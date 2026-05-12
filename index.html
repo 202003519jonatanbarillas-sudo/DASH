@@ -9,19 +9,48 @@
       padding: 0;
       scroll-behavior: smooth;
       font-family: Arial, sans-serif;
-      background: gray;
+      background: black;
+	  overflow-y: hidden; /* evita scroll vertical */
+	  overflow-x: hidden; /* evita scroll vertical */
     }
 
-    section {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
+  /* Chrome, Safari, Edge */
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Firefox */
+  html {
+    scrollbar-width: none;
+  }
+
+  /* IE y Edge antiguos */
+  body {
+    -ms-overflow-style: none;
+  }
+
+ section {
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  overflow: hidden;
+
+  opacity: 0;
+  transform: translateY(20px);
+
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+}
+
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
     section.visible {
       opacity: 1;
@@ -56,16 +85,19 @@
 
     .recurso.izquierda {
       justify-content: flex-start;
+      align-items: center;
     }
 
     .recurso.derecha {
       justify-content: flex-end;
+	  align-items: center;
     }
 
-    .preview {
-      width: 600px;
-      height: 100%;
-    }
+	.preview {
+	  width: 80vw;
+	  max-width: 1000px;
+	  height: 75vh;
+	}
 
     .preview iframe {
       width: 100%;
@@ -74,128 +106,213 @@
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
+	
+#fullscreenBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 12px 20px;
 
-    /* Navegación */
-    nav {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: rgba(0,0,0,0.5);
-      padding: 10px;
-      border-radius: 8px;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 8px;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
+  width: 50px;
+  height: 50px;
+
+  background: #2c2c2c;   /* gris oscuro */
+  color: white;
+
+  border: none;
+  border-radius: 50%; 
+  backdrop-filter: blur(5px);
+  font-size: 22px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+  z-index: 9999;
+
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+#fullscreenBtn:hover {
+  background: #444444;   /* gris más claro al pasar el mouse */
+}
+
+
+
+
   </style>
 </head>
 <body>
 
-  <!-- Barra superior -->
-  <div class="topbar">
-    <!-- Área izquierda -->
-    <div class="left-area">
-      <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-      <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/logousac2.png" alt="Logo 1" class="logo">
-    </div>
+<button id="fullscreenBtn">⛶</button>
+<div id="fullpage"></div>
 
-    <!-- Área central -->
-    <div class="center-area">
-      <img src="https://github.com/202003519jonatanbarillas-sudo/infinal/releases/download/v7.0/econ.png" alt="Logo 2" class="logo">
-      <h1>ESCUELA DE ECONOMÍA</h1>
-    </div>
-    
-    <div class="right-area">
-      <h1>SEMINARIO 2026</h1>
-    </div>
-  </div>
+<!-- Hero con video -->
+<section id="hero" class="hero">
+  <video autoplay muted loop>
+    <source src="https://github.com/202003519jonatanbarillas-sudo/infogra-chin/releases/download/v1/valores.mp4" type="video/mp4">
+  </video>
+  <h1>SEMINARIO 2026</h1>
+</section>
 
-  <!-- Panel lateral -->
-  <div class="sidebar" id="sidebar">
-    <a href="#" onclick="mostrar('blockchain')">Dashboard 1 (Blockchain)</a>
-    <a href="#" onclick="mostrar('perspectivas')">Dashboard 2 (Perspectivas)</a>
-    <a href="#" onclick="mostrar('documentos')">Documento de la Investigación</a>
-  </div>
-
-  <!-- Contenido dinámico -->
-  <div class="content" id="contenido">
-    <div class="scroll-area" id="scroll-area">
-      <!-- Aquí se insertan los recursos dinámicos -->
+<!-- Sección Blockchain -->
+<section id="sec1" style="background:#2c2c2c;">
+  <div class="recurso derecha">
+    <div class="preview">
+      <iframe src="dashboard1.html"></iframe>
     </div>
   </div>
+</section>
 
-  <!-- Librería QR -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<!-- Sección Perspectivas -->
+<section id="sec2" style="background:#2c2c2c;">
+  <div class="recurso izquierda">
+    <div class="preview">
+      <iframe src="dashboard1.html"></iframe>
+    </div>
+  </div>
+</section>
 
-  <script>
-  function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const content = document.getElementById("contenido");
+<!-- Sección Investigación -->
+<section id="sec3" style="background:#2c2c2c;">
+  <div class="recurso derecha">
+    <div class="preview">
+      <iframe src="dashboard2.html"></iframe>
+    </div>
+  </div>
+</section>
 
-    sidebar.classList.toggle("active");
-    content.classList.toggle("shifted");
-  }
+<script>
 
-  // 🔹 Bloquear flechas y redirigirlas al scroll-area
-  document.addEventListener("keydown", function(e) {
-    const area = document.getElementById("scroll-area");
-    if (!area) return;
+  // =========================
+  // FADE IN / OUT
+  // =========================
 
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      area.scrollBy(0, 50);
-    }
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      area.scrollBy(0, -50);
-    }
+  const observer = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      } else {
+        entry.target.classList.remove("visible");
+      }
+
+    });
+
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll("section").forEach(sec => {
+    observer.observe(sec);
   });
 
-  // 🔹 Función para mostrar cada sección
-  function mostrar(seccion) {
-    const cont = document.getElementById("contenido");
-    cont.innerHTML = `<div class="scroll-area" id="scroll-area"></div>`;
-    const area = document.getElementById("scroll-area");
 
-    if (seccion === "blockchain") {
-      area.innerHTML += `
-        <div class="recurso">
-          <div class="preview">
-            <iframe src="https://202003519jonatanbarillas-sudo.github.io/DASH/dashboard%201.html"></iframe>
-          </div>
-        </div>`;
+  // =========================
+  // FULLSCREEN
+  // =========================
+
+  const btn = document.getElementById("fullscreenBtn");
+
+  btn.addEventListener("click", () => {
+
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
     }
 
-    if (seccion === "perspectivas") {
-      area.innerHTML += `
-        <div class="recurso">
-          <div class="preview">
-            <iframe src="https://202003519jonatanbarillas-sudo.github.io/DASH/dashboard%202.html"></iframe>
-          </div>
-        </div>`;
+  });
+
+
+  // =========================
+  // SCROLL ENTRE SECCIONES
+  // =========================
+
+  document.addEventListener("DOMContentLoaded", () => {
+
+    const sections = document.querySelectorAll("section");
+
+    let currentSection = 0;
+    let scrolling = false;
+
+    function scrollToSection(target) {
+
+      sections[target].scrollIntoView({
+        behavior: "smooth"
+      });
+
     }
 
-    if (seccion === "documentos") {
-      area.innerHTML += `
-        <div class="recurso">
-          <div class="preview">
-            <iframe src="documento_investigacion.html"></iframe>
-          </div>
-        </div>`;
+    function nextSection() {
+
+      if (currentSection < sections.length - 1) {
+
+        currentSection++;
+        scrollToSection(currentSection);
+
+      }
+
     }
-  }
 
-  // 🔹 Al cargar la página, mostrar Dashboard 1 por defecto
-  window.onload = function() {
-    mostrar("blockchain");
-  };
-  </script>
+    function prevSection() {
 
+      if (currentSection > 0) {
+
+        currentSection--;
+        scrollToSection(currentSection);
+
+      }
+
+    }
+
+    // =========================
+    // RUEDA DEL MOUSE
+    // =========================
+
+    window.addEventListener("wheel", (e) => {
+
+      if (scrolling) return;
+
+      scrolling = true;
+
+      if (e.deltaY > 0) {
+        nextSection();
+      } else {
+        prevSection();
+      }
+
+      setTimeout(() => {
+        scrolling = false;
+      }, 900);
+
+    });
+
+
+    // =========================
+    // TECLADO
+    // =========================
+
+    window.addEventListener("keydown", (e) => {
+
+      if (e.key === "ArrowDown") {
+        nextSection();
+      }
+
+      if (e.key === "ArrowUp") {
+        prevSection();
+      }
+
+    });
+
+  });
+
+</script>
+
+
+  
+  
 </body>
 </html>
