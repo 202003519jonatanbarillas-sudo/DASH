@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Seminario 2026</title>
+  <title>DASHBOARDS</title>
   <style>
     body, html {
       margin: 0;
@@ -15,37 +15,15 @@
     }
 
   /* Chrome, Safari, Edge */
-  html::-webkit-scrollbar {
-    display: none;
-  }
+  html::-webkit-scrollbar { display: none; }
 
   /* Firefox */
-  html {
-    scrollbar-width: none;
-  }
+  html { scrollbar-width: none; }
 
   /* IE y Edge antiguos */
-  body {
-    -ms-overflow-style: none;
-  }
+  body {-ms-overflow-style: none;}
 
- section {
-  height: 100vh;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: relative;
-  overflow: hidden;
-
-  opacity: 0;
-  transform: translateY(20px);
-
-  transition:
-    opacity 1s ease,
-    transform 1s ease;
-}
+ section { height: 100vh; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; opacity: 0; transform: translateY(20px); transition: opacity 1s ease, transform 1s ease;}
 
 section.visible {
   opacity: 1;
@@ -69,44 +47,73 @@ section.visible {
       object-fit: cover;
       z-index: -1;
     }
-    .hero h1 {
-      color: white;
-      font-size: 3em;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-    }
+.hero h1 {
+  background: rgba(0, 0, 0, 0.75);   /* negro con transparencia */
+  backdrop-filter: blur(8px);       /* desenfoque del fondo */
+  -webkit-backdrop-filter: blur(8px); /* soporte en Safari */
+  padding: 20px;
+  border-radius: 25px;
+  color: white;
+  font-size: 3em;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
 
-    /* Bloques recurso */
-    .recurso {
-      display: flex;
-      width: 80%;
-      max-width: 1000px;
-      height: 60vh;
-    }
+.recurso {
+  display: grid;
+  width: 80%;
+  max-width: 1200px;
+  height: 60vh;
+  gap: 100px;   /* 🔹 espacio entre columnas */
+  align-items: center;
+  justify-content: center;
+}
 
-    .recurso.izquierda {
-      justify-content: flex-start;
-      align-items: center;
-    }
 
-    .recurso.derecha {
-      justify-content: flex-end;
-	  align-items: center;
-    }
+/* 🔹 Layout con recurso a la derecha */
+.recurso.derecha {
+  grid-template-columns: 1fr 2fr;
+}
 
-	.preview {
-	  width: 80vw;
-	  max-width: 1000px;
-	  height: 75vh;
-	}
+/* 🔹 Layout con recurso a la izquierda */
+.recurso.izquierda {
+  grid-template-columns: 2fr 1fr;
+}
 
-    .preview iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-	
+.texto {
+  color: white;
+  background: rgba(0, 0, 0, 0.75);   /* negro con transparencia */
+  backdrop-filter: blur(8px);       /* desenfoque del fondo */
+  -webkit-backdrop-filter: blur(8px); /* soporte en Safari */
+  padding: 25px;
+  padding-left: 25px;
+  border-radius: 25px;
+  font-size: 1.2em;
+}
+
+.texto h2 {
+  margin: 0 0 10px 0;
+  font-size: 2em;
+  color: #ffeb3b; /* amarillo para destacar el título */
+}
+
+.preview {
+  width: 100%;
+  height: 100%;
+  border-radius: 25%;
+}
+
+.preview iframe {
+  width: 100%;
+  height: 100%;
+  border: black;
+  border-radius: 25px;
+  background: rgba(0, 0, 0, 0.75);   /* negro con transparencia */
+  backdrop-filter: blur(8px);       /* desenfoque del fondo */
+  -webkit-backdrop-filter: blur(8px); /* soporte en Safari */
+  padding:25px;
+  }
+
+
 #fullscreenBtn {
   position: absolute;
   top: 10px;
@@ -155,30 +162,42 @@ section.visible {
   <video autoplay muted loop>
     <source src="https://github.com/202003519jonatanbarillas-sudo/infogra-chin/releases/download/v1/valores.mp4" type="video/mp4">
   </video>
-  <h1>SEMINARIO 2026</h1>
+  <h1>PORTAFORLIO DE DASHBOARDS</h1>
 </section>
 
-<!-- Sección Blockchain -->
+<!-- Sección Blockchain (iframe a la derecha) -->
 <section id="sec1" style="background:#2c2c2c;">
   <div class="recurso derecha">
+    <div class="texto">
+      <h2>Blockchain</h2>
+      <p>Visualización del dashboard sobre tecnología blockchain y sus aplicaciones.</p>
+    </div>
     <div class="preview">
       <iframe src="dashboard1.html"></iframe>
     </div>
   </div>
 </section>
 
-<!-- Sección Perspectivas -->
+<!-- Sección Perspectivas (iframe a la izquierda) -->
 <section id="sec2" style="background:#2c2c2c;">
   <div class="recurso izquierda">
     <div class="preview">
-      <iframe src="dashboard1.html"></iframe>
+      <iframe src="dashboard2.html"></iframe>
+    </div>
+    <div class="texto">
+      <h2>Perspectivas</h2>
+      <p>Análisis de tendencias económicas y escenarios futuros.</p>
     </div>
   </div>
 </section>
 
-<!-- Sección Investigación -->
+<!-- Sección Investigación (iframe a la derecha) -->
 <section id="sec3" style="background:#2c2c2c;">
   <div class="recurso derecha">
+    <div class="texto">
+      <h2>Investigación</h2>
+      <p>Documentos y resultados de investigación académica.</p>
+    </div>
     <div class="preview">
       <iframe src="dashboard2.html"></iframe>
     </div>
