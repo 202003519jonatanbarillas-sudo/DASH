@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Seminario 2026</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      font-family: Arial, sans-serif;
+    }
+
+    section {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      opacity: 0;                /* 🔹 Oculto por defecto */
+      transform: translateY(50px); /* 🔹 Desplazado hacia abajo */
+      transition: opacity 1s ease, transform 1s ease; /* 🔹 Transición suave */
+    }
+
+    section.visible {
+      opacity: 1;                /* 🔹 Aparece */
+      transform: translateY(0);  /* 🔹 Se coloca en su lugar */
+    }
+
+    /* Primera sección con video de fondo */
+    .hero {
+      overflow: hidden;
+    }
+
+    .hero video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .hero h1 {
+      color: white;
+      font-size: 3em;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+
+    /* Secciones con iframes */
+    .iframe-section iframe {
+      width: 80%;
+      height: 80%;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    /* Navegación fija */
+    nav {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.5);
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 8px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navegación -->
+  <nav>
+    <a href="#hero">Inicio</a>
+    <a href="#sec1">Sección 1</a>
+    <a href="#sec2">Sección 2</a>
+    <a href="#sec3">Sección 3</a>
+  </nav>
+
+  <!-- Primera sección: video de fondo -->
+  <section id="hero" class="hero">
+    <video autoplay muted loop>
+      <source src="tu_video.mp4" type="video/mp4">
+    </video>
+    <h1>SEMINARIO 2026</h1>
+  </section>
+
+  <!-- Sección 1 con iframe -->
+  <section id="sec1" class="iframe-section" style="background:#f0f0f0;">
+    <iframe src="presentacion_blockchain.html"></iframe>
+  </section>
+
+  <!-- Sección 2 con iframe -->
+  <section id="sec2" class="iframe-section" style="background:#e0e0ff;">
+    <iframe src="presentacion_perspectivas.html"></iframe>
+  </section>
+
+  <!-- Sección 3 con iframe -->
+  <section id="sec3" class="iframe-section" style="background:#ffe0e0;">
+    <iframe src="analisis_blockchain.pdf"></iframe>
+  </section>
+
+  <script>
+    // 🔹 Intersection Observer para detectar secciones visibles
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        } else {
+          entry.target.classList.remove("visible");
+        }
+      });
+    }, { threshold: 0.3 }); // Se activa cuando el 30% de la sección está visible
+
+    document.querySelectorAll("section").forEach(sec => {
+      observer.observe(sec);
+    });
+  </script>
+</body>
+</html>
