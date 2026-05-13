@@ -1,312 +1,868 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>DASHBOARDS</title>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      scroll-behavior: smooth;
-      font-family: Arial, sans-serif;
-      background: black;
-	  overflow-y: hidden; /* evita scroll vertical */
-	  overflow-x: hidden; /* evita scroll vertical */
-    }
 
-  /* Chrome, Safari, Edge */
-  html::-webkit-scrollbar { display: none; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  /* Firefox */
-  html { scrollbar-width: none; }
+<title>Dashboard Macroeconómico</title>
 
-  /* IE y Edge antiguos */
-  body {-ms-overflow-style: none;}
+<style>
 
- section { height: 100vh; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; opacity: 0; transform: translateY(20px); transition: opacity 1s ease, transform 1s ease;}
+/* =========================
+   RESET
+========================= */
 
-section.visible {
-  opacity: 1;
-  transform: translateY(0);
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Hero con video */
-    .hero {
-      overflow: hidden;
-    }
-    .hero video {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-.hero h1 {
-  background: rgba(0, 0, 0, 0.75);   /* negro con transparencia */
-  backdrop-filter: blur(8px);       /* desenfoque del fondo */
-  -webkit-backdrop-filter: blur(8px); /* soporte en Safari */
-  padding: 20px;
-  border-radius: 25px;
-  color: white;
-  font-size: 3em;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+html{
+  scroll-behavior:smooth;
+  scrollbar-width:none;
 }
 
-.recurso {
-  display: grid;
-  width: 80%;
-  max-width: 1200px;
-  height: 60vh;
-  gap: 100px;   /* 🔹 espacio entre columnas */
-  align-items: center;
-  justify-content: center;
-  line-height:1.3;
+html::-webkit-scrollbar{
+  display:none;
+}
+
+body{
+  font-family:'Segoe UI', Arial, sans-serif;
+  background:black;
+  overflow:hidden;
+  color:white;
+  -ms-overflow-style:none;
+}
+
+/* =========================
+   VARIABLES
+========================= */
+
+:root{
+
+  --bg1:#050505;
+  --bg2:#101010;
+  --bg3:#1a1a1a;
+
+  --gold:#d4af37;
+  --gold2:#f1d67a;
+  --goldSoft:#a88b2c;
+
+  --text:#ffffff;
+}
+
+/* =========================
+   CONTENEDOR GENERAL
+========================= */
+
+#container{
+  height:100vh;
+  overflow:hidden;
+}
+
+/* =========================
+   SECCIONES
+========================= */
+
+section{
+
+  height:100vh;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  position:relative;
+
+  padding:40px;
+
+  overflow:hidden;
+
+  opacity:0;
+  transform:translateY(25px);
+
+  transition:
+    opacity .9s ease,
+    transform .9s ease;
+}
+
+section.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero video{
+
+  position:absolute;
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  z-index:-2;
+}
+
+.hero::before{
+
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:rgba(0,0,0,.55);
+
+  z-index:-1;
+}
+
+.hero h1{
+
+  padding:24px 40px;
+
+  border-radius:28px;
+
+  background:rgba(0,0,0,.55);
+
+  backdrop-filter:blur(10px);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  color:white;
+
+  font-size:clamp(2rem, 5vw, 4.5rem);
+
+  font-weight:900;
+
+  letter-spacing:2px;
+
+  text-align:center;
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.45);
+}
+
+/* =========================
+   FULLSCREEN
+========================= */
+
+#fullscreenBtn{
+
+  position:fixed;
+
+  top:20px;
+  right:20px;
+
+  width:52px;
+  height:52px;
+
+  border:none;
+
+  border-radius:50%;
+
+  background:rgba(30,30,30,.9);
+
+  color:white;
+
+  font-size:22px;
+
+  cursor:pointer;
+
+  z-index:9999;
+
+  transition:.3s ease;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.35);
+}
+
+#fullscreenBtn:hover{
+
+  transform:scale(1.08);
+
+  background:#2f2f2f;
+}
+
+/* =========================
+   CONTENEDOR DASHBOARD
+========================= */
+
+.recurso{
+
+  width:min(1600px,95vw);
+
+  min-height:88vh;
+
+  display:grid;
+
+  grid-template-columns:
+    minmax(360px,420px)
+    minmax(0,1fr);
+
+  gap:28px;
+
+  padding:28px;
+
+  border-radius:34px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(25,25,25,.96),
+      rgba(10,10,10,.96)
+    );
+
+  border:1px solid rgba(255,255,255,.05);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.65),
+    inset 0 1px 0 rgba(255,255,255,.03);
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+/* Glow normal */
+
+.recurso::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:500px;
+  height:500px;
+
+  top:-220px;
+  left:-160px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(212,175,55,.18),
+      transparent 70%
+    );
+
+  pointer-events:none;
+}
+
+/* Glow invertido */
+
+.recurso.invertido::before{
+
+  right:-160px;
+  left:unset;
 }
 
 
-/* 🔹 Layout con recurso a la derecha */
-.recurso.derecha {
-  grid-template-columns: 1fr 2fr;
+/* =========================
+   PANEL IZQUIERDO
+========================= */
+
+.info{
+
+  display:flex;
+  flex-direction:column;
+
+  gap:22px;
+
+  padding:12px;
+
+  position:relative;
+
+  z-index:2;
 }
 
-/* 🔹 Layout con recurso a la izquierda */
-.recurso.izquierda {
-  grid-template-columns: 2fr 1fr;
+
+
+/* TAG */
+
+.tag{
+
+  width:max-content;
+
+  padding:10px 18px;
+
+  border-radius:999px;
+
+  background:rgba(212,175,55,.08);
+
+  border:1px solid rgba(212,175,55,.25);
+
+  color:var(--gold2);
+
+  font-size:13px;
+
+  font-weight:700;
+
+  letter-spacing:1px;
+
+  text-transform:uppercase;
 }
 
-.texto {
-  color: white;
-  background: rgba(0, 0, 0, 0.75);   /* negro con transparencia */
-  backdrop-filter: blur(8px);       /* desenfoque del fondo */
-  -webkit-backdrop-filter: blur(8px); /* soporte en Safari */
-  padding: 25px;
-  padding-left: 25px;
-  border-radius: 25px;
-  font-size: 1.2em;
-  text-align: justify;
+/* TITULO */
+
+.titulo{
+
+  font-size:clamp(1.9rem, 3vw, 3.2rem);
+
+  line-height:1.05;
+
+  font-weight:900;
+
+  letter-spacing:-1px;
+
+  color:white;
 }
 
-.texto h2 {
-  margin: 0 0 10px 0;
-  font-size: 2em;
-  color: #ffeb3b; /* amarillo para destacar el título */
-  text-align: left;
+.titulo span{
 
+  color:var(--gold);
+
+  text-shadow:
+    0 0 12px rgba(212,175,55,.25);
 }
 
-.preview {
-  width: 100%;
-  height: 100%;
-  border-radius: 25%;
+/* DIVIDER */
+
+.divider{
+
+  width:110px;
+  height:5px;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--goldSoft),
+      var(--gold2)
+    );
 }
 
-.preview iframe {
-  width: 100%;
-  height: 100%;
-  border: black;
-  border-radius: 25px;
-  background: rgba(0, 0, 0, 0.75);   /* negro con transparencia */
-  backdrop-filter: blur(8px);       /* desenfoque del fondo */
-  -webkit-backdrop-filter: blur(8px); /* soporte en Safari */
-  padding:25px;
+/* TEXTO */
+
+.descripcion{
+
+  color:rgba(255,255,255,.78);
+
+  line-height:1.85;
+
+  font-size:1rem;
+
+  text-align:justify;
+}
+
+/* =========================
+   KPIs
+========================= */
+
+.stats{
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:16px;
+
+  margin-top:auto;
+}
+
+.card{
+
+  position:relative;
+
+  padding:22px;
+
+  border-radius:24px;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.03),
+      rgba(255,255,255,.015)
+    );
+
+  border:1px solid rgba(255,255,255,.05);
+
+  transition:.35s ease;
+}
+
+.card::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(212,175,55,.08),
+      transparent
+    );
+
+  opacity:0;
+
+  transition:.35s ease;
+}
+
+.card:hover{
+
+  transform:translateY(-5px);
+
+  border-color:rgba(212,175,55,.18);
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.35);
+}
+
+.card:hover::before{
+  opacity:1;
+}
+
+.card h3{
+
+  font-size:12px;
+
+  text-transform:uppercase;
+
+  letter-spacing:1.5px;
+
+  color:#9d9d9d;
+
+  margin-bottom:12px;
+}
+
+.card p{
+
+  font-size:1.7rem;
+
+  font-weight:800;
+
+  color:white;
+}
+
+/* =========================
+   PANEL DASHBOARD
+========================= */
+
+.preview{
+
+  position:relative;
+
+  min-width:0;
+
+  border-radius:30px;
+
+  overflow:hidden;
+
+  background:#0a0a0a;
+
+  border:1px solid rgba(255,255,255,.06);
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.55);
+}
+
+/* Barra superior */
+
+.preview::before{
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:0;
+  right:0;
+
+  height:48px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,.05),
+      transparent
+    );
+
+  z-index:2;
+
+  pointer-events:none;
+}
+
+/* TOPBAR */
+
+.topbar{
+
+  position:absolute;
+
+  top:16px;
+  left:20px;
+
+  display:flex;
+
+  gap:8px;
+
+  z-index:3;
+}
+
+.dot{
+
+  width:12px;
+  height:12px;
+
+  border-radius:50%;
+
+  background:rgba(212,175,55,.35);
+
+  border:1px solid rgba(255,255,255,.08);
+}
+
+/* IFRAME */
+
+.preview iframe{
+
+  width:100%;
+  height:100%;
+
+  min-height:88vh;
+
+  border:none;
+
+  display:block;
+
+  background:white;
+}
+/* =========================
+   SECCIÓN INVERTIDA
+========================= */
+
+.recurso.invertido{
+  grid-template-columns:
+    minmax(0,1fr)
+    minmax(360px,420px);
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+  section{
+    padding:20px;
   }
 
+  .recurso{
 
-#fullscreenBtn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 12px 20px;
+    grid-template-columns:1fr;
 
-  width: 50px;
-  height: 50px;
+    min-height:auto;
+  }
 
-  background: #2c2c2c;   /* gris oscuro */
-  color: white;
-
-  border: none;
-  border-radius: 50%; 
-  backdrop-filter: blur(5px);
-  font-size: 22px;
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-
-  z-index: 9999;
-
-  transition: transform 0.2s ease, background 0.3s ease;
+  .preview{
+    height:72vh;
+  }
 }
 
-#fullscreenBtn:hover {
-  background: #444444;   /* gris más claro al pasar el mouse */
+@media(max-width:700px){
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .preview{
+    height:65vh;
+  }
+
+  .titulo{
+    font-size:2rem;
+  }
+
+  .hero h1{
+    padding:20px;
+  }
 }
 
-
-
-
-  </style>
+</style>
 </head>
+
 <body>
 
 <button id="fullscreenBtn">⛶</button>
-<div id="fullpage"></div>
 
-<!-- Hero con video -->
-<section id="hero" class="hero">
-  <video autoplay muted loop>
-    <source src="https://github.com/202003519jonatanbarillas-sudo/infogra-chin/releases/download/v1/valores.mp4" type="video/mp4">
-  </video>
-  <h1>PORTAFORLIO DE DASHBOARDS</h1>
-</section>
+<div id="container">
 
-<!-- Sección Blockchain (iframe a la derecha) -->
-<section id="sec1" style="background:#2c2c2c;">
-  <div class="recurso derecha">
-    <div class="texto">
-      <h2>DASHBOARD DE DATOS MACROECONÓMICOS</h2>
-      <p>Este dashboard de datos macroeconómicos presenta indicadores clave del sector monetario, como la base monetaria y el crédito bancario total. Incluye métricas de último valor, promedio histórico, máximos y mínimos, además de gráficas interactivas que permiten analizar tendencias de largo plazo y patrones estacionales. Su objetivo es ofrecer una visualización clara y dinámica para apoyar el análisis económico y la toma de decisiones.</p>
+  <!-- HERO -->
+
+  <section id="hero" class="hero visible">
+
+    <video autoplay muted loop playsinline>
+      <source src="https://github.com/202003519jonatanbarillas-sudo/infogra-chin/releases/download/v1/valores.mp4" type="video/mp4">
+    </video>
+
+    <h1>PORTAFOLIO DE DASHBOARDS</h1>
+
+  </section>
+
+  <!-- DASHBOARD -->
+
+  <section>
+
+    <div class="recurso">
+
+      <!-- PANEL IZQUIERDO -->
+
+      <div class="info">
+
+        <div class="tag">
+          Sistema Macroeconómico
+        </div>
+
+        <div class="titulo">
+          Dashboard de Datos
+          <span>Macroeconómicos</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="descripcion">
+          Este dashboard integra indicadores monetarios y financieros
+          relevantes para el análisis macroeconómico. Incluye series
+          históricas, métricas comparativas y visualizaciones
+          interactivas que facilitan la identificación de tendencias,
+          variaciones estacionales y patrones de comportamiento económico.
+        </div>
+
+        <!-- KPIs -->
+
+        <div class="stats">
+
+          <div class="card">
+            <h3>Indicadores</h3>
+            <p>12+</p>
+          </div>
+
+          <div class="card">
+            <h3>Series Históricas</h3>
+            <p>25 años</p>
+          </div>
+
+          <div class="card">
+            <h3>Actualización</h3>
+            <p>Mensual</p>
+          </div>
+
+          <div class="card">
+            <h3>Visualización</h3>
+            <p>Interactiva</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- DASHBOARD -->
+
+      <div class="preview">
+
+        <div class="topbar">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+
+        <iframe src="dashboard1.html"></iframe>
+
+      </div>
+
     </div>
-    <div class="preview">
-      <iframe src="dashboard1.html"></iframe>
-    </div>
-  </div>
-</section>
 
-<!-- Sección Perspectivas (iframe a la izquierda) -->
-<section id="sec2" style="background:#2c2c2c;">
-  <div class="recurso izquierda">
+  </section>
+
+<!-- NUEVA SECCIÓN INVERTIDA -->
+
+<section>
+
+  <div class="recurso invertido">
+
+    <!-- DASHBOARD IZQUIERDA -->
+
     <div class="preview">
+
+      <div class="topbar">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+
       <iframe src="dashboard2.html"></iframe>
+
     </div>
-    <div class="texto">
-      <h2>DASHBOARD DE VENTAS</h2>
-      <p>Este dashboard de ventas ofrece una visión integral del desempeño comercial, mostrando métricas clave como ventas totales, número de órdenes, promedio de ventas y porcentaje de devoluciones. Los gráficos permiten analizar la distribución regional, el tipo de cliente y los métodos de pago, además de seguir la serie histórica de ventas. Su objetivo es facilitar el diagnóstico de la actividad comercial y apoyar la toma de decisiones estratégicas.</p>
+
+    <!-- PANEL DERECHO -->
+
+    <div class="info">
+
+      <div class="tag">
+        Sistema de Ventas
+      </div>
+
+      <div class="titulo">
+        Dashboard de
+        <span>Ventas</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="descripcion">
+        Este dashboard permite analizar el comportamiento
+        comercial mediante indicadores clave de ventas,
+        órdenes y devoluciones. Incluye métricas por región,
+        métodos de pago, tipos de cliente y series históricas
+        para identificar tendencias y patrones de consumo.
+      </div>
+
+      <!-- KPIs -->
+
+      <div class="stats">
+
+	  <div class="card">
+		<h3>Indicadores</h3>
+		<p>KPIs y Gráficos</p>
+	  </div>
+
+	  <div class="card">
+		<h3>Mercado</h3>
+		<p>Retail Local</p>
+	  </div>
+
+	  <div class="card">
+		<h3>Actualización</h3>
+		<p>Diaria</p>
+	  </div>
+
+	  <div class="card">
+		<h3>Tipo de Datos</h3>
+		<p>Micro</p>
+	  </div>
+
+      </div>
+
     </div>
+
   </div>
+
 </section>
 
+</div>
 
 <script>
 
-  const observer = new IntersectionObserver((entries) => {
+/* =========================
+   FADE IN
+========================= */
 
-    entries.forEach(entry => {
+const observer = new IntersectionObserver((entries) => {
 
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      } else {
-        entry.target.classList.remove("visible");
-      }
+  entries.forEach(entry => {
 
-    });
-
-  }, { threshold: 0.3 });
-
-  document.querySelectorAll("section").forEach(sec => {
-    observer.observe(sec);
-  });
-
-
-
-  const btn = document.getElementById("fullscreenBtn");
-
-  btn.addEventListener("click", () => {
-
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-    } else {
-      document.exitFullscreen();
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
     }
 
   });
 
+},{
+  threshold:0.25
+});
 
-  document.addEventListener("DOMContentLoaded", () => {
+document.querySelectorAll("section").forEach(sec => {
+  observer.observe(sec);
+});
 
-    const sections = document.querySelectorAll("section");
+/* =========================
+   FULLSCREEN
+========================= */
 
-    let currentSection = 0;
-    let scrolling = false;
+const btn = document.getElementById("fullscreenBtn");
 
-    function scrollToSection(target) {
+btn.addEventListener("click", () => {
 
-      sections[target].scrollIntoView({
-        behavior: "smooth"
-      });
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen();
+  }else{
+    document.exitFullscreen();
+  }
 
-    }
+});
 
-    function nextSection() {
+/* =========================
+   SCROLL ENTRE SECCIONES
+========================= */
 
-      if (currentSection < sections.length - 1) {
+const sections = document.querySelectorAll("section");
 
-        currentSection++;
-        scrollToSection(currentSection);
+let currentSection = 0;
+let isScrolling = false;
 
-      }
+function goToSection(index){
 
-    }
+  if(index < 0 || index >= sections.length) return;
 
-    function prevSection() {
+  currentSection = index;
 
-      if (currentSection > 0) {
-
-        currentSection--;
-        scrollToSection(currentSection);
-
-      }
-
-    }
-
-
-    window.addEventListener("wheel", (e) => {
-
-      if (scrolling) return;
-
-      scrolling = true;
-
-      if (e.deltaY > 0) {
-        nextSection();
-      } else {
-        prevSection();
-      }
-
-      setTimeout(() => {
-        scrolling = false;
-      }, 900);
-
-    });
-
-
-
-    window.addEventListener("keydown", (e) => {
-
-      if (e.key === "ArrowDown") {
-        nextSection();
-      }
-
-      if (e.key === "ArrowUp") {
-        prevSection();
-      }
-
-    });
-
+  sections[currentSection].scrollIntoView({
+    behavior:"smooth"
   });
+
+}
+
+window.addEventListener("wheel", (e) => {
+
+  e.preventDefault();
+
+  if(isScrolling) return;
+
+  isScrolling = true;
+
+  if(e.deltaY > 0){
+    goToSection(currentSection + 1);
+  }else{
+    goToSection(currentSection - 1);
+  }
+
+  setTimeout(() => {
+    isScrolling = false;
+  }, 1000);
+
+}, { passive:false });
+
+window.addEventListener("keydown", (e) => {
+
+  if(e.key === "ArrowDown"){
+    goToSection(currentSection + 1);
+  }
+
+  if(e.key === "ArrowUp"){
+    goToSection(currentSection - 1);
+  }
+
+});
 
 </script>
 
-
-  
-  
 </body>
 </html>
