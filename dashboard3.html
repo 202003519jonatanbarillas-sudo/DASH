@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard - Billetes Falsos</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<head>
+
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.9.0.min.js"></script>
+
+</head>
+
+<style>
+
+/* =========================
+RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    color:#1f2937; /* texto gris oscuro */
+    overflow-x:hidden;
+
+    background:
+    radial-gradient(circle at top left,#93c5fd33,transparent 25%),
+    radial-gradient(circle at bottom right,#a7f3d033,transparent 25%),
+    radial-gradient(circle at center,#f9fafb 0%,#f3f4f6 55%,#e5e7eb 100%);
+}
+
+/* =========================
+ANIMATED BACKGROUND
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    background:
+    linear-gradient(rgba(0,0,0,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,0,0,.05) 1px,transparent 1px);
+
+    background-size:50px 50px;
+
+    mask-image:linear-gradient(to bottom,rgba(255,255,255,.8),transparent);
+
+    pointer-events:none;
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:900px;
+    height:900px;
+
+    background:
+    radial-gradient(circle,
+    rgba(59,130,246,.18),
+    transparent 70%);
+
+    top:-350px;
+    right:-250px;
+
+    filter:blur(50px);
+    animation:floatGlow 10s ease-in-out infinite alternate;
+    z-index:-1;
+}
+
+@keyframes floatGlow{
+    from{
+        transform:translateY(0px) translateX(0px);
+    }
+    to{
+        transform:translateY(40px) translateX(-50px);
+    }
+}
+
+
+/* =========================
+CONTAINER
+========================= */
+
+.container{
+
+    width:min(1450px,92%);
+
+    margin:auto;
+
+    padding:50px 0 90px;
+}
+
+/* =========================
+HERO
+========================= */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    border-radius:40px;
+    padding:85px 75px;
+
+    background:
+    linear-gradient(145deg,
+    rgba(255,255,255,.9),
+    rgba(243,244,246,.75));
+
+    border:1px solid rgba(0,0,0,.08);
+    backdrop-filter:blur(22px);
+
+    box-shadow:
+    0 0 0 1px rgba(0,0,0,.03),
+    0 30px 80px rgba(0,0,0,.15);
+}
+
+/* Glow */
+
+.hero::before{
+    content:"";
+    position:absolute;
+    width:700px;
+    height:700px;
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle,
+    rgba(59,130,246,.25),
+    transparent 70%);
+
+    top:-350px;
+    right:-260px;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle,
+    rgba(16,185,129,.18),
+    transparent 70%);
+
+    bottom:-260px;
+    left:-180px;
+}
+
+/* =========================
+BADGE
+========================= */
+
+.badge{
+    position:relative;
+    z-index:2;
+    width:max-content;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 20px;
+    border-radius:999px;
+
+    background:
+    linear-gradient(135deg,#60a5fa,#34d399);
+
+    color:#1f2937; /* texto oscuro para contraste */
+    font-size:.8rem;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+
+    box-shadow:
+    0 12px 25px rgba(59,130,246,.25);
+
+    margin-bottom:30px;
+}
+
+.badge::before{
+    content:"";
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#1f2937;
+    box-shadow:0 0 10px #1f2937;
+}
+
+/* =========================
+HERO TEXT
+========================= */
+
+.hero h1{
+    position:relative;
+    z-index:2;
+    max-width:1000px;
+    font-size:clamp(3.5rem,7vw,6.5rem);
+    line-height:.95;
+    letter-spacing:-.06em;
+    margin-bottom:28px;
+    font-weight:900;
+
+    background:
+    linear-gradient(135deg,#1f2937,#3b82f6,#10b981);
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    position:relative;
+    z-index:2;
+    max-width:760px;
+    color:#374151; /* gris oscuro para buena legibilidad */
+    line-height:1.8;
+    font-size:1.08rem;
+}
+
+/* =========================
+KPI GRID
+========================= */
+
+.kpi-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+    margin-top:40px;
+}
+
+/* =========================
+KPI
+========================= */
+
+.kpi{
+    position:relative;
+    overflow:hidden;
+    padding:30px;
+    border-radius:28px;
+
+    background:
+    linear-gradient(145deg,
+    rgba(255,255,255,.9),
+    rgba(243,244,246,.72));
+
+    border:1px solid rgba(0,0,0,.08);
+    backdrop-filter:blur(18px);
+
+    transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.12);
+}
+
+.kpi::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(135deg,
+    rgba(59,130,246,.12),
+    transparent 60%);
+    opacity:0;
+    transition:.35s;
+}
+
+.kpi:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:0 28px 50px rgba(59,130,246,.22);
+}
+
+.kpi:hover::before{
+    opacity:1;
+}
+
+.kpi span{
+    position:relative;
+    z-index:2;
+    color:#6b7280; /* gris medio */
+    font-size:.88rem;
+    font-weight:600;
+    letter-spacing:.03em;
+}
+
+.kpi h2{
+    position:relative;
+    z-index:2;
+    margin:18px 0 8px;
+    font-size:2.7rem;
+    font-weight:800;
+    line-height:1;
+    color:#1f2937; /* texto oscuro */
+}
+
+.kpi p{
+    position:relative;
+    z-index:2;
+    color:#2563eb; /* azul fuerte para destacar */
+    font-weight:700;
+}
+
+/* =========================
+SECTION
+========================= */
+
+.section{
+    margin-top:95px;
+}
+/* =========================
+SECTION TITLE
+========================= */
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    margin-bottom:28px;
+}
+
+.section-title h2{
+    font-size:2.2rem;
+    font-weight:800;
+    color:#1f2937; /* gris oscuro para contraste */
+    letter-spacing:-.04em;
+    white-space:nowrap;
+}
+
+.section-title .line{
+    flex:1;
+    height:2px;
+    border-radius:999px;
+    background:
+    linear-gradient(to right,
+    #3b82f6,
+    transparent);
+}
+
+/* =========================
+STORY CARD
+========================= */
+
+.story-card{
+    position:relative;
+    overflow:hidden;
+    padding:45px;
+    border-radius:32px;
+
+    background:
+    linear-gradient(145deg,
+    rgba(255,255,255,.92),
+    rgba(243,244,246,.75));
+
+    border:1px solid rgba(0,0,0,.07);
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+    0 20px 40px rgba(0,0,0,.12);
+}
+
+.story-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(135deg,
+    rgba(59,130,246,.08),
+    transparent 60%);
+}
+
+.story-card p{
+    position:relative;
+    z-index:2;
+    color:#374151; /* gris oscuro para legibilidad */
+    line-height:1.8;
+    font-size:1.03rem;
+}
+
+/* =========================
+CHART GRID
+========================= */
+
+.chart-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(500px,1fr));
+
+    gap:30px;
+
+    margin-top:35px;
+}
+
+.chart-grid1{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(380px,1fr));
+
+    gap:24px;
+
+    margin-top:24px;
+}
+/* =========================
+CHART BOX
+========================= */
+
+.chart-box,
+.chart-box1{
+    position:relative;
+    overflow:hidden;
+    border-radius:32px;
+    padding:24px;
+    min-height:460px;
+
+    background:
+    linear-gradient(145deg,
+    rgba(255,255,255,.92),
+    rgba(243,244,246,.75));
+
+    border:1px solid rgba(0,0,0,.08);
+    backdrop-filter:blur(18px);
+
+    transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+
+    box-shadow:
+    0 18px 40px rgba(0,0,0,.12);
+}
+
+.chart-box::before,
+.chart-box1::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(135deg,
+    rgba(59,130,246,.10),
+    transparent 60%);
+    opacity:0;
+    transition:.35s;
+}
+
+.chart-box:hover,
+.chart-box1:hover{
+    transform:translateY(-10px);
+    box-shadow:0 30px 55px rgba(59,130,246,.20);
+}
+
+.chart-box:hover::before,
+.chart-box1:hover::before{
+    opacity:1;
+}
+
+/* =========================
+BOKEH
+========================= */
+
+.bk-root{
+    width:100% !important;
+}
+
+.bk-Figure{
+    border-radius:22px !important;
+    overflow:hidden !important;
+}
+
+/* =========================
+FOOTER
+========================= */
+
+.footer{
+
+    margin-top:100px;
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    font-size:.95rem;
+
+    letter-spacing:.04em;
+}
+/* =========================
+SCROLLBAR (Light Theme)
+========================= */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#f3f4f6; /* gris claro */
+}
+
+::-webkit-scrollbar-thumb{
+    background:
+    linear-gradient(#60a5fa,#34d399); /* azul → verde suave */
+    border-radius:999px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#3b82f6; /* azul más intenso */
+}
+
+#fullscreenBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 12px 20px;
+
+  width: 50px;
+  height: 50px;
+
+  background: #3b82f6;   /* azul intenso */
+  color: #1f2937;        /* texto oscuro para contraste */
+
+  border: none;
+  border-radius: 50%; 
+  backdrop-filter: blur(5px);
+  font-size: 22px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+
+  z-index: 9999;
+
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+#fullscreenBtn:hover {
+  background: #60a5fa;   /* azul más claro al pasar el mouse */
+}
+
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+    .chart-grid{
+        grid-template-columns:1fr;
+    }
+
+    .chart-grid1{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:900px){
+
+    .hero{
+        padding:55px 30px;
+    }
+
+    .hero h1{
+        font-size:3rem;
+    }
+
+    .section-title{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .section-title .line{
+        width:100%;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .container{
+        width:94%;
+    }
+
+    .hero{
+        border-radius:30px;
+    }
+
+    .hero h1{
+        font-size:2.4rem;
+    }
+
+    .story-card,
+    .chart-box,
+    .chart-box1,
+    .kpi{
+        border-radius:24px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<button id="fullscreenBtn">⛶</button>
+<div id="fullpage"></div>
+<div class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div class="badge">
+            ANÁLISIS ESTADÍSTICO
+        </div>
+
+        <h1>
+            Detección Inteligente de Billetes Falsos
+        </h1>
+
+        <p>
+            Exploración visual de métricas wavelet aplicadas a billetes auténticos y falsos.
+            El objetivo es descubrir patrones estadísticos capaces de diferenciar ambas clases
+            mediante visualización avanzada y análisis exploratorio.
+        </p>
+
+    </section>
+
+    <!-- KPIS -->
+    <section class="kpi-grid">
+
+        <div class="kpi">
+            <span>Billetes auténticos</span>
+            <h2>762</h2>
+        </div>
+
+        <div class="kpi">
+            <span>Billetes falsos</span>
+            <h2>610</h2>
+        </div>
+
+        <div class="kpi">
+            <span>Variance promedio</span>
+            <h2>2.28 / -1.87</h2>
+            <p>Auténticos/ Falsos</p>
+        </div>
+
+        <div class="kpi">
+            <span>Entropy promedio</span>
+            <h2>4.26 / -0.99</h2>
+            <p>Auténticos/ Falsos</p>
+        </div>
+
+        <div class="kpi">
+            <span>Entropy promedio</span>
+            <h2> -1.15 / -1.25</h2>
+            <p>Auténticos/ Falsos</p>
+        </div>
+		
+        <div class="kpi">
+            <span>Entropy promedio</span>
+            <h2>-1.15 / -1.25</h2>
+            <p>Auténticos/ Falsos</p>
+        </div>		
+    </section>
+
+    <!-- CONTEXTO -->
+    <section class="section">
+
+        <div class="section-title">
+            <h2>Contexto del problema</h2>
+            <div class="line"></div>
+        </div>
+
+        <div class="story-card">
+            <p>
+                Cada billete fue procesado utilizando transformadas wavelet para extraer
+                características numéricas como variance, skewness, curtosis y entropy.
+                Estas variables permiten construir modelos capaces de distinguir
+                entre billetes auténticos y falsificados.
+            </p>
+        </div>
+
+    </section>
+
+    <!-- GRAFICAS -->
+    <section class="section">
+
+        <div class="section-title">
+            <h2>Análisis visual</h2>
+            <div class="line"></div>
+        </div>
+
+        <div class="chart-grid">
+
+		<div class="chart-box">
+			<div id="grafica_hist"></div>
+		</div>
+
+		<div class="chart-box">
+			<div id="grafica_scatter"></div>
+		</div>
+
+
+		</div>
+
+        <div class="chart-grid1">
+		
+		<div class="chart-box1">
+			<div id="grafica_box"></div>
+		</div>
+
+		<div class="chart-box1">
+			<div id="grafica_heat_0"></div>
+		</div>
+
+		<div class="chart-box1">
+			<div id="grafica_heat_1"></div>
+		</div>
+
+        </div>
+
+    </section>
+
+    <!-- CONCLUSION -->
+    <section class="section">
+
+        <div class="section-title">
+            <h2>Conclusiones</h2>
+            <div class="line"></div>
+        </div>
+
+        <div class="story-card">
+            <p>
+			Las métricas obtenidas mediante transformaciones wavelet evidencian
+			un alto poder discriminativo entre billetes auténticos y falsos, ya 
+			que capturan diferencias estadísticas que se reflejan de manera clara 
+			en las gráficas del dashboard. En los histogramas y boxplots se 
+			observan distribuciones distintas para cada clase, con medianas y 
+			rangos que separan de forma visible los patrones de los billetes 
+			auténticos frente a los falsos. Los gráficos de dispersión muestran 
+			zonas diferenciadas que facilitan la identificación de fronteras de 
+			decisión, mientras que las matrices de correlación revelan que los 
+			billetes falsos presentan estructuras internas de relación entre variables 
+			significativamente distintas a las de los auténticos. Estos hallazgos 
+			confirman que las métricas wavelet no solo permiten distinguir 
+			visualmente ambas clases, sino que también constituyen una base sólida
+			para el desarrollo de modelos de machine learning orientados 
+			a la detección automática de fraude financiero.
+            </p>
+        </div>
+
+    </section>
+
+    <div class="footer">
+        Dashboard de Storytelling Estadístico • Python + Bokeh
+    </div>
+
+</div>
+
+<script>
+
+Bokeh.embed.embed_item(
+    {"target_id": "grafica_hist", "root_id": "p1007", "doc": {"version": "3.9.0", "title": "", "config": {"type": "object", "name": "DocumentConfig", "id": "p1361", "attributes": {"notifications": {"type": "object", "name": "Notifications", "id": "p1362"}}}, "roots": [{"type": "object", "name": "Figure", "id": "p1007", "attributes": {"width": 635, "height": 450, "x_range": {"type": "object", "name": "DataRange1d", "id": "p1008"}, "y_range": {"type": "object", "name": "DataRange1d", "id": "p1009"}, "x_scale": {"type": "object", "name": "LinearScale", "id": "p1017"}, "y_scale": {"type": "object", "name": "LinearScale", "id": "p1018"}, "title": {"type": "object", "name": "Title", "id": "p1010", "attributes": {"text": "Distribuci\u00f3n de Variance por clase", "text_color": "#0f172a", "text_font_size": "16pt"}}, "outline_line_color": "#e2e8f0", "renderers": [{"type": "object", "name": "GlyphRenderer", "id": "p1046", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1040", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1041", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1042"}, "data": {"type": "map", "entries": [["top", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/2NkgAB2IMUPxEJALAHE3ECsDsQWQOwAxOZA7ALEXkDsAcTZQOwKxPpALArEPEDMBMQAM2fcplAAAAA="}, "shape": [20], "dtype": "int32", "order": "little"}], ["left", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/wGgAF//orQ3+MIkEcDyJOmaydcNwKDgYkUNZgnATZzc71D0BMD7V1aalIIAwFInoImwIfi/WD0nvW987r8gWBzO/GrZv+CUK7zLRcQ/gPYjRWTY5j/kg57Nqk/0P4gMq3gjM/0/mMrbEU4LA0DqDmJnCn0HQDxT6LzG7gtAxks3iUEwEEDwbfqzH2kSQBqQvd79oRRAQrKACdzaFkBs1EM0uhMZQNq3RxOgAAAA"}, "shape": [20], "dtype": "float64", "order": "little"}], ["right", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/wGgAF//8iTpmsnXDcCg4GJFDWYJwE2c3O9Q9ATA+1dWmpSCAMBSJ6CJsCH4v1g9J71vfO6/IFgczvxq2b/glCu8y0XEP4D2I0Vk2OY/5IOezapP9D+IDKt4IzP9P5jK2xFOCwNA6g5iZwp9B0A8U+i8xu4LQMZLN4lBMBBA8G36sx9pEkAakL3e/aEUQEKygAnc2hZAbNRDNLoTGUCU9gZfmEwbQA3y+jOgAAAA"}, "shape": [20], "dtype": "float64", "order": "little"}]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1047", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1048"}}}, "glyph": {"type": "object", "name": "Quad", "id": "p1043", "attributes": {"left": {"type": "field", "field": "left"}, "right": {"type": "field", "field": "right"}, "bottom": {"type": "value", "value": 0}, "top": {"type": "field", "field": "top"}, "line_color": {"type": "value", "value": "#1f77b4"}, "line_alpha": {"type": "value", "value": 0.6}, "fill_color": {"type": "value", "value": "#3b82f6"}, "fill_alpha": {"type": "value", "value": 0.6}, "hatch_alpha": {"type": "value", "value": 0.6}}}, "nonselection_glyph": {"type": "object", "name": "Quad", "id": "p1044", "attributes": {"left": {"type": "field", "field": "left"}, "right": {"type": "field", "field": "right"}, "bottom": {"type": "value", "value": 0}, "top": {"type": "field", "field": "top"}, "line_color": {"type": "value", "value": "#1f77b4"}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "#3b82f6"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "Quad", "id": "p1045", "attributes": {"left": {"type": "field", "field": "left"}, "right": {"type": "field", "field": "right"}, "bottom": {"type": "value", "value": 0}, "top": {"type": "field", "field": "top"}, "line_color": {"type": "value", "value": "#1f77b4"}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "#3b82f6"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1057", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1051", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1052", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1053"}, "data": {"type": "map", "entries": [["top", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/2NnYGDgAmJWKM0LpIWBWAWINYBYFYhNgdgBiH2AWA2IbYBYHYiVgVgRiIWAmAeIQWYAAIbxuLdQAAAA"}, "shape": [20], "dtype": "int32", "order": "little"}], ["left", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/wGgAF//eqUsQxwrHMDVPh2PGUgawC/YDdsWZRjAinH+JhSCFsDlCu9yEZ8UwECk374OvBLAmj3QCgzZEMDqrYGtEuwNwJ/gYkUNJgrAVBNE3QdgBsAKRiV1ApoCwIDxDBr6p/2/6FbPSe8b9r+oeCPzyB/tvwCHUKVmD9y/ABsv3SQGoT/YJk7udyjgPwBcyY6NQO8/mEiil1Es9z8o499nXLj+PzI6MvSgAAAA"}, "shape": [20], "dtype": "float64", "order": "little"}], ["right", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/wGgAF//1T4djxlIGsAv2A3bFmUYwIpx/iYUghbA5QrvchGfFMBApN++DrwSwJo90AoM2RDA6q2BrRLsDcCf4GJFDSYKwFQTRN0HYAbACkYldQKaAsCA8Qwa+qf9v+hWz0nvG/a/qHgj88gf7b8Ah1ClZg/cvwAbL90kBqE/2CZO7nco4D8AXMmOjUDvP5hIopdRLPc/KOPfZ1y4/j/gvg6cMyIDQBYNIc6gAAAA"}, "shape": [20], "dtype": "float64", "order": "little"}]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1058", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1059"}}}, "glyph": {"type": "object", "name": "Quad", "id": "p1054", "attributes": {"left": {"type": "field", "field": "left"}, "right": {"type": "field", "field": "right"}, "bottom": {"type": "value", "value": 0}, "top": {"type": "field", "field": "top"}, "line_color": {"type": "value", "value": "#1f77b4"}, "line_alpha": {"type": "value", "value": 0.6}, "fill_color": {"type": "value", "value": "#ef4444"}, "fill_alpha": {"type": "value", "value": 0.6}, "hatch_alpha": {"type": "value", "value": 0.6}}}, "nonselection_glyph": {"type": "object", "name": "Quad", "id": "p1055", "attributes": {"left": {"type": "field", "field": "left"}, "right": {"type": "field", "field": "right"}, "bottom": {"type": "value", "value": 0}, "top": {"type": "field", "field": "top"}, "line_color": {"type": "value", "value": "#1f77b4"}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "#ef4444"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "Quad", "id": "p1056", "attributes": {"left": {"type": "field", "field": "left"}, "right": {"type": "field", "field": "right"}, "bottom": {"type": "value", "value": 0}, "top": {"type": "field", "field": "top"}, "line_color": {"type": "value", "value": "#1f77b4"}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "#ef4444"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}], "toolbar": {"type": "object", "name": "Toolbar", "id": "p1016", "attributes": {"tools": [{"type": "object", "name": "PanTool", "id": "p1029"}, {"type": "object", "name": "WheelZoomTool", "id": "p1030", "attributes": {"renderers": "auto"}}, {"type": "object", "name": "BoxZoomTool", "id": "p1031", "attributes": {"dimensions": "both", "overlay": {"type": "object", "name": "BoxAnnotation", "id": "p1032", "attributes": {"syncable": false, "line_color": "black", "line_alpha": 1.0, "line_width": 2, "line_dash": [4, 4], "fill_color": "lightgrey", "fill_alpha": 0.5, "level": "overlay", "visible": false, "left": {"type": "number", "value": "nan"}, "right": {"type": "number", "value": "nan"}, "top": {"type": "number", "value": "nan"}, "bottom": {"type": "number", "value": "nan"}, "left_units": "canvas", "right_units": "canvas", "top_units": "canvas", "bottom_units": "canvas", "handles": {"type": "object", "name": "BoxInteractionHandles", "id": "p1038", "attributes": {"all": {"type": "object", "name": "AreaVisuals", "id": "p1037", "attributes": {"fill_color": "white", "hover_fill_color": "lightgray"}}}}}}}}, {"type": "object", "name": "ResetTool", "id": "p1039"}, {"type": "object", "name": "HoverTool", "id": "p1061", "attributes": {"renderers": "auto", "tooltips": [["Frecuencia", "@top"]], "sort_by": null}}], "logo": null, "autohide": true}}, "left": [{"type": "object", "name": "LinearAxis", "id": "p1024", "attributes": {"ticker": {"type": "object", "name": "BasicTicker", "id": "p1025", "attributes": {"mantissas": [1, 2, 5]}}, "formatter": {"type": "object", "name": "BasicTickFormatter", "id": "p1026"}, "axis_label_text_color": "#0f172a", "major_label_policy": {"type": "object", "name": "AllLabels", "id": "p1027"}, "major_label_text_color": "#334155"}}], "below": [{"type": "object", "name": "LinearAxis", "id": "p1019", "attributes": {"ticker": {"type": "object", "name": "BasicTicker", "id": "p1020", "attributes": {"mantissas": [1, 2, 5]}}, "formatter": {"type": "object", "name": "BasicTickFormatter", "id": "p1021"}, "axis_label_text_color": "#0f172a", "major_label_policy": {"type": "object", "name": "AllLabels", "id": "p1022"}, "major_label_text_color": "#334155"}}], "center": [{"type": "object", "name": "Grid", "id": "p1023", "attributes": {"axis": {"id": "p1019"}, "grid_line_color": "#cbd5e1", "grid_line_alpha": 0.4}}, {"type": "object", "name": "Grid", "id": "p1028", "attributes": {"dimension": 1, "axis": {"id": "p1024"}, "grid_line_color": "#cbd5e1", "grid_line_alpha": 0.4}}, {"type": "object", "name": "Legend", "id": "p1049", "attributes": {"border_line_color": "#cbd5e1", "label_text_color": "#0f172a", "items": [{"type": "object", "name": "LegendItem", "id": "p1050", "attributes": {"label": {"type": "value", "value": "Aut\u00e9nticos"}, "renderers": [{"id": "p1046"}]}}, {"type": "object", "name": "LegendItem", "id": "p1060", "attributes": {"label": {"type": "value", "value": "Falsos"}, "renderers": [{"id": "p1057"}]}}]}}], "background_fill_color": "#f8fafc", "border_fill_color": "#f8fafc"}}]}, "version": "3.9.0"},
+    "grafica_hist"
+);
+
+Bokeh.embed.embed_item(
+    {"target_id": "grafica_box", "root_id": "p1006", "doc": {"version": "3.9.0", "title": "", "config": {"type": "object", "name": "DocumentConfig", "id": "p1168", "attributes": {"notifications": {"type": "object", "name": "Notifications", "id": "p1169"}}}, "roots": [{"type": "object", "name": "Figure", "id": "p1006", "attributes": {"width": 400, "height": 390, "x_range": {"type": "object", "name": "FactorRange", "id": "p1016", "attributes": {"factors": ["Aut\u00e9nticos", "Falsos"]}}, "y_range": {"type": "object", "name": "DataRange1d", "id": "p1008", "attributes": {"start": -12.932697999999998, "end": 11.893196999999999}}, "x_scale": {"type": "object", "name": "CategoricalScale", "id": "p1017"}, "y_scale": {"type": "object", "name": "LinearScale", "id": "p1018"}, "title": {"type": "object", "name": "Title", "id": "p1009", "attributes": {"text": "Boxplot de Skewness", "text_color": "#0f172a", "text_font_size": "18pt"}}, "outline_line_color": "#e2e8f0", "renderers": [{"type": "object", "name": "GlyphRenderer", "id": "p1047", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1041", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1042", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1043"}, "data": {"type": "map", "entries": [["x", ["Aut\u00e9nticos"]], ["bottom", [0.45006250000000003]], ["top", [8.691975]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1048", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1049"}}}, "glyph": {"type": "object", "name": "VBar", "id": "p1044", "attributes": {"x": {"type": "field", "field": "x"}, "width": {"type": "value", "value": 0.6}, "bottom": {"type": "field", "field": "bottom"}, "top": {"type": "field", "field": "top"}, "line_alpha": {"type": "value", "value": 0.75}, "fill_color": {"type": "value", "value": "#3b82f6"}, "fill_alpha": {"type": "value", "value": 0.75}, "hatch_alpha": {"type": "value", "value": 0.75}}}, "nonselection_glyph": {"type": "object", "name": "VBar", "id": "p1045", "attributes": {"x": {"type": "field", "field": "x"}, "width": {"type": "value", "value": 0.6}, "bottom": {"type": "field", "field": "bottom"}, "top": {"type": "field", "field": "top"}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "#3b82f6"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "VBar", "id": "p1046", "attributes": {"x": {"type": "field", "field": "x"}, "width": {"type": "value", "value": 0.6}, "bottom": {"type": "field", "field": "bottom"}, "top": {"type": "field", "field": "top"}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "#3b82f6"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1056", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1050", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1051", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1052"}, "data": {"type": "map", "entries": [["x", ["Aut\u00e9nticos"]], ["y", [4.256627188342782]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1057", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1058"}}}, "glyph": {"type": "object", "name": "Rect", "id": "p1053", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.6}, "height": {"type": "value", "value": 0.03}, "fill_color": {"type": "value", "value": "black"}}}, "nonselection_glyph": {"type": "object", "name": "Rect", "id": "p1054", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.6}, "height": {"type": "value", "value": 0.03}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "black"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "Rect", "id": "p1055", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.6}, "height": {"type": "value", "value": 0.03}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "black"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1065", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1059", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1060", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1061"}, "data": {"type": "map", "entries": [["x", ["Aut\u00e9nticos"]], ["y", [4.256627188342782]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1066", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1067"}}}, "glyph": {"type": "object", "name": "Scatter", "id": "p1062", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "size": {"type": "value", "value": 12}, "line_color": {"type": "value", "value": "#f59e0b"}, "fill_color": {"type": "value", "value": "#f59e0b"}, "hatch_color": {"type": "value", "value": "#f59e0b"}, "marker": {"type": "value", "value": "diamond"}}}, "nonselection_glyph": {"type": "object", "name": "Scatter", "id": "p1063", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "size": {"type": "value", "value": 12}, "line_color": {"type": "value", "value": "#f59e0b"}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "#f59e0b"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_color": {"type": "value", "value": "#f59e0b"}, "hatch_alpha": {"type": "value", "value": 0.1}, "marker": {"type": "value", "value": "diamond"}}}, "muted_glyph": {"type": "object", "name": "Scatter", "id": "p1064", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "size": {"type": "value", "value": 12}, "line_color": {"type": "value", "value": "#f59e0b"}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "#f59e0b"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_color": {"type": "value", "value": "#f59e0b"}, "hatch_alpha": {"type": "value", "value": 0.2}, "marker": {"type": "value", "value": "diamond"}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1074", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1068", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1069", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1070"}, "data": {"type": "map", "entries": [["x0", ["Aut\u00e9nticos"]], ["y0", [8.691975]], ["x1", ["Aut\u00e9nticos"]], ["y1", [12.9516]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1075", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1076"}}}, "glyph": {"type": "object", "name": "Segment", "id": "p1071", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_width": {"type": "value", "value": 2}}}, "nonselection_glyph": {"type": "object", "name": "Segment", "id": "p1072", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.1}, "line_width": {"type": "value", "value": 2}}}, "muted_glyph": {"type": "object", "name": "Segment", "id": "p1073", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.2}, "line_width": {"type": "value", "value": 2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1083", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1077", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1078", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1079"}, "data": {"type": "map", "entries": [["x0", ["Aut\u00e9nticos"]], ["y0", [0.45006250000000003]], ["x1", ["Aut\u00e9nticos"]], ["y1", [-6.9321]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1084", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1085"}}}, "glyph": {"type": "object", "name": "Segment", "id": "p1080", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_width": {"type": "value", "value": 2}}}, "nonselection_glyph": {"type": "object", "name": "Segment", "id": "p1081", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.1}, "line_width": {"type": "value", "value": 2}}}, "muted_glyph": {"type": "object", "name": "Segment", "id": "p1082", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.2}, "line_width": {"type": "value", "value": 2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1092", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1086", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1087", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1088"}, "data": {"type": "map", "entries": [["x", ["Aut\u00e9nticos"]], ["y", [12.9516]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1093", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1094"}}}, "glyph": {"type": "object", "name": "Rect", "id": "p1089", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "fill_color": {"type": "value", "value": "#475569"}, "hatch_color": {"type": "value", "value": "#475569"}}}, "nonselection_glyph": {"type": "object", "name": "Rect", "id": "p1090", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "#475569"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_color": {"type": "value", "value": "#475569"}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "Rect", "id": "p1091", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "#475569"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_color": {"type": "value", "value": "#475569"}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1101", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1095", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1096", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1097"}, "data": {"type": "map", "entries": [["x", ["Aut\u00e9nticos"]], ["y", [-6.9321]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1102", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1103"}}}, "glyph": {"type": "object", "name": "Rect", "id": "p1098", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "fill_color": {"type": "value", "value": "#475569"}, "hatch_color": {"type": "value", "value": "#475569"}}}, "nonselection_glyph": {"type": "object", "name": "Rect", "id": "p1099", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "#475569"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_color": {"type": "value", "value": "#475569"}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "Rect", "id": "p1100", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "#475569"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_color": {"type": "value", "value": "#475569"}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1110", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1104", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1105", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1106"}, "data": {"type": "map", "entries": [["x", ["Falsos"]], ["bottom", [-5.8100249999999996]], ["top", [3.189275]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1111", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1112"}}}, "glyph": {"type": "object", "name": "VBar", "id": "p1107", "attributes": {"x": {"type": "field", "field": "x"}, "width": {"type": "value", "value": 0.6}, "bottom": {"type": "field", "field": "bottom"}, "top": {"type": "field", "field": "top"}, "line_alpha": {"type": "value", "value": 0.75}, "fill_color": {"type": "value", "value": "#ef4444"}, "fill_alpha": {"type": "value", "value": 0.75}, "hatch_alpha": {"type": "value", "value": 0.75}}}, "nonselection_glyph": {"type": "object", "name": "VBar", "id": "p1108", "attributes": {"x": {"type": "field", "field": "x"}, "width": {"type": "value", "value": 0.6}, "bottom": {"type": "field", "field": "bottom"}, "top": {"type": "field", "field": "top"}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "#ef4444"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "VBar", "id": "p1109", "attributes": {"x": {"type": "field", "field": "x"}, "width": {"type": "value", "value": 0.6}, "bottom": {"type": "field", "field": "bottom"}, "top": {"type": "field", "field": "top"}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "#ef4444"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1119", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1113", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1114", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1115"}, "data": {"type": "map", "entries": [["x", ["Falsos"]], ["y", [-0.9935761245901639]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1120", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1121"}}}, "glyph": {"type": "object", "name": "Rect", "id": "p1116", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.6}, "height": {"type": "value", "value": 0.03}, "fill_color": {"type": "value", "value": "black"}}}, "nonselection_glyph": {"type": "object", "name": "Rect", "id": "p1117", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.6}, "height": {"type": "value", "value": 0.03}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "black"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "Rect", "id": "p1118", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.6}, "height": {"type": "value", "value": 0.03}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "black"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1128", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1122", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1123", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1124"}, "data": {"type": "map", "entries": [["x", ["Falsos"]], ["y", [-0.9935761245901639]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1129", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1130"}}}, "glyph": {"type": "object", "name": "Scatter", "id": "p1125", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "size": {"type": "value", "value": 12}, "line_color": {"type": "value", "value": "#f59e0b"}, "fill_color": {"type": "value", "value": "#f59e0b"}, "hatch_color": {"type": "value", "value": "#f59e0b"}, "marker": {"type": "value", "value": "diamond"}}}, "nonselection_glyph": {"type": "object", "name": "Scatter", "id": "p1126", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "size": {"type": "value", "value": 12}, "line_color": {"type": "value", "value": "#f59e0b"}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "#f59e0b"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_color": {"type": "value", "value": "#f59e0b"}, "hatch_alpha": {"type": "value", "value": 0.1}, "marker": {"type": "value", "value": "diamond"}}}, "muted_glyph": {"type": "object", "name": "Scatter", "id": "p1127", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "size": {"type": "value", "value": 12}, "line_color": {"type": "value", "value": "#f59e0b"}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "#f59e0b"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_color": {"type": "value", "value": "#f59e0b"}, "hatch_alpha": {"type": "value", "value": 0.2}, "marker": {"type": "value", "value": "diamond"}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1137", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1131", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1132", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1133"}, "data": {"type": "map", "entries": [["x0", ["Falsos"]], ["y0", [3.189275]], ["x1", ["Falsos"]], ["y1", [9.6014]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1138", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1139"}}}, "glyph": {"type": "object", "name": "Segment", "id": "p1134", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_width": {"type": "value", "value": 2}}}, "nonselection_glyph": {"type": "object", "name": "Segment", "id": "p1135", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.1}, "line_width": {"type": "value", "value": 2}}}, "muted_glyph": {"type": "object", "name": "Segment", "id": "p1136", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.2}, "line_width": {"type": "value", "value": 2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1146", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1140", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1141", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1142"}, "data": {"type": "map", "entries": [["x0", ["Falsos"]], ["y0", [-5.8100249999999996]], ["x1", ["Falsos"]], ["y1", [-13.7731]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1147", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1148"}}}, "glyph": {"type": "object", "name": "Segment", "id": "p1143", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_width": {"type": "value", "value": 2}}}, "nonselection_glyph": {"type": "object", "name": "Segment", "id": "p1144", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.1}, "line_width": {"type": "value", "value": 2}}}, "muted_glyph": {"type": "object", "name": "Segment", "id": "p1145", "attributes": {"x0": {"type": "field", "field": "x0"}, "y0": {"type": "field", "field": "y0"}, "x1": {"type": "field", "field": "x1"}, "y1": {"type": "field", "field": "y1"}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.2}, "line_width": {"type": "value", "value": 2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1155", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1149", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1150", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1151"}, "data": {"type": "map", "entries": [["x", ["Falsos"]], ["y", [9.6014]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1156", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1157"}}}, "glyph": {"type": "object", "name": "Rect", "id": "p1152", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "fill_color": {"type": "value", "value": "#475569"}, "hatch_color": {"type": "value", "value": "#475569"}}}, "nonselection_glyph": {"type": "object", "name": "Rect", "id": "p1153", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "#475569"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_color": {"type": "value", "value": "#475569"}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "Rect", "id": "p1154", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "#475569"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_color": {"type": "value", "value": "#475569"}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}, {"type": "object", "name": "GlyphRenderer", "id": "p1164", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1158", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1159", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1160"}, "data": {"type": "map", "entries": [["x", ["Falsos"]], ["y", [-13.7731]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1165", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1166"}}}, "glyph": {"type": "object", "name": "Rect", "id": "p1161", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "fill_color": {"type": "value", "value": "#475569"}, "hatch_color": {"type": "value", "value": "#475569"}}}, "nonselection_glyph": {"type": "object", "name": "Rect", "id": "p1162", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "value", "value": "#475569"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_color": {"type": "value", "value": "#475569"}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "Rect", "id": "p1163", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 0.18}, "height": {"type": "value", "value": 0.01}, "line_color": {"type": "value", "value": "#475569"}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "value", "value": "#475569"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_color": {"type": "value", "value": "#475569"}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}], "toolbar": {"type": "object", "name": "Toolbar", "id": "p1015", "attributes": {"tools": [{"type": "object", "name": "PanTool", "id": "p1029"}, {"type": "object", "name": "WheelZoomTool", "id": "p1030", "attributes": {"renderers": "auto"}}, {"type": "object", "name": "BoxZoomTool", "id": "p1031", "attributes": {"dimensions": "both", "overlay": {"type": "object", "name": "BoxAnnotation", "id": "p1032", "attributes": {"syncable": false, "line_color": "black", "line_alpha": 1.0, "line_width": 2, "line_dash": [4, 4], "fill_color": "lightgrey", "fill_alpha": 0.5, "level": "overlay", "visible": false, "left": {"type": "number", "value": "nan"}, "right": {"type": "number", "value": "nan"}, "top": {"type": "number", "value": "nan"}, "bottom": {"type": "number", "value": "nan"}, "left_units": "canvas", "right_units": "canvas", "top_units": "canvas", "bottom_units": "canvas", "handles": {"type": "object", "name": "BoxInteractionHandles", "id": "p1038", "attributes": {"all": {"type": "object", "name": "AreaVisuals", "id": "p1037", "attributes": {"fill_color": "white", "hover_fill_color": "lightgray"}}}}}}}}, {"type": "object", "name": "ResetTool", "id": "p1039"}, {"type": "object", "name": "SaveTool", "id": "p1040"}, {"type": "object", "name": "HoverTool", "id": "p1167", "attributes": {"renderers": "auto", "tooltips": [["Skewness", "$y"]], "sort_by": null}}], "logo": null, "autohide": true}}, "left": [{"type": "object", "name": "LinearAxis", "id": "p1024", "attributes": {"ticker": {"type": "object", "name": "BasicTicker", "id": "p1025", "attributes": {"mantissas": [1, 2, 5]}}, "formatter": {"type": "object", "name": "BasicTickFormatter", "id": "p1026"}, "major_label_policy": {"type": "object", "name": "AllLabels", "id": "p1027"}, "major_label_text_color": "#334155"}}], "below": [{"type": "object", "name": "CategoricalAxis", "id": "p1019", "attributes": {"ticker": {"type": "object", "name": "CategoricalTicker", "id": "p1020"}, "formatter": {"type": "object", "name": "CategoricalTickFormatter", "id": "p1021"}, "major_label_policy": {"type": "object", "name": "AllLabels", "id": "p1022"}, "major_label_text_color": "#334155"}}], "center": [{"type": "object", "name": "Grid", "id": "p1023", "attributes": {"axis": {"id": "p1019"}, "grid_line_color": null, "grid_line_alpha": 0.3}}, {"type": "object", "name": "Grid", "id": "p1028", "attributes": {"dimension": 1, "axis": {"id": "p1024"}, "grid_line_color": "#cbd5e1", "grid_line_alpha": 0.3}}], "background_fill_color": "#f8fafc", "border_fill_color": "#f8fafc"}}]}, "version": "3.9.0"},
+    "grafica_box"
+);
+
+
+Bokeh.embed.embed_item(
+    {"target_id": "grafica_scatter", "root_id": "p1225", "doc": {"version": "3.9.0", "title": "", "config": {"type": "object", "name": "DocumentConfig", "id": "p1375", "attributes": {"notifications": {"type": "object", "name": "Notifications", "id": "p1376"}}}, "roots": [{"type": "object", "name": "Figure", "id": "p1225", "attributes": {"width": 635, "height": 450, "x_range": {"type": "object", "name": "DataRange1d", "id": "p1226"}, "y_range": {"type": "object", "name": "DataRange1d", "id": "p1227"}, "x_scale": {"type": "object", "name": "LinearScale", "id": "p1235"}, "y_scale": {"type": "object", "name": "LinearScale", "id": "p1236"}, "title": {"type": "object", "name": "Title", "id": "p1228", "attributes": {"text": "Variance vs Skewness", "text_color": "#0f172a", "text_font_size": "16pt"}}, "outline_line_color": "#e2e8f0", "renderers": [{"type": "object", "name": "GlyphRenderer", "id": "p1261", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1222", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1223", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1224"}, "data": {"type": "map", "entries": [["variance", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/11aZXiVxxI+Gjsnx2K4F3cr2h3cKV5cS4tDKe7F3aV4cSlWtOgu7oFgCVKSQEKUEHe5uzMf/Lj5kydPjny7O/Pa7JyVF0d7Zlnh2Iq3I3Q1XFD61MQR6z7boOqLbZ+KH7JAoR/KHGzpeskuDJ37uul0Jwyq9NBx95IVNi5Z1Pf5FR0cHdyjW4W/PKH+48adg9ZlstYb090G/ZnCzsxMPtUlzg4/ntw4fOmwfFa+u3nf+kZZ3ONYsb4/N7bA26w5o66cdcHqyb8V9R5shtQxvWafOB/DPntfq7m1cgab15bPLp7pCwu95Sd8FwB56ZPDdjhfstIl1SvtsLxJu0u/JH9msaa6zvpXnKDeVWjTJzboz45+K9sns0Ubd/fImRTCP/QOuBAERaBhqzYTs9b4wDgRtcR54wm/8+7cwllPM9jdS/+ucqvphEP9wwdU/5DAy13MXZL6NosvHTbgXesFRsDH/sMMO/aWvZjr7g3pW/7bsKSVC5KfdRrqCLFA5JA9r+qedMDes99n3vj5Ab84/0LXE41m8WkJTftPfJfAWoUkprZ/7QZRxQ9Ft60ew8uMmTbjwDHdt78vrnJL9G9rh39PGqNWVsxmm09bfzvWwQms3sBL7ax+sM2j6K6BlTyhFm6cCbhtR529Z31g8oZCpl6dfQBfNt8ECbPkOxoFgKX1d5MNRTzh5D8deoz3juFn7025truIOzy/8tG3+P1QNjen0YRADyf8p5Z/JpfFfahfRGz3A0/1NR1MMCC/Rfbn0S4IeB2Y0X2YEbLsMRdOGhPZ5L+j9mes4kz/3uC5fLcd8JhXOuCee9PtPUNd9JxHHNBA7sLRv5yQ9devZ2J/N4DVUGWJfx8bmG+vqTW12hF2zi/nYcL9J2xzaXXyyeyUWvZYN4hMLvlsfKgTxkblHEly+YKby5fdeZfH0iv2X3MjzRNOhAya8mMJBzwbP8g9sHAyn+vj5ZzgEU91NcOhPbcNVDUuO5XB7oytO+8COKBl9uc40dAJ8z/c/fPyZiPg/lf1gltTh75asSeCF9r0wnPEXnd42lIdlB7kl8lvtEHxBr+2HPnFLOi3F8S0rV5QuqkL9odes+343Rfs6hgueME9+alrnzjgvNrOPlYYp752vgFOVx+3T38lj+P6X3tALVWePdwB6y3RDrPxgDNZka5vis4K96Q+CHNAaJhlw5H5ucxfbVMLE/Rr/kP066p2mCpPscZ/Ou1vdyiGB/eZUd9Y4EKQ7r2hnQMKTqvGy+AlF8V1/bdEJv8y0Rm6rM9nfv3BnlbnU9yhd0NVEQbxfRHRr1QzG0ytJjvqmAu2FKydk3PJAqrLe1f0gmvXA8p3X+QL/3QZvW1qMR2M1I3/w3T7LfMrfj+S7U/kWI/7HbBqyzjXAuEHPT4e2H6rlC/ILx+9LcP3Wz9g31/SQc3LFeyWczns8E8Pat/6xwFjVbsPtcN2iTLR92yAj7U7jPWR7ap7b4MmEk365+cw7DezN3y5f7P58Rgz9Fnc4NXtai6tX3J5u53zyt9oLZ+Tx+9qcswCcxDP8hnW70cj4P4OMUKGLNeOm+xAdWfQ+iiNUV/6QvW1f2XW+sUKtY2bkr7UucMyIlRjG6HCjcWHflruQ/tx2wHRo6rIR0pidzt8v6zZ4ERG55vLo3eHDW3lfY0tLzksoW/zDywptb18VAdgv5TM4Qin0UlcFoXZ5ZvPWq4YIyvdCmUzQ9tPGXOP4XJbeEOXCf/sdXsu+P4JTb2CyxqB8CGbbQ2Z1b9o5Wu8zvLIzb1afOIV1UKXuYMNgS+X/xRfQ+5wKr9dSgK40wtks/iP6pRHMNLcRfgRYf5WN3TedjhwVR10Bmus7ySh1odw5JJBfK3fxRLlP250AB7fwXx2ZZIEHn/Zb+9aG6etCND6QCewbg0OwO2TOIf9f8YBKZHmkDaHYpkEg3N+jX2govqYhn6wuYXcgJkmeFFleOEPITooKC0RfrAevH+TTFTRCROXr45ILmmF8yl5L6bFmMAy8034SVl6VC8OmGyQyDiwkNbPaWyoPK0vDdJYOdyY2/zxI/WTynFdT/RiRv2/f/ipnxHeBf/xe+uNSUyCRHjMJhesmrG09VRHMM/pP/Z2/um0b+enyuFTdbPA583yADyebD9QcFFmTBovNmtI7Z6nDKJ2z5qVj/gYoFZg6MLmpvcsTR37KzPh2SAdPBrQQUJkGsf6LmmH49nqi+warhtBfvr0u5W8IEGiVNn26TxConQky2Zh1dQTuMF69bVjjfCnbINFbxwgi0kWWDbD55mhgwc9rh/e3zmE7fpy6E6H7xMZ9YMLrq+4Nr/usA/EP30+sD1yOSe+84MWx0e+/83LAd3+LbEobp0DGq1/OLct94Ci3uob9UA44Q0HOoPPkBYegGVRwwaq60N/8IRyWDi5jF7no+GSEYrW+K+c2x9Z7E7naZ6dZ6/lcfK4cx7avtVbP9WgV3xgeu/D9R5ftoHqnsi1foDtKvlCPdby1WZogcDmBwFtu+QW+t0CUoxIZnMAlsOzNNbqslcldiSeIU88y2cV2wV3vPb6AZMgJBHOAaOwQN219bxgX+vAZ8jN51WG57KX6vimpbHHJUaYFx+LZ7LL9k1o+o50QKInnO2TdvHNchNgPf2rF3guyx2A7ZqUz0ySrj57m0DujvxAPQzuVfFZ3o6jTNHe4B6pjHA9mf1RXgGH4ZtuSXsrC++OOyxSNJGWzbC+TuTzAarscgwwqlPK6u6TEtmK2kV/Xr8uiFG/ZTEHArYL8JjyHPC1/x5IOBxZwhe6I6BlsU5S9cSa9HBV0XxkMvuql+Snz0xO9Ideu/8+HjLIDMGyS1q1yWK4HVvdv+Eu0ma4t3ZeOTz0R4XsdsLJulbSd0FOaOJrzm656xYnHHTAWsnqpWWfEo7mMCyjzETqg1466vfpVsiTqipY70G8Ot6u1YFFwxs7qLJo3DmRzZpTqHSTNwmM+CRP04E+cKCqqoxkjs9Z2gHFvjsZWKtUJCNdY/3Gt6Q3HSBZa8fefV7QeELg0mfvPYiPyjkF4pYllfpR8s3XfbqzNyb+5wnxrFSzpGGPBlhha5v8wWEXH3Lk4ZtmwLft9wQlr7YtNcPLKEUEBkH8ZgbCdQsEHn3ysld8DvsNC8sNjuyXjVQ6ABBfatsJR8tbYeGux/KVnoByO9cCCq1TVuuJZ8wGQDm9wwHDJ2y80uhuFENcX5fP2iPhZPLa9+/1CXn+geos+Kt+KODhSj4EuYEUSZL5nBpPZjLUEcf8ID1hTcbRTXEM+XWODf7oNzWlx5JwpqpiYpYBsEzSjQK3YYWL9K7ZIIivbXCxfo+VKd8H8y6qPIx66D698Y2R1+M0vWKDSkrAFzaIRmXbz1xQI5UpGTV+ghnOPNvvO2nma458s8EJhyVaLbvuDng8YalMdcuD03qtPgoY1u0pj2/4FvGmi4TYD6ys42RcQPwNJs2A/KiTpEMiHLBMfoplQwRDXWwrYAqVn5oc5Cvq20gXPbXAHiVLzxUwKQJbFBttg8X3JYD+7CRdMTaZUT2nctJRBQztSqhREH4kc+Sr3j6wfc3oFrcbcP5ayVL/r6/LYYTPmd/4B/3LcAs4lIz+1QSqfDyKZtG+JKYylLnnpF6S6izvhV7Tj/5APJbCvuK7FJFS0IQzJc8OSzxE/RDjgmnKmMyywM+QPiPjbpz2vF5UP/29AWVivzR20EtW7nxP6tfdRkB87mAnXJF+Cv3NEjsMQQHtDc+lvel90R8eXqsyv+B4NMN62m6F8Qi0WWwYCkUzrJS2cbxeB9Ms6okj2DMpQz2XO0GVT4d70WyXdfX6n6ISWDckJg9YZ5dMfM0HlBsqKF3AOygDl+4PVdW2bjEL2r9khn7kodQ3avvaukC9e/GhuwyWZCUb4uNYkewK//bu+pqRrrSBQr+669xguDKkh0yg1Ld5ve1b/QxWxxRr0Xgll5Oe1UHPQv08JnZJ0NbnBtZ3D+8WVJ/NLszoPCM0M4GRnnTBTWULmnsDPpZD+k/kIwuQv0pml5Ws3+wGCKMx+Qz35Q8P6Igbn8dRF0910/rcBNsbXAzdU1Fw9Jd6C/RZHlHlj42H+Vf9uOHOiOI9O8UztLOxNuiPwJTKiL91mu7yAbQ3+9wA5f4ik6bvdZDc7MkvL391QQm10cxXw89nXDZHtdM7rYBtt8IOiBddzYC6gweQnyupA/K/ATBRGcAaRpEvVVj5WrmM8MEB5LstoJ6+00JPqHSics4Jj1hG6w9jTa5221zapocejXoXRNV8ycgfpzLS6XpAGyb9DekhK5B+SeeIsxH+gMv9zwvQ7lc3QYkl13P9ah9iEQskcEqdSr64gKFuKeUGhzYfT2vV/DL/JNXxhxJRxOuSL5FWguzgozakpzeQ7nPTdE+6xr8OwH0e5QCsx/oZjPydRctB8hjKnkZWIB63A+kN6RekqopY4K31jQd4SDu8u4oZMF/oYgDSh1kMdWwlBygb+GKZk/qotA7Uy/+u5oD25YIeVtz8kpMuMAr089LXYt1X0Gk8m8Ww/0qbaR1+vsTfg5wa/+ZpdWeH61JNzjRKXUGCASYo2yx5AffzRDJT9F/4gwl+jBmct/vmCyarRTKaHYJdaqP0pBOXJzMhbVXVFzLvwPot4F99DdrHJAPEK9k68yXD3KTf13wok6F8C05n362PHu77MIgvPjYubUfqZ6rf5S4NbzPZ7DI/rj+xNYGNHJ+46H4PN4Fy+qkv/IxE7QkdVzc+sCAtgmE+Nd4fTrQJn+F7Ikn72w6yWiTwJLN2Ek3yppiAfLMbPJHu70BRG3zV8WiPLElMqT2v4HROOtafcpzevrCghupUC9D6AvknKXevrbZp+UEyRz16RuKWVOuNXKZv/pZ42Q5/Khv8IIiTns5js6PnZ29u+IGNker21zMWkG6hZuVKFsopqvgC+Usb+ZzdLtIJQxyAODUqj2GuIvsQ31/HSnmPzQaYbz0wAW6/zNU2qPZb5Q0qZQi84KRcpmNR8lW98zUfqgcVpzX41QvQJt02a3Vph6AyMok7KnlS2azyCQz14RJfaF6+cEPLzBC2RNJy7ZYehB9D3UGSoVSGyayZClQa2wDjjg/R7PCR4aNnrwvh/b7rXSww9wFrow7msDu8l7al7wYX8dE7Ly2fshLeMDMoezX9bhr/un/oe/clMsrdZB2iH3BCB8OLF6fPXeOUH7lrvspG+dt4P8oJh+cxbMddKez/8bS2kqmTnNB8cOTTMm8tsKbw4ZVzpf4j3jMA+cM8fusfFdykM9WN/fre5jGzP45+UvU5q4GE8pShn7tq1HR2NEOdvN5COjxJT5/z1hvmqsbr7aS8YbtOJCp7JvOZEuFnw1oNima+ZwZaI1uGc/QjmSZQ6cqaWh6Uv4wIgK88QH1rp7q+mckOVqiaNO90FHtWb8P48xdDGfq4rtkM9eI7K/nTeE9QqUftnnby0yO0/GiAP7xTtGSyaT4ulaEc2eVNeazcHzwOmUts26p+XIB9/o8v8WoFLyD9YaRcaEcOQzqp4UN1MFTmOkq4TTTBJDwoyzd/QXXirvlih3ZeuawUBnq+kFrkcsu0V+94/nDZGUN84EY2k0wfRfnuLF+4Je3O+yQrdOhddFiFK/vJP0l/Hrl97LiOP4awbsmxxYynEzjla27UJ+0TWTVVQOfNgnJpqQeUbxooeV7RXjurlgd84k1V4L3TAQnfrQpqdPQzq4nEncdQ1280CsoVrfDgoAqKIxnhvA9IsJLJoQ8Erorx7NAkmqlUa67ct8bdZkcFfPcnV26mwdA4hsfeLJ5tWSsFUBUHYEzhaYDV6m1/hWj95Knle0ZAfRXiApQH3g7Kydqa4aBM2U5NtEOJW4G+jU6uY0YUTJ6AObfOQDlB33TeVtmXjBDNZ2ZzXO99G/mfFVZRSsVUPxhEfSTqXB5499yeoTviOeUcLxnqrqVfqC/bGwXhRyav2FKU7nHkI1cusNyAYN5PGbCdAQLjyXJ5vGJyuZht96M5+svCecTn+61iQVclAPM4+c9X/EPjWnG3u7zX8MUiFPpfP5z9VZcJyo3NAvPkwe858VUiw/rYk8yQ/2OcgvydWZDvNoi+yr7nZfG6lxaEbG0epuXA2eypvezCNkVjSW+n+QnM9R54CsIZnSA9/5mTDvmo4eZnhvnL5yCOMcR7qyijYuvHhQTqmKpOgbFDfQ+BerlhDvf55U3+pk0R/EjN846Iv+L4fJk2pS/WiR6TJOM49IJ8WSpHPxDlIShv9xGd1dvPmsT5VwGeYxs+YaQrMjnqToNDSHUccMHpECOUfdnkISg/LODEv285+RS9oLmEQ2DOMNkmaF5jEu5yytAlVy8wB/XL4BZrn/9iG77mFTDIzdTO0U38hEFNDid9lcC/9KziM+dIPMe8s1RhgX55nUGgDpySxo8mqUGIQZAPsgvKwfO5kjXHQ8J4u8kdrnS6v4BhTm63C8rB9ILmLEZB9eAu0E8u+EjrvRHL1vquG+I3/iMjH+ojdiq7F+ApZqEQMdE5eOfzUgODa4R4P2FlcaCUygbN/KXdvG1P2UMVd88OEPfV+OOkRaCv8TQK8pspvBga/Pssc9XJpmfKfWSUy0Tz1Wocs9Yh0Od7FBFruquDcwqd+pnnpeV9BXyCR89R6RDNh0dUjR+5JIETL+gFzWncxDqpFicE5nHkyctWoVzewlm+ojIKBC+B7VPngzaHMgjMxZOcAstipVNQvXuJKXI8FlYtkTfzDr1xKWkXo/wxm6PPqeAlcF/XmATq/ahUTvyXzc8puNkWznv32rZx/riHbMaEqa/GXY7mmPePyeOERxH8uN/Y1b9vn8CmHHw6fdWAZ5z0va/Avi6ewcsl/JO6xxLJZTggjUAmP6fGXJXdxdjfh8244YrVcqIwNvd9j/03QqIY8lVXd9FTxZKQzrPlqUzakMuVvQu4kMMJp8PZ7xjs6UClcTMOpDCVFnT85BC/oPEwCcyHc3I4vS6co40yZLEwOX6pU8YInd7y08/2xzPKW/y0/nIXqKePp/M5OLh5y+pRsMGUamwTnsNGnHjetkPkY+qbHKtAGthZSOC29LKLN8dUQKsXSzso4RnKK/80bcuKzKds2Z+udqm1L1H+FJ7FyffkcfJ3qRpuuAvk7flOgc81RifaDTu7+mj5e4zWmcNp/mYRaPtNngJ1W4ZOUN6Qy1kZff5CW09OuXc2R937xSJwTvbZQ1yRXTTjvNQTqp0L5XA1jf13VSpvUP3jQbdtFzSfmchxjnpUL1bJtPJazSSe242Nr9wtjKf83RBqtgnmqM+3FBYNX90eW1dnELRNyRzxKC6XqzSyXIBF0Fw3nYfWPvRw6NCH/OyUt4s+NQpllIPZNNwt4DiXGasXlLsZxMABlxK6rRnJKN9N0+Y+KQzxuoSv9joPsVSNkYfJfAnz3BT+pajq4GhGfZrNUJ4MjGBm6cqaNC2k8YxVoE1oqRPkXz/xRL4pPsQjmkWNb17aYItjjQurhDCck+7z1uYTRQWO4zq7RBU1+It2F1h3BzO4DAFudHz7H1cpdERyHMdcJVcn0EctMIgOuMB0jmOEfzxEbzXGSnAJbE+Hu7jaXZ/RZO5eTvlhDqd5s01Q3uGt+Wd3EXhj15TM0V/4UueNfavK3uGUJxdwyiusAuV1grsohMFiHsd5WzmDwPZqLs/PEL+v+0832A9mMc3N+zMnnNKJusEj9x9I/szN4/573L34G058G8tJ1/oI8m+pvNGjLQGDS0ZyB/4jl6N9snqIrnhwSdzaJKNE9YbXWIuoelOWxV4lv/3ErPFlCj+q2mVeHkc4OJnHVz8qO7dm4i2aC5fMZHN03WS0EclQBybbBc1tjaIuBgC5fIOu3rkxxz/xY4o+fkxkpDNzmWKjmNlBDP3PUV+B/me3WRCPZPB1SRU3JS5czQc/1s9vOCNey7uTtDlyHKd80y6IbwPEcjXeqW0TlH8ZxVOZyta4HMvP1Q7fkj39OX9p6pqhb/uR8rwQnUDY6qsTNHfM5MSjnqQvBvoI1M0LDWJyk1/+qp1/laPv8tZpfOgtfkfjbBUpcow9yN0sSqrxwrhYjnTU9wX7qGK4Uhm8jjIYZT0F5jkdTYL8SBqneV0OPyPH/yvevuG/LOhYe6J/iDbfDec419+Wxe9W73q13qlgXr5El/qRXpwFbIur+6xbEEdbM91XIH91Seexp/+UE8NPnPxyBkf47WoWCNv2CA2XwzT/HcGwHN66i0tqHPNrBkc/0T+HU/6UyT+UHSojiiia/5bTabo+mSn4mDfVKSgPMgkcD4fm8nvNPOuMLfik5VsZNDdZpQfi7yiGg8mV/oLyDQ9Np2Rz0qVCw9cU5cIl4Gew6sU87hvKv9F0iV3gNZRphcVNNXZZ7xA4H5ltFjT3TeRxvZ60+1L0Od85TAWjoZzOp4CTjyvgyOe6DPo9z1No91Eod2mkE/2PHb5e1xrEcCxTLpejvrxvFTT38CI9HGUQH2I2yRsbelFjX+9xI+u94Wrat72nQWDO5OcQNG+2CNL7OoF6vlMOx3zp+2xO92zecNLXWRxx7ZZJ4LWZAZk87vCo+Ydzwngr/IJQmvP+WETgWPu0UdMb6Rxzpg0GQfmGt9DmMXztm1v382xBnPLjlwx12ivHN1wjXWsUKFP83QTl58H8bzXGqJHIDp3ZcL1rcgJDHgjyFYRrXkLLGwXO5xdlcZrfyfs3eDByzo+5W6SWExcW6CN/s5H+3KQXjXPr9dlXIp7XUeOuM1Gs06vDS0ZM+qLN0V4RPwXbBOaqr4oKHGfkuoQ2hxE0b8nl3fv3TB/g/MhpzhzPqb50gubBXsKgxu1cL1DXX7AK9Gs1fUlPbrEKNZ5IXBTFcZ4TYBDYR1kOIdnmajd/h6DcxkPgPDvFKKxTbp5vtTWWv1Rx6FKpU9T4bbtT4PzGZhNtldC4axR0j6SA9FgJneg2ZEzpe81iOfntXA3/3AXeD+qT94135DBFTm4/caTT1CKkZ6q5Cbpnlc1xjDPDSDq/t03Q/YACPnDYlsPvi3ziq3/4ZDTs3Erzt81OgdcgDhgF3aMxaX3mLla1ev76ftinb35HqZSllz7SPYSbfgJxap9VoG773k0QD+fxYs99Nk+D5wz9+G9p7HovT/8ldYIY4mWhIlQPrRyanjd98wmG3SVbe6wJ1Hj9I/sSvv5j55hojtdA5joEzmOqFBM03/cReCztrELdttiwRCfe7n3ktvXneE65ehJHP7XWKHYoOzzCKpCWmUHg3DXYKjDnauUr1HZl97dTHfknc5eyEQeNopK6VhTtJD1+zyFwDOxlEeQbjCKwe/GJdd5FazrKTOuo7xKPFMwUtwucNzhNhD/d9BrP5HOvvQnGtW8+crz/NjpPwxkPwoNN+Vyp0Bm+ifyMguei8XQ/a1sRjWdMgnx8Bse51H4j8ckSu8CcM18n5i7ZC7vvRXHP92tbmzufprw4wSFw3phoEDQ3MgnKyTxEmb/7Na1wNZ4bBzdZsDg/nI09XEhKpHCG9VXXT9svL4Hjx+5uguYdBbxpsrvxydWbjHAjhY1CYfSM4a/ThQXqasnvlIObNd+SztezQvLq2xUWOkYxTRg70K5SdPr6aE7zH7ugXKUYreuuj9afVrFbjUN76QWO168lcPJJSRzncbsNYoaMXdc/9BZ0f8MkMOeZYBd4vNX8xHM1/qtkFwjXW1I43R8xC7wXtcxFvFbBKTDPvOUldstUe9unJH7ljBK04Yxen8npwoxV4Bxzq7sg3Z7FMT5tmcq3KhuwPJSjTW4SyWSRzHtij+Iq7XYlF3DKQb7wGv6L78XEbdXyxFOkcwr7C5o/pvJazaed/e1WIKf+T+d0n9JdYG69PYlX6xe3YuH5R6yPZJVyCfEM54+RboJyvSSOuOifxTF/G6/TdEcgO71TAV0WU+5z6TMth9/iEKiz5Fz2kkxHhmd89WEJnPA7jSl5ffWZHqi+Uxneh1vuJyj/dxekB7I43XN5xMmPpzGcq7zMYD88TAlLOHaVoYwsaxHEa4UEzUEcAu9z/mvS5sKJPLN214UvPp9isYo+jz3hdJ8iS+NPvSiPg55kTn7HTfNLLsLXNkZNh72m+wEN0kmX6myC5pxWgfP1nibxPxYForjgKgAA"}, "shape": [1372], "dtype": "float64", "order": "little"}], ["skewness", {"type": "ndarray", "array": {"type": "bytes", "data": "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"}, "shape": [1372], "dtype": "float64", "order": "little"}], ["clase", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/+3SwQkAAAgDsbr/0nYKHxKhAxgucQQIECBAgAABAgQIfBOYPmQMNKABDWhAAxrQwH0DC6Uae89wFQAA"}, "shape": [1372], "dtype": "int32", "order": "little"}], ["color", ["#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#3b82f6", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444", "#ef4444"]]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1262", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1263"}}}, "glyph": {"type": "object", "name": "Scatter", "id": "p1258", "attributes": {"x": {"type": "field", "field": "variance"}, "y": {"type": "field", "field": "skewness"}, "size": {"type": "value", "value": 7}, "line_color": {"type": "field", "field": "color"}, "line_alpha": {"type": "value", "value": 0.7}, "fill_color": {"type": "field", "field": "color"}, "fill_alpha": {"type": "value", "value": 0.7}, "hatch_color": {"type": "field", "field": "color"}, "hatch_alpha": {"type": "value", "value": 0.7}}}, "nonselection_glyph": {"type": "object", "name": "Scatter", "id": "p1259", "attributes": {"x": {"type": "field", "field": "variance"}, "y": {"type": "field", "field": "skewness"}, "size": {"type": "value", "value": 7}, "line_color": {"type": "field", "field": "color"}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "field", "field": "color"}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_color": {"type": "field", "field": "color"}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "Scatter", "id": "p1260", "attributes": {"x": {"type": "field", "field": "variance"}, "y": {"type": "field", "field": "skewness"}, "size": {"type": "value", "value": 7}, "line_color": {"type": "field", "field": "color"}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "field", "field": "color"}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_color": {"type": "field", "field": "color"}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}], "toolbar": {"type": "object", "name": "Toolbar", "id": "p1234", "attributes": {"tools": [{"type": "object", "name": "PanTool", "id": "p1247"}, {"type": "object", "name": "WheelZoomTool", "id": "p1248", "attributes": {"renderers": "auto"}}, {"type": "object", "name": "BoxZoomTool", "id": "p1249", "attributes": {"dimensions": "both", "overlay": {"type": "object", "name": "BoxAnnotation", "id": "p1250", "attributes": {"syncable": false, "line_color": "black", "line_alpha": 1.0, "line_width": 2, "line_dash": [4, 4], "fill_color": "lightgrey", "fill_alpha": 0.5, "level": "overlay", "visible": false, "left": {"type": "number", "value": "nan"}, "right": {"type": "number", "value": "nan"}, "top": {"type": "number", "value": "nan"}, "bottom": {"type": "number", "value": "nan"}, "left_units": "canvas", "right_units": "canvas", "top_units": "canvas", "bottom_units": "canvas", "handles": {"type": "object", "name": "BoxInteractionHandles", "id": "p1256", "attributes": {"all": {"type": "object", "name": "AreaVisuals", "id": "p1255", "attributes": {"fill_color": "white", "hover_fill_color": "lightgray"}}}}}}}}, {"type": "object", "name": "ResetTool", "id": "p1257"}, {"type": "object", "name": "HoverTool", "id": "p1264", "attributes": {"renderers": "auto", "tooltips": [["Variance", "@variance"], ["Skewness", "@skewness"], ["Clase", "@clase"]], "sort_by": null}}], "logo": null, "autohide": true}}, "left": [{"type": "object", "name": "LinearAxis", "id": "p1242", "attributes": {"ticker": {"type": "object", "name": "BasicTicker", "id": "p1243", "attributes": {"mantissas": [1, 2, 5]}}, "formatter": {"type": "object", "name": "BasicTickFormatter", "id": "p1244"}, "axis_label_text_color": "#0f172a", "major_label_policy": {"type": "object", "name": "AllLabels", "id": "p1245"}, "major_label_text_color": "#334155"}}], "below": [{"type": "object", "name": "LinearAxis", "id": "p1237", "attributes": {"ticker": {"type": "object", "name": "BasicTicker", "id": "p1238", "attributes": {"mantissas": [1, 2, 5]}}, "formatter": {"type": "object", "name": "BasicTickFormatter", "id": "p1239"}, "axis_label_text_color": "#0f172a", "major_label_policy": {"type": "object", "name": "AllLabels", "id": "p1240"}, "major_label_text_color": "#334155"}}], "center": [{"type": "object", "name": "Grid", "id": "p1241", "attributes": {"axis": {"id": "p1237"}, "grid_line_color": "#cbd5e1", "grid_line_alpha": 0.4}}, {"type": "object", "name": "Grid", "id": "p1246", "attributes": {"dimension": 1, "axis": {"id": "p1242"}, "grid_line_color": "#cbd5e1", "grid_line_alpha": 0.4}}], "background_fill_color": "#f8fafc", "border_fill_color": "#f8fafc"}}]}, "version": "3.9.0"},
+    "grafica_scatter"
+);
+
+Bokeh.embed.embed_item(
+    {"target_id": "grafica_heat_0", "root_id": "p1273", "doc": {"version": "3.9.0", "title": "", "config": {"type": "object", "name": "DocumentConfig", "id": "p1380", "attributes": {"notifications": {"type": "object", "name": "Notifications", "id": "p1381"}}}, "roots": [{"type": "object", "name": "Figure", "id": "p1273", "attributes": {"width": 400, "height": 390, "x_range": {"type": "object", "name": "FactorRange", "id": "p1283", "attributes": {"factors": ["variance", "skewness", "curtosis", "entropy"]}}, "y_range": {"type": "object", "name": "FactorRange", "id": "p1284", "attributes": {"factors": ["entropy", "curtosis", "skewness", "variance"]}}, "x_scale": {"type": "object", "name": "CategoricalScale", "id": "p1285"}, "y_scale": {"type": "object", "name": "CategoricalScale", "id": "p1286"}, "title": {"type": "object", "name": "Title", "id": "p1276", "attributes": {"text": "Correlaci\u00f3n - Billetes Aut\u00e9nticos", "text_color": "#0f172a", "text_font_size": "16pt"}}, "outline_line_color": "#e2e8f0", "renderers": [{"type": "object", "name": "GlyphRenderer", "id": "p1311", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1265", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1266", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1267"}, "data": {"type": "map", "entries": [["index", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/w3DCRLAEBAAsHVUi+L/v5XMJCIimS1WH5uvn93h9He5PV7JfInhQAAAAA=="}, "shape": [16], "dtype": "int32", "order": "little"}], ["x", {"type": "ndarray", "array": ["variance", "variance", "variance", "variance", "skewness", "skewness", "skewness", "skewness", "curtosis", "curtosis", "curtosis", "curtosis", "entropy", "entropy", "entropy", "entropy"], "shape": [16], "dtype": "object", "order": "little"}], ["y", {"type": "ndarray", "array": ["variance", "skewness", "curtosis", "entropy", "variance", "skewness", "curtosis", "entropy", "variance", "skewness", "curtosis", "entropy", "variance", "skewness", "curtosis", "entropy"], "shape": [16], "dtype": "object", "order": "little"}], ["value", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/2NgAIEP9jZKZsn2zGf3z5L/XzxZ7up+3tdbursX3oKLg5UB1S2wb3vHx/Zi/66W7SePTnkKVw8Th6nb/e3g8rvtt+xh5sDUw8Rh6gA/9YutgAAAAA=="}, "shape": [16], "dtype": "float64", "order": "little"}]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1312", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1313"}}}, "glyph": {"type": "object", "name": "Rect", "id": "p1308", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 1}, "height": {"type": "value", "value": 1}, "line_color": {"type": "value", "value": null}, "fill_color": {"type": "field", "field": "value", "transform": {"type": "object", "name": "LinearColorMapper", "id": "p1271", "attributes": {"palette": ["#440154", "#440255", "#440357", "#450558", "#45065A", "#45085B", "#46095C", "#460B5E", "#460C5F", "#460E61", "#470F62", "#471163", "#471265", "#471466", "#471567", "#471669", "#47186A", "#48196B", "#481A6C", "#481C6E", "#481D6F", "#481E70", "#482071", "#482172", "#482273", "#482374", "#472575", "#472676", "#472777", "#472878", "#472A79", "#472B7A", "#472C7B", "#462D7C", "#462F7C", "#46307D", "#46317E", "#45327F", "#45347F", "#453580", "#453681", "#443781", "#443982", "#433A83", "#433B83", "#433C84", "#423D84", "#423E85", "#424085", "#414186", "#414286", "#404387", "#404487", "#3F4587", "#3F4788", "#3E4888", "#3E4989", "#3D4A89", "#3D4B89", "#3D4C89", "#3C4D8A", "#3C4E8A", "#3B508A", "#3B518A", "#3A528B", "#3A538B", "#39548B", "#39558B", "#38568B", "#38578C", "#37588C", "#37598C", "#365A8C", "#365B8C", "#355C8C", "#355D8C", "#345E8D", "#345F8D", "#33608D", "#33618D", "#32628D", "#32638D", "#31648D", "#31658D", "#31668D", "#30678D", "#30688D", "#2F698D", "#2F6A8D", "#2E6B8E", "#2E6C8E", "#2E6D8E", "#2D6E8E", "#2D6F8E", "#2C708E", "#2C718E", "#2C728E", "#2B738E", "#2B748E", "#2A758E", "#2A768E", "#2A778E", "#29788E", "#29798E", "#287A8E", "#287A8E", "#287B8E", "#277C8E", "#277D8E", "#277E8E", "#267F8E", "#26808E", "#26818E", "#25828E", "#25838D", "#24848D", "#24858D", "#24868D", "#23878D", "#23888D", "#23898D", "#22898D", "#228A8D", "#228B8D", "#218C8D", "#218D8C", "#218E8C", "#208F8C", "#20908C", "#20918C", "#1F928C", "#1F938B", "#1F948B", "#1F958B", "#1F968B", "#1E978A", "#1E988A", "#1E998A", "#1E998A", "#1E9A89", "#1E9B89", "#1E9C89", "#1E9D88", "#1E9E88", "#1E9F88", "#1EA087", "#1FA187", "#1FA286", "#1FA386", "#20A485", "#20A585", "#21A685", "#21A784", "#22A784", "#23A883", "#23A982", "#24AA82", "#25AB81", "#26AC81", "#27AD80", "#28AE7F", "#29AF7F", "#2AB07E", "#2BB17D", "#2CB17D", "#2EB27C", "#2FB37B", "#30B47A", "#32B57A", "#33B679", "#35B778", "#36B877", "#38B976", "#39B976", "#3BBA75", "#3DBB74", "#3EBC73", "#40BD72", "#42BE71", "#44BE70", "#45BF6F", "#47C06E", "#49C16D", "#4BC26C", "#4DC26B", "#4FC369", "#51C468", "#53C567", "#55C666", "#57C665", "#59C764", "#5BC862", "#5EC961", "#60C960", "#62CA5F", "#64CB5D", "#67CC5C", "#69CC5B", "#6BCD59", "#6DCE58", "#70CE56", "#72CF55", "#74D054", "#77D052", "#79D151", "#7CD24F", "#7ED24E", "#81D34C", "#83D34B", "#86D449", "#88D547", "#8BD546", "#8DD644", "#90D643", "#92D741", "#95D73F", "#97D83E", "#9AD83C", "#9DD93A", "#9FD938", "#A2DA37", "#A5DA35", "#A7DB33", "#AADB32", "#ADDC30", "#AFDC2E", "#B2DD2C", "#B5DD2B", "#B7DD29", "#BADE27", "#BDDE26", "#BFDF24", "#C2DF22", "#C5DF21", "#C7E01F", "#CAE01E", "#CDE01D", "#CFE11C", "#D2E11B", "#D4E11A", "#D7E219", "#DAE218", "#DCE218", "#DFE318", "#E1E318", "#E4E318", "#E7E419", "#E9E419", "#ECE41A", "#EEE51B", "#F1E51C", "#F3E51E", "#F6E61F", "#F8E621", "#FAE622", "#FDE724"], "low": -1, "high": 1}}}}}, "nonselection_glyph": {"type": "object", "name": "Rect", "id": "p1309", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 1}, "height": {"type": "value", "value": 1}, "line_color": {"type": "value", "value": null}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "field", "field": "value", "transform": {"id": "p1271"}}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "Rect", "id": "p1310", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 1}, "height": {"type": "value", "value": 1}, "line_color": {"type": "value", "value": null}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "field", "field": "value", "transform": {"id": "p1271"}}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}], "toolbar": {"type": "object", "name": "Toolbar", "id": "p1282", "attributes": {"tools": [{"type": "object", "name": "PanTool", "id": "p1297"}, {"type": "object", "name": "WheelZoomTool", "id": "p1298", "attributes": {"renderers": "auto"}}, {"type": "object", "name": "BoxZoomTool", "id": "p1299", "attributes": {"dimensions": "both", "overlay": {"type": "object", "name": "BoxAnnotation", "id": "p1300", "attributes": {"syncable": false, "line_color": "black", "line_alpha": 1.0, "line_width": 2, "line_dash": [4, 4], "fill_color": "lightgrey", "fill_alpha": 0.5, "level": "overlay", "visible": false, "left": {"type": "number", "value": "nan"}, "right": {"type": "number", "value": "nan"}, "top": {"type": "number", "value": "nan"}, "bottom": {"type": "number", "value": "nan"}, "left_units": "canvas", "right_units": "canvas", "top_units": "canvas", "bottom_units": "canvas", "handles": {"type": "object", "name": "BoxInteractionHandles", "id": "p1306", "attributes": {"all": {"type": "object", "name": "AreaVisuals", "id": "p1305", "attributes": {"fill_color": "white", "hover_fill_color": "lightgray"}}}}}}}}, {"type": "object", "name": "ResetTool", "id": "p1307"}, {"type": "object", "name": "HoverTool", "id": "p1359", "attributes": {"renderers": "auto", "tooltips": [["Variable X", "@x"], ["Variable Y", "@y"], ["Correlaci\u00f3n", "@value{0.00}"]], "sort_by": null}}], "logo": null, "autohide": true}}, "left": [{"type": "object", "name": "CategoricalAxis", "id": "p1292", "attributes": {"ticker": {"type": "object", "name": "CategoricalTicker", "id": "p1293"}, "formatter": {"type": "object", "name": "CategoricalTickFormatter", "id": "p1294"}, "axis_label_text_color": "#0f172a", "major_label_policy": {"type": "object", "name": "AllLabels", "id": "p1295"}, "major_label_text_color": "#334155"}}], "right": [{"type": "object", "name": "ColorBar", "id": "p1355", "attributes": {"location": [0, 0], "title": "Correlaci\u00f3n", "major_label_policy": {"type": "object", "name": "NoOverlap", "id": "p1356"}, "color_mapper": {"id": "p1271"}}}], "below": [{"type": "object", "name": "CategoricalAxis", "id": "p1287", "attributes": {"ticker": {"type": "object", "name": "CategoricalTicker", "id": "p1288"}, "formatter": {"type": "object", "name": "CategoricalTickFormatter", "id": "p1289"}, "axis_label_text_color": "#0f172a", "major_label_policy": {"type": "object", "name": "AllLabels", "id": "p1290"}, "major_label_text_color": "#334155"}}], "center": [{"type": "object", "name": "Grid", "id": "p1291", "attributes": {"axis": {"id": "p1287"}, "grid_line_color": "#cbd5e1", "grid_line_alpha": 0.4}}, {"type": "object", "name": "Grid", "id": "p1296", "attributes": {"dimension": 1, "axis": {"id": "p1292"}, "grid_line_color": "#cbd5e1", "grid_line_alpha": 0.4}}], "background_fill_color": "#f8fafc", "border_fill_color": "#f8fafc"}}]}, "version": "3.9.0"},
+    "grafica_heat_0"
+);
+
+Bokeh.embed.embed_item(
+    {"target_id": "grafica_heat_1", "root_id": "p1314", "doc": {"version": "3.9.0", "title": "", "config": {"type": "object", "name": "DocumentConfig", "id": "p1384", "attributes": {"notifications": {"type": "object", "name": "Notifications", "id": "p1385"}}}, "roots": [{"type": "object", "name": "Figure", "id": "p1314", "attributes": {"width": 400, "height": 390, "x_range": {"type": "object", "name": "FactorRange", "id": "p1324", "attributes": {"factors": ["variance", "skewness", "curtosis", "entropy"]}}, "y_range": {"type": "object", "name": "FactorRange", "id": "p1325", "attributes": {"factors": ["entropy", "curtosis", "skewness", "variance"]}}, "x_scale": {"type": "object", "name": "CategoricalScale", "id": "p1326"}, "y_scale": {"type": "object", "name": "CategoricalScale", "id": "p1327"}, "title": {"type": "object", "name": "Title", "id": "p1317", "attributes": {"text": "Correlaci\u00f3n - Billetes Falsos", "text_color": "#0f172a", "text_font_size": "16pt"}}, "outline_line_color": "#e2e8f0", "renderers": [{"type": "object", "name": "GlyphRenderer", "id": "p1352", "attributes": {"data_source": {"type": "object", "name": "ColumnDataSource", "id": "p1268", "attributes": {"selected": {"type": "object", "name": "Selection", "id": "p1269", "attributes": {"indices": [], "line_indices": []}}, "selection_policy": {"type": "object", "name": "UnionRenderers", "id": "p1270"}, "data": {"type": "map", "entries": [["index", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/w3DCRLAEBAAsHVUi+L/v5XMJCIimS1WH5uvn93h9He5PV7JfInhQAAAAA=="}, "shape": [16], "dtype": "int32", "order": "little"}], ["x", {"type": "ndarray", "array": ["variance", "variance", "variance", "variance", "skewness", "skewness", "skewness", "skewness", "curtosis", "curtosis", "curtosis", "curtosis", "entropy", "entropy", "entropy", "entropy"], "shape": [16], "dtype": "object", "order": "little"}], ["y", {"type": "ndarray", "array": ["variance", "skewness", "curtosis", "entropy", "variance", "skewness", "curtosis", "entropy", "variance", "skewness", "curtosis", "entropy", "variance", "skewness", "curtosis", "entropy"], "shape": [16], "dtype": "object", "order": "little"}], ["value", {"type": "ndarray", "array": {"type": "bytes", "data": "H4sIAAEAAAAA/2NgAIEP9rMCL911vLvJ/vXNZW+uBt/bf2jR3Glye6/AxcHKgOpm2oTY7kt/s//m9fdqFp4P9sPUw8Rh6hIOrvB3XHXRHmYOTD1MHKYOABsHP8SAAAAA"}, "shape": [16], "dtype": "float64", "order": "little"}]]}}}, "view": {"type": "object", "name": "CDSView", "id": "p1353", "attributes": {"filter": {"type": "object", "name": "AllIndices", "id": "p1354"}}}, "glyph": {"type": "object", "name": "Rect", "id": "p1349", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 1}, "height": {"type": "value", "value": 1}, "line_color": {"type": "value", "value": null}, "fill_color": {"type": "field", "field": "value", "transform": {"type": "object", "name": "LinearColorMapper", "id": "p1272", "attributes": {"palette": ["#440154", "#440255", "#440357", "#450558", "#45065A", "#45085B", "#46095C", "#460B5E", "#460C5F", "#460E61", "#470F62", "#471163", "#471265", "#471466", "#471567", "#471669", "#47186A", "#48196B", "#481A6C", "#481C6E", "#481D6F", "#481E70", "#482071", "#482172", "#482273", "#482374", "#472575", "#472676", "#472777", "#472878", "#472A79", "#472B7A", "#472C7B", "#462D7C", "#462F7C", "#46307D", "#46317E", "#45327F", "#45347F", "#453580", "#453681", "#443781", "#443982", "#433A83", "#433B83", "#433C84", "#423D84", "#423E85", "#424085", "#414186", "#414286", "#404387", "#404487", "#3F4587", "#3F4788", "#3E4888", "#3E4989", "#3D4A89", "#3D4B89", "#3D4C89", "#3C4D8A", "#3C4E8A", "#3B508A", "#3B518A", "#3A528B", "#3A538B", "#39548B", "#39558B", "#38568B", "#38578C", "#37588C", "#37598C", "#365A8C", "#365B8C", "#355C8C", "#355D8C", "#345E8D", "#345F8D", "#33608D", "#33618D", "#32628D", "#32638D", "#31648D", "#31658D", "#31668D", "#30678D", "#30688D", "#2F698D", "#2F6A8D", "#2E6B8E", "#2E6C8E", "#2E6D8E", "#2D6E8E", "#2D6F8E", "#2C708E", "#2C718E", "#2C728E", "#2B738E", "#2B748E", "#2A758E", "#2A768E", "#2A778E", "#29788E", "#29798E", "#287A8E", "#287A8E", "#287B8E", "#277C8E", "#277D8E", "#277E8E", "#267F8E", "#26808E", "#26818E", "#25828E", "#25838D", "#24848D", "#24858D", "#24868D", "#23878D", "#23888D", "#23898D", "#22898D", "#228A8D", "#228B8D", "#218C8D", "#218D8C", "#218E8C", "#208F8C", "#20908C", "#20918C", "#1F928C", "#1F938B", "#1F948B", "#1F958B", "#1F968B", "#1E978A", "#1E988A", "#1E998A", "#1E998A", "#1E9A89", "#1E9B89", "#1E9C89", "#1E9D88", "#1E9E88", "#1E9F88", "#1EA087", "#1FA187", "#1FA286", "#1FA386", "#20A485", "#20A585", "#21A685", "#21A784", "#22A784", "#23A883", "#23A982", "#24AA82", "#25AB81", "#26AC81", "#27AD80", "#28AE7F", "#29AF7F", "#2AB07E", "#2BB17D", "#2CB17D", "#2EB27C", "#2FB37B", "#30B47A", "#32B57A", "#33B679", "#35B778", "#36B877", "#38B976", "#39B976", "#3BBA75", "#3DBB74", "#3EBC73", "#40BD72", "#42BE71", "#44BE70", "#45BF6F", "#47C06E", "#49C16D", "#4BC26C", "#4DC26B", "#4FC369", "#51C468", "#53C567", "#55C666", "#57C665", "#59C764", "#5BC862", "#5EC961", "#60C960", "#62CA5F", "#64CB5D", "#67CC5C", "#69CC5B", "#6BCD59", "#6DCE58", "#70CE56", "#72CF55", "#74D054", "#77D052", "#79D151", "#7CD24F", "#7ED24E", "#81D34C", "#83D34B", "#86D449", "#88D547", "#8BD546", "#8DD644", "#90D643", "#92D741", "#95D73F", "#97D83E", "#9AD83C", "#9DD93A", "#9FD938", "#A2DA37", "#A5DA35", "#A7DB33", "#AADB32", "#ADDC30", "#AFDC2E", "#B2DD2C", "#B5DD2B", "#B7DD29", "#BADE27", "#BDDE26", "#BFDF24", "#C2DF22", "#C5DF21", "#C7E01F", "#CAE01E", "#CDE01D", "#CFE11C", "#D2E11B", "#D4E11A", "#D7E219", "#DAE218", "#DCE218", "#DFE318", "#E1E318", "#E4E318", "#E7E419", "#E9E419", "#ECE41A", "#EEE51B", "#F1E51C", "#F3E51E", "#F6E61F", "#F8E621", "#FAE622", "#FDE724"], "low": -1, "high": 1}}}}}, "nonselection_glyph": {"type": "object", "name": "Rect", "id": "p1350", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 1}, "height": {"type": "value", "value": 1}, "line_color": {"type": "value", "value": null}, "line_alpha": {"type": "value", "value": 0.1}, "fill_color": {"type": "field", "field": "value", "transform": {"id": "p1272"}}, "fill_alpha": {"type": "value", "value": 0.1}, "hatch_alpha": {"type": "value", "value": 0.1}}}, "muted_glyph": {"type": "object", "name": "Rect", "id": "p1351", "attributes": {"x": {"type": "field", "field": "x"}, "y": {"type": "field", "field": "y"}, "width": {"type": "value", "value": 1}, "height": {"type": "value", "value": 1}, "line_color": {"type": "value", "value": null}, "line_alpha": {"type": "value", "value": 0.2}, "fill_color": {"type": "field", "field": "value", "transform": {"id": "p1272"}}, "fill_alpha": {"type": "value", "value": 0.2}, "hatch_alpha": {"type": "value", "value": 0.2}}}}}], "toolbar": {"type": "object", "name": "Toolbar", "id": "p1323", "attributes": {"tools": [{"type": "object", "name": "PanTool", "id": "p1338"}, {"type": "object", "name": "WheelZoomTool", "id": "p1339", "attributes": {"renderers": "auto"}}, {"type": "object", "name": "BoxZoomTool", "id": "p1340", "attributes": {"dimensions": "both", "overlay": {"type": "object", "name": "BoxAnnotation", "id": "p1341", "attributes": {"syncable": false, "line_color": "black", "line_alpha": 1.0, "line_width": 2, "line_dash": [4, 4], "fill_color": "lightgrey", "fill_alpha": 0.5, "level": "overlay", "visible": false, "left": {"type": "number", "value": "nan"}, "right": {"type": "number", "value": "nan"}, "top": {"type": "number", "value": "nan"}, "bottom": {"type": "number", "value": "nan"}, "left_units": "canvas", "right_units": "canvas", "top_units": "canvas", "bottom_units": "canvas", "handles": {"type": "object", "name": "BoxInteractionHandles", "id": "p1347", "attributes": {"all": {"type": "object", "name": "AreaVisuals", "id": "p1346", "attributes": {"fill_color": "white", "hover_fill_color": "lightgray"}}}}}}}}, {"type": "object", "name": "ResetTool", "id": "p1348"}, {"type": "object", "name": "HoverTool", "id": "p1360", "attributes": {"renderers": "auto", "tooltips": [["Variable X", "@x"], ["Variable Y", "@y"], ["Correlaci\u00f3n", "@value{0.00}"]], "sort_by": null}}], "logo": null, "autohide": true}}, "left": [{"type": "object", "name": "CategoricalAxis", "id": "p1333", "attributes": {"ticker": {"type": "object", "name": "CategoricalTicker", "id": "p1334"}, "formatter": {"type": "object", "name": "CategoricalTickFormatter", "id": "p1335"}, "axis_label_text_color": "#0f172a", "major_label_policy": {"type": "object", "name": "AllLabels", "id": "p1336"}, "major_label_text_color": "#334155"}}], "right": [{"type": "object", "name": "ColorBar", "id": "p1357", "attributes": {"location": [0, 0], "title": "Correlaci\u00f3n", "title_text_color": "#0f172a", "major_label_policy": {"type": "object", "name": "NoOverlap", "id": "p1358"}, "major_label_text_color": "#334155", "border_line_color": "#cbd5e1", "background_fill_color": "#f8fafc", "color_mapper": {"id": "p1272"}}}], "below": [{"type": "object", "name": "CategoricalAxis", "id": "p1328", "attributes": {"ticker": {"type": "object", "name": "CategoricalTicker", "id": "p1329"}, "formatter": {"type": "object", "name": "CategoricalTickFormatter", "id": "p1330"}, "axis_label_text_color": "#0f172a", "major_label_policy": {"type": "object", "name": "AllLabels", "id": "p1331"}, "major_label_text_color": "#334155"}}], "center": [{"type": "object", "name": "Grid", "id": "p1332", "attributes": {"axis": {"id": "p1328"}, "grid_line_color": "#cbd5e1", "grid_line_alpha": 0.4}}, {"type": "object", "name": "Grid", "id": "p1337", "attributes": {"dimension": 1, "axis": {"id": "p1333"}, "grid_line_color": "#cbd5e1", "grid_line_alpha": 0.4}}], "background_fill_color": "#f8fafc", "border_fill_color": "#f8fafc"}}]}, "version": "3.9.0"},
+    "grafica_heat_1"
+);
+
+
+  // =========================
+  // FULLSCREEN
+  // =========================
+
+  const btn = document.getElementById("fullscreenBtn");
+
+  btn.addEventListener("click", () => {
+
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+
+  });
+  
+</script>
+
+</body>
+</html>
