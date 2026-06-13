@@ -1235,6 +1235,30 @@ const btn = document.getElementById("fullscreenBtn");
     if (e.key === "ArrowDown") { e.preventDefault(); goToSection(currentSection + 1); }
     if (e.key === "ArrowUp") { e.preventDefault(); goToSection(currentSection - 1); }
   });
+  /* ==========================================================================
+   MOVIL: Detección de Swipe (Touch Events)
+   ========================================================================== */
+	let touchStartY = 0;
+
+	window.addEventListener("touchstart", (e) => {
+	  touchStartY = e.changedTouches[0].screenY;
+	}, { passive: true });
+
+	window.addEventListener("touchend", (e) => {
+	  if (isScrolling) return; // Respeta tu bloqueo actual de animación
+	  
+	  const touchEndY = e.changedTouches[0].screenY;
+	  const deltaY = touchStartY - touchEndY;
+	  
+	  // Umbral de 50px para evitar que cambie de sección por error
+	  if (Math.abs(deltaY) > 50) {
+		if (deltaY > 0) {
+		  goToSection(currentSection + 1); // Swipe hacia arriba (bajar página)
+		} else {
+		  goToSection(currentSection - 1); // Swipe hacia abajo (subir página)
+		}
+	  }
+	}, { passive: true });
 </script>
 
 </body>
