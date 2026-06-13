@@ -8,959 +8,772 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    /* ==========================================================================
-       RESET & BASE DESIGN
-       ========================================================================== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      background-color: #050505;
-    }
-
-    html::-webkit-scrollbar {
-      display: none;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #050505;
-      overflow: hidden;
-      color: #f3f4f6;
-    }
-
-	:root {
-	  --bg-start: #050505;
-	  --bg-card: rgba(18, 18, 18, 0.7);
-	  --border-glow: rgba(212, 175, 55, 0.15); /* dorado clásico */
-	  --accent: #d4af37;        /* dorado sobrio */
-	  --accent-light: #ffd700;  /* dorado brillante para hover */
-	  --accent-muted: #b8860b;  /* dorado antiguo */
-	  --accent: #f5f5f5;
-	  --text-muted: #c0c0c0;
-	  --glass-border: rgba(255, 255, 255, 0.08);
-	  --glass-reflection: rgba(255, 255, 255, 0.03);
-	}
-
-	#container {
-      height: 100vh;
-      overflow-y: hidden;
-      overflow-x: hidden;
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
-      position: relative;
-      background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-      background-size: 60px 60px;
-      animation: panBackground 60s linear infinite;
-    }
-
-    @keyframes panBackground {
-      0% { background-position: 0 0; }
-      100% { background-position: -60px -60px; }
-    }
-    /* ==========================================================================
-       ESTRUCTURA DE SECCIONES (SCROLL SNAP)
-       ========================================================================== */
-    section {
-      height: 100vh;
-      width: 100vw;
-      scroll-snap-align: center;
-      scroll-snap-stop: always;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      padding: 40px 60px;
-      perspective: 1000px;
-    }
-
-    /* ==========================================================================
-       HERO / BIENVENIDA
-       ========================================================================== */
-    .hero video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -2;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(5,5,5,0.85) 90%);
-      z-index: -1;
-    }
-
-    .hero h1 {
-      padding: 30px 60px;
-      border-radius: 30px;
-      background: linear-gradient(145deg, rgba(20,20,20,0.6), rgba(10,10,10,0.9));
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--border-glow);
-      color: var(--accent);
-	  text-shadow: 0 0 25px rgba(212,175,55,0.4);
-      font-size: clamp(2.2rem, 5.5vw, 4.2rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      text-align: center;
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
-    }
-
-    /* ==========================================================================
-       BOTÓN FULLSCREEN PREMIUM
-       ========================================================================== */
-    #fullscreenBtn {
-      position: fixed;
-      top: 30px;
-      right: 30px;
-      width: 50px;
-      height: 50px;
-      border: 1px solid var(--border-glow);
-      border-radius: 16px;
-      background: linear-gradient(145deg, #111, #1a1a1a);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      color: var(--accent);
-      font-size: 20px;
-      cursor: pointer;
-      z-index: 9999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: all 0.4s var(--ease-out-expo);
-      box-shadow: 0 10px 30px rgba(212,175,55,0.25);
-    }
-
-    #fullscreenBtn:hover {
-      transform: translateY(-3px) scale(1.05);
-      border-color: var(--accent-light);
-      color: var(--accent-light);
-      background: linear-gradient(145deg, #1a1a1a, #222);
-      box-shadow: 0 15px 40px rgba(212,175,55,0.35);
-    }
-
-/* ==================================================
-   ABOUT ME
-================================================== */
-
-.about-section{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:80px;
+/* ==========================================================================
+   1. VARIABLES & THEME (PALETA DORADA PREMIUM)
+   ========================================================================== */
+:root {
+  /* Fondos */
+  --bg-start: #050505;
+  --bg-card: rgba(18, 18, 18, 0.7);
+  
+  /* Escala de Dorados */
+  --gold-light: #ffd700;       /* Dorado brillante (Hovers y destellos) */
+  --gold-base: #d4af37;        /* Dorado clásico (Acentos principales) */
+  --gold-dark: #b8860b;        /* Dorado antiguo (Sombras y degradados) */
+  
+  /* Brillos y Transparencias Doradas */
+  --gold-glow: rgba(212, 175, 55, 0.15);
+  --gold-glow-strong: rgba(212, 175, 55, 0.35);
+  --glass-border: rgba(212, 175, 55, 0.12); /* Borde de cristal tintado en oro */
+  
+  /* Textos */
+  --text-main: #f4f4f0;        /* Blanco con un levísimo tono cálido */
+  --text-muted: #b3b3b0;       /* Gris cálido */
+  
+  /* Utilidades */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.about-container{
-    width:min(1400px,90vw);
-    display:grid;
-    grid-template-columns:420px 1fr;
-    gap:80px;
-    align-items:center;
+/* ==========================================================================
+   2. RESET & BASE DESIGN
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.about-photo{
-    position:relative;
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  background-color: var(--bg-start);
 }
 
-.about-photo::before{
-    content:"";
-    position:absolute;
-    inset:-20px;
-    border-radius:40px;
-    background:
-    radial-gradient(circle,
-    rgba(245,158,11,.2),
-    transparent 70%);
-    z-index:-1;
+html::-webkit-scrollbar {
+  display: none;
 }
 
-.about-photo img{
-    width:100%;
-    border-radius:30px;
-    object-fit:cover;
-    box-shadow:
-    0 40px 80px rgba(0,0,0,.8);
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-start);
+  overflow: hidden;
+  color: var(--text-main);
 }
 
-.about-badge{
-    display:inline-block;
-    margin-bottom:25px;
-    color:#f59e0b;
-    font-size:.8rem;
-    letter-spacing:.2em;
-    text-transform:uppercase;
+/* ==========================================================================
+   3. LAYOUT PRINCIPAL (SCROLL SNAP & FONDO)
+   ========================================================================== */
+#container {
+  height: 100vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  position: relative;
+  /* Retícula de fondo tintada ligeramente en oro */
+  background-image: 
+    linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: panBackground 60s linear infinite;
 }
 
-.about-content h2{
-    font-size:clamp(2rem,3.5vw,3.5rem);
-    line-height:1;
-    font-weight:900;
-    margin-bottom:30px;
+@keyframes panBackground {
+  0% { background-position: 0 0; }
+  100% { background-position: -60px -60px; }
 }
 
-.about-content h2 span{
-    display:block;
-    background:linear-gradient(
-        135deg,
-        #f59e0b,
-        #ffffff
-    );
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+section {
+  height: 100vh;
+  width: 100vw;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 40px 60px;
+  perspective: 1000px;
 }
 
-.about-content p{
-    font-size:1.15rem;
-    color:#9ca3af;
-    line-height:1.9;
-    max-width:700px;
-    margin-bottom:40px;
+/* ==========================================================================
+   4. UI COMPONENTS (BOTONES Y NAVEGACIÓN)
+   ========================================================================== */
+#fullscreenBtn {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #111, #1a1a1a);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--gold-base);
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s var(--ease-out-expo);
+  box-shadow: 0 10px 30px var(--gold-glow);
 }
 
-.about-highlights{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:25px;
+#fullscreenBtn:hover {
+  transform: translateY(-3px) scale(1.05);
+  border-color: var(--gold-light);
+  color: var(--gold-light);
+  background: linear-gradient(145deg, #1a1a1a, #222);
+  box-shadow: 0 15px 40px var(--gold-glow-strong);
 }
 
-.highlight{
-    padding:25px;
-    border-left:2px solid #f59e0b;
-    background:rgba(255,255,255,.02);
+.side-nav {
+  position: fixed;
+  right: 35px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 999;
 }
 
-.highlight strong{
-    display:block;
-    font-size:1rem;
-    margin-bottom:8px;
-    color:white;
+.side-dot {
+  width: 6px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--gold-base);
+  box-shadow: 0 0 10px var(--gold-glow);
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out-expo);
 }
 
-.highlight span{
-    color:#9ca3af;
-    font-size:.9rem;
+.side-dot.active {
+  background: var(--gold-light);
+  height: 48px;
+  box-shadow: 0 0 15px var(--gold-base);
 }
 
-/* ==================================================
-   METODOLOGÍA
-================================================== */
-
-.methodology{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding:100px 80px;
+/* ==========================================================================
+   5. SECCIÓN: HERO
+   ========================================================================== */
+.hero video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
 }
 
-.method-header{
-    max-width:900px;
-    margin:0 auto 100px;
-    text-align:center;
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(5,5,5,0.85) 90%);
+  z-index: -1;
 }
 
-.method-tag{
-    display:inline-block;
-    color:#f59e0b;
-    font-size:.8rem;
-    letter-spacing:.25em;
-    text-transform:uppercase;
-    margin-bottom:20px;
+.hero h1 {
+  padding: 30px 60px;
+  border-radius: 30px;
+  background: linear-gradient(145deg, rgba(20,20,20,0.6), rgba(10,10,10,0.9));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  color: var(--gold-light);
+  text-shadow: 0 0 25px var(--gold-glow-strong);
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
 }
 
-.method-header h2{
-    font-size:clamp(3rem,5vw,5rem);
-    font-weight:900;
-    line-height:1;
-    margin-bottom:30px;
+/* ==========================================================================
+   6. SECCIÓN: ABOUT ME
+   ========================================================================== */
+.about-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px;
 }
 
-.method-header h2 span{
-    display:block;
-
-    background:linear-gradient(
-        135deg,
-        #ffffff,
-        #f59e0b
-    );
-
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+.about-container {
+  width: min(1400px, 90vw);
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 80px;
+  align-items: center;
 }
 
-.method-header p{
-    color:#9ca3af;
-    line-height:1.8;
-    font-size:1.1rem;
+.about-photo {
+  position: relative;
 }
 
-.timeline{
-    width:min(1400px,90vw);
-    margin:auto;
-
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:30px;
+.about-photo::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  border-radius: 40px;
+  background: radial-gradient(circle, var(--gold-glow-strong), transparent 70%);
+  z-index: -1;
 }
 
-.timeline-item{
-    position:relative;
-
-    padding:40px 30px;
-
-    background:
-    linear-gradient(
-        180deg,
-        rgba(255,255,255,.03),
-        rgba(255,255,255,.01)
-    );
-
-    border:1px solid rgba(255,255,255,.05);
-
-    border-radius:25px;
-
-    transition:.4s;
+.about-photo img {
+  width: 75%;
+  border-radius: 30px;
+  object-fit: cover;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+  border: 1px solid var(--glass-border);
 }
 
-.timeline-item:hover{
-    transform:translateY(-10px);
-
-    border-color:
-    rgba(245,158,11,.3);
-
-    box-shadow:
-    0 25px 50px rgba(0,0,0,.4);
+.about-badge {
+  display: inline-block;
+  margin-bottom: 25px;
+  color: var(--gold-base);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
-.step-number{
-    font-size:4rem;
-    font-weight:900;
-
-    color:rgba(245,158,11,.15);
-
-    margin-bottom:20px;
+.about-content h2 {
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  line-height: 1;
+  font-weight: 900;
+  margin-bottom: 30px;
 }
 
-.timeline-item h3{
-    color:white;
-    margin-bottom:15px;
+.about-content h2 span {
+  display: block;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.timeline-item p{
-    color:#9ca3af;
-    line-height:1.8;
+.about-content p {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  line-height: 1.9;
+  max-width: 700px;
+  margin-bottom: 40px;
 }
 
-    /* ==========================================================================
-       CONTENEDOR DE PRODUCTO (RECURSO)
-       ========================================================================== */
-    .recurso {
-      width: min(1560px, 92vw);
-      height: 84vh;
-      display: grid;
-      grid-template-columns: 420px minmax(0, 1fr);
-      gap: 45px;
-      padding: 40px;
-      border-radius: 40px;
-      background: linear-gradient(145deg, rgba(22, 22, 22, 0.8), rgba(8, 8, 8, 0.95));
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border: 1px solid var(--glass-border);
-      border-top: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 
-        0 40px 100px rgba(0, 0, 0, 0.9),
-        inset 0 1px 2px rgba(255, 255, 255, 0.05);
-      position: relative;
-      overflow-y: hidden;
-      overflow-x: hidden;
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
-      opacity: 0;
-      transform: translateY(50px) rotateX(5deg);
-      transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo);
-    }
-
-    section.visible .recurso {
-      opacity: 1;
-      transform: translateY(0) rotateX(0);
-    }
-
-    /* Efectos de Iluminación Ambiental */
-    .recurso::before {
-      content: "";
-      position: absolute;
-      width: 700px;
-      height: 700px;
-      top: -350px;
-      left: -250px;
-      background: radial-gradient(circle, var(--border-glow) 0%, transparent 65%);
-      pointer-events: none;
-      z-index: 0;
-      animation: pulseAmbient 8s alternate infinite ease-in-out;
-    }
-
-    .recurso.invertido::before {
-      right: -250px;
-      left: unset;
-      background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 65%);
-    }
-
-    @keyframes pulseAmbient {
-      0% { transform: scale(0.9); opacity: 0.7; }
-      100% { transform: scale(1.1); opacity: 1; }
-    }
-
-    /* ==========================================================================
-       PANEL LATERAL INFORMATIVO (STAGGERED REVEALS)
-       ========================================================================== */
-    .info {
-      display: flex;
-      flex-direction: column;
-      gap: 26px;
-      position: relative;
-      z-index: 2;
-      height: 100%;
-    }
-
-    .info > * {
-      opacity: 0;
-      transform: translateX(-30px);
-      transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
-    }
-
-    section.visible .info > * {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    section.visible .info > :nth-child(1) { transition-delay: 0.2s; }
-    section.visible .info > :nth-child(2) { transition-delay: 0.3s; }
-    section.visible .info > :nth-child(3) { transition-delay: 0.4s; }
-    section.visible .info > :nth-child(4) { transition-delay: 0.5s; }
-    section.visible .info > :nth-child(5) { transition-delay: 0.6s; }
-
-    .tag {
-      width: max-content;
-      padding: 8px 16px;
-      border-radius: 12px;
-      background: rgba(217, 119, 6, 0.1);
-      border: 1px solid rgba(217, 119, 6, 0.3);
-      color: var(--accent-light);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .titulo {
-      font-size: clamp(2rem, 2.8vw, 3rem);
-      line-height: 1.1;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: #ffffff;
-    }
-
-    .titulo span {
-      background: linear-gradient(135deg, #ffffff 10%, var(--accent-light) 90%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-block;
-    }
-
-    .divider {
-      width: 70px;
-      height: 4px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-light));
-    }
-
-    .descripcion {
-      color: var(--text-muted);
-      line-height: 1.8;
-      font-size: 1.05rem;
-      text-align: left;
-      font-weight: 400;
-    }
-
-    /* ==========================================================================
-       TARJETAS DE MÉTRICAS (KPIs)
-       ========================================================================== */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-top: auto;
-    }
-
-    .card {
-      position: relative;
-      padding: 20px;
-      border-radius: 20px;
-      overflow: hidden;
-	  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-	  border: 1px solid rgba(212,175,55,0.25);
-      box-shadow: inset 0 0 12px rgba(212,175,55,0.1);
-	  transition: all 0.5s var(--ease-out-expo);
-    }
-
-    .card:hover {
-      transform: translateY(-6px) scale(1.02);
-      border-color: var(--accent-light);
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
-      box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 25px rgba(212,175,55,0.25);
-    }
-	/* Divider dorado */
-	.divider {
-	  background: linear-gradient(90deg, var(--accent-muted), var(--accent-light));
-	  box-shadow: 0 0 12px rgba(212,175,55,0.4);
-	}
-    .card h3 {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #ffffff;
-    }
-
-    /* ==========================================================================
-       CONTENEDOR DEL IFRAME (PREVIEW FRAME)
-       ========================================================================== */
-    .preview {
-      position: relative;
-      min-width: 0;
-      height: 100%;
-      border-radius: 28px;
-      overflow: hidden;
-      background: #090909;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
-      transform: scale(0.98);
-      opacity: 0;
-      transition: all 1.2s var(--ease-out-expo) 0.3s;
-    }
-
-    section.visible .preview {
-      transform: scale(1);
-      opacity: 1;
-    }
-
-    .preview::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 44px;
-      background: linear-gradient(to right, rgba(20,20,20,0.95), rgba(10,10,10,0.95));
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(10px);
-      z-index: 2;
-    }
-
-    .topbar {
-      position: absolute;
-      top: 17px;
-      left: 20px;
-      display: flex;
-      gap: 8px;
-      z-index: 3;
-    }
-
-    .dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.15);
-    }
-    
-    .preview:hover .dot:nth-child(1) { background: #ff5f56; }
-    .preview:hover .dot:nth-child(2) { background: #ffbd2e; }
-    .preview:hover .dot:nth-child(3) { background: #27c93f; }
-
-    .preview iframe {
-      width: 100%;
-      height: calc(100% - 44px);
-      margin-top: 44px;
-      border: none;
-      display: block;
-      background: #121212;
-    }
-
-    .recurso.invertido {
-      grid-template-columns: minmax(0, 1fr) 420px;
-    }
-    
-    .recurso.invertido .info > * {
-      transform: translateX(30px);
-    }
-    
-    section.visible .recurso.invertido .info > * {
-      transform: translateX(0);
-    }
-
-    /* ==========================================================================
-       INDICADORES DE PAGINACIÓN LATERAL
-       ========================================================================== */
-    .side-nav {
-      position: fixed;
-      right: 35px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      z-index: 999;
-    }
-
-    .side-dot {
-      width: 6px;
-      height: 24px;
-      border-radius: 12px;
-      background: var(--accent);
-	  box-shadow: 0 0 20px var(--accent-light);
-      cursor: pointer;
-      transition: all 0.4s var(--ease-out-expo);
-    }
-
-    .side-dot.active {
-      background: var(--accent-light);
-      height: 48px;
-      box-shadow: 0 0 15px var(--accent);
-    }
-
-
-/* ==================================================
-   ENIF - PROYECTO DESTACADO
-================================================== */
-
-.enif-section{
-    min-height: 1000px;
-    padding:120px 70px;
-    display:flex;
-    justify-content:center;
-    position:relative;
-}
-.enif-section{
-    height:auto !important;
-    min-height:auto !important;
-}
-.enif-showcase{
-    width:min(1900px,96vw);
-    display:flex;
-    flex-direction:column;
-    gap:80px;
+.about-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
 }
 
-/* ==================================================
-   HEADER
-================================================== */
-
-.enif-header{
-    max-width:1200px;
-    margin:auto;
-    text-align:center;
+.highlight {
+  padding: 25px;
+  border-left: 2px solid var(--gold-base);
+  background: rgba(212, 175, 55, 0.03);
+  border-radius: 0 12px 12px 0;
 }
 
-.enif-tag{
-    display:inline-flex;
-    padding:10px 22px;
-    border-radius:999px;
-    background:rgba(245,158,11,.08);
-    border:1px solid rgba(245,158,11,.25);
-    color:#f59e0b;
-    font-size:.75rem;
-    font-weight:800;
-    letter-spacing:.15em;
-    text-transform:uppercase;
+.highlight strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: var(--text-main);
 }
 
-.enif-header h2{
-    margin-top:25px;
-    font-size:clamp(3rem,5vw,5.5rem);
-    font-weight:900;
-    line-height:1.05;
-    letter-spacing:-.05em;
+.highlight span {
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
-.enif-header h2 span{
-    background:linear-gradient(
-        135deg,
-        #ffffff,
-        #f59e0b
-    );
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+/* ==========================================================================
+   7. SECCIÓN: METODOLOGÍA
+   ========================================================================== */
+.methodology {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px 80px;
 }
 
-.enif-header p{
-    margin-top:25px;
-    color:#9ca3af;
-    line-height:1.9;
-    font-size:1.15rem;
-    max-width:1000px;
-    margin-inline:auto;
+.method-header {
+  max-width: 900px;
+  margin: 0 auto 100px;
+  text-align: center;
 }
 
-/* ==================================================
-   GALERIA
-================================================== */
-
-.enif-gallery{
-    display:flex;
-    flex-direction:column;
-    gap:28px;
+.method-tag {
+  display: inline-block;
+  color: var(--gold-base);
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 15px;
 }
 
-/* ==================================================
-   HERO SHOT
-================================================== */
-
-.enif-shot-main{
-    height:760px;
+.method-header h2 {
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 25px;
 }
 
-/* ==================================================
-   GRID INTERMEDIO
-================================================== */
-
-.enif-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:28px;
+.method-header h2 span {
+  display: block;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-base));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.enif-shot-2,
-.enif-shot-3,
-.enif-shot-4,
-.enif-shot-5{
-    height:340px;
+.method-header p {
+  color: var(--text-muted);
+  line-height: 1.5;
+  font-size: 1.1rem;
 }
 
-/* ==================================================
-   SCREENSHOT FINAL
-================================================== */
-
-.enif-shot-wide{
-    height:620px;
+.timeline {
+  width: min(1400px, 90vw);
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
 }
 
-/* ==================================================
-   TARJETAS IMAGEN
-================================================== */
-
-.enif-shot-main,
-.enif-shot-2,
-.enif-shot-3,
-.enif-shot-4,
-.enif-shot-5,
-.enif-shot-wide{
-
-    position:relative;
-
-    overflow:hidden;
-
-    border-radius:34px;
-
-    background:#090909;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    box-shadow:
-        0 30px 70px rgba(0,0,0,.55);
-
-    transition:
-        transform .6s cubic-bezier(.16,1,.3,1),
-        border-color .6s;
+.timeline-item {
+  position: relative;
+  padding: 40px 30px;
+  background: linear-gradient(180deg, rgba(212,175,55,0.04), rgba(255,255,255,0.01));
+  border: 1px solid var(--glass-border);
+  border-radius: 25px;
+  transition: 0.4s var(--ease-out-expo);
 }
 
-.enif-shot-main:hover,
-.enif-shot-2:hover,
-.enif-shot-3:hover,
-.enif-shot-4:hover,
-.enif-shot-5:hover,
-.enif-shot-wide:hover{
-
-    transform:translateY(-6px);
-
-    border-color:rgba(245,158,11,.25);
+.timeline-item:hover {
+  transform: translateY(-10px);
+  border-color: var(--gold-base);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 30px var(--gold-glow);
 }
 
-.enif-gallery img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    transition:transform .9s cubic-bezier(.16,1,.3,1);
+.step-number {
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--gold-glow);
+  margin-bottom: 15px;
+  transition: 0.4s ease;
 }
 
-.enif-gallery img:hover{
-    transform:scale(1.04);
+.timeline-item:hover .step-number {
+  color: var(--gold-base);
 }
 
-/* ==================================================
-   METRICAS
-================================================== */
-
-.enif-footer{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:22px;
+.timeline-item h3 {
+  color: var(--text-main);
+  margin-bottom: 12.5px;
 }
 
-.enif-metric{
-    padding:34px;
-    border-radius:28px;
-
-    background:
-    linear-gradient(
-        145deg,
-        rgba(18,18,18,.90),
-        rgba(8,8,8,.96)
-    );
-
-    border:1px solid rgba(255,255,255,.05);
-
-    text-align:center;
+.timeline-item p {
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
-.enif-metric span{
-    display:block;
-    color:#9ca3af;
-    font-size:.75rem;
-    text-transform:uppercase;
-    letter-spacing:.12em;
+/* ==========================================================================
+   8. SECCIÓN: PRODUCTOS Y RECURSOS (CAJAS DE CRISTAL)
+   ========================================================================== */
+.recurso {
+  width: min(1560px, 92vw);
+  height: 84vh;
+  display: grid;
+  grid-template-columns: 420px minmax(0, 1fr);
+  gap: 45px;
+  padding: 40px;
+  border-radius: 40px;
+  background: linear-gradient(145deg, rgba(22, 22, 22, 0.8), rgba(8, 8, 8, 0.95));
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 
+    0 40px 100px rgba(0, 0, 0, 0.9),
+    inset 0 1px 2px rgba(212, 175, 55, 0.1);
+  position: relative;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  opacity: 0;
+  transform: translateY(50px) rotateX(5deg);
+  transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo);
 }
 
-.enif-metric strong{
-    display:block;
-    margin-top:14px;
-    font-size:2rem;
-    font-weight:800;
-    color:white;
+section.visible .recurso {
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
 }
 
-/* ==================================================
-   NOTA
-================================================== */
-
-.enif-note{
-    max-width:1100px;
-    margin:auto;
-    padding:35px;
-    border-radius:28px;
-    background:rgba(255,255,255,.02);
-    border:1px solid rgba(255,255,255,.05);
-    text-align:center;
-    color:#9ca3af;
-    line-height:1.9;
+/* Efectos de Iluminación Ambiental Dorada */
+.recurso::before {
+  content: "";
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  top: -350px;
+  left: -250px;
+  background: radial-gradient(circle, var(--gold-glow) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+  animation: pulseAmbient 8s alternate infinite ease-in-out;
 }
 
-/* ==================================================
-   RESPONSIVE
-================================================== */
-
-@media(max-width:1200px){
-
-    .enif-section{
-        padding:90px 30px;
-    }
-
-    .enif-shot-main{
-        height:500px;
-    }
-
-    .enif-grid{
-        grid-template-columns:1fr;
-    }
-
-    .enif-shot-2,
-    .enif-shot-3,
-    .enif-shot-4,
-    .enif-shot-5{
-        height:280px;
-    }
-
-    .enif-shot-wide{
-        height:420px;
-    }
-
-    .enif-footer{
-        grid-template-columns:1fr 1fr;
-    }
+.recurso.invertido::before {
+  right: -250px;
+  left: unset;
 }
 
-@media(max-width:768px){
-
-    .enif-section{
-        padding:60px 20px;
-    }
-
-    .enif-header h2{
-        font-size:2.3rem;
-    }
-
-    .enif-shot-main{
-        height:320px;
-    }
-
-    .enif-shot-2,
-    .enif-shot-3,
-    .enif-shot-4,
-    .enif-shot-5{
-        height:220px;
-    }
-
-    .enif-shot-wide{
-        height:280px;
-    }
-
-    .enif-footer{
-        grid-template-columns:1fr;
-    }
+@keyframes pulseAmbient {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.1); opacity: 1; }
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
-
-@media(max-width:900px){
-
-    .enif-gallery{
-        grid-template-columns:1fr;
-    }
-
-    .enif-shot.large{
-        grid-row:auto;
-    }
-
-    .enif-footer{
-        grid-template-columns:1fr 1fr;
-    }
+/* Panel Informativo Lateral */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  position: relative;
+  z-index: 2;
+  height: 100%;
 }
 
-    /* ==========================================================================
-       RESPONSIVE DESIGN (BREAKPOINTS)
-       ========================================================================== */
+.info > * {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+
+section.visible .info > * { opacity: 1; transform: translateX(0); }
+section.visible .info > :nth-child(1) { transition-delay: 0.2s; }
+section.visible .info > :nth-child(2) { transition-delay: 0.3s; }
+section.visible .info > :nth-child(3) { transition-delay: 0.4s; }
+section.visible .info > :nth-child(4) { transition-delay: 0.5s; }
+section.visible .info > :nth-child(5) { transition-delay: 0.6s; }
+
+.tag {
+  width: max-content;
+  padding: 8px 16px;
+  border-radius: 12px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.titulo {
+  font-size: clamp(2rem, 2.8vw, 3rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+}
+
+.titulo span {
+  background: linear-gradient(135deg, var(--gold-light) 10%, var(--gold-base) 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Divider 100% Dorado */
+.divider {
+  width: 70px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+  box-shadow: 0 0 12px var(--gold-glow-strong);
+}
+
+.descripcion {
+  color: var(--text-muted);
+  line-height: 1.8;
+  font-size: 1.05rem;
+  text-align: left;
+  font-weight: 400;
+}
+
+/* Tarjetas de Métricas (KPIs) Doradas */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: auto;
+}
+
+.card {
+  position: relative;
+  padding: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(255,255,255,0.01));
+  border: 1px solid rgba(212,175,55,0.25);
+  box-shadow: inset 0 0 12px rgba(212,175,55,0.1);
+  transition: all 0.5s var(--ease-out-expo);
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--gold-light);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 25px var(--gold-glow-strong);
+}
+
+.card h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold-base);
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Contenedor del Iframe */
+.preview {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #090909;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+  transform: scale(0.98);
+  opacity: 0;
+  transition: all 1.2s var(--ease-out-expo) 0.3s;
+}
+
+section.visible .preview {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.preview::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background: linear-gradient(to right, rgba(20,20,20,0.95), rgba(10,10,10,0.95));
+  border-bottom: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  z-index: 2;
+}
+
+.topbar {
+  position: absolute;
+  top: 17px;
+  left: 20px;
+  display: flex;
+  gap: 8px;
+  z-index: 3;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.2);
+}
+
+.preview:hover .dot:nth-child(1) { background: #ff5f56; }
+.preview:hover .dot:nth-child(2) { background: #ffbd2e; }
+.preview:hover .dot:nth-child(3) { background: #27c93f; }
+
+.preview iframe {
+  width: 100%;
+  height: calc(100% - 44px);
+  margin-top: 44px;
+  border: none;
+  display: block;
+  background: #121212;
+}
+
+.recurso.invertido {
+  grid-template-columns: minmax(0, 1fr) 420px;
+}
+
+.recurso.invertido .info > * { transform: translateX(30px); }
+section.visible .recurso.invertido .info > * { transform: translateX(0); }
+
+/* ==========================================================================
+   9. CASO DE ESTUDIO (DASHBOARD ENIF)
+   ========================================================================== */
+.cs-container {
+  width: min(1500px, 95vw);
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  opacity: 0;
+  transform: scale(0.95) translateY(30px);
+  transition: all 1.2s var(--ease-out-expo);
+}
+
+section.visible .cs-container {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.cs-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 12px;
+  background: var(--gold-glow);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.cs-title {
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  line-height: 1.1;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+.cs-title span, .cs-bento-text h3 span {
+  background: linear-gradient(135deg, var(--gold-light) 10%, var(--gold-dark) 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cs-desc {
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  line-height: 1.8;
+  max-width: 850px;
+  margin: 20px auto 0;
+}
+
+/* Slide 1: Hero Principal */
+.cs-hero {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 30px;
+  height: 100%;
+}
+
+.cs-image-main, .cs-image-wide {
+  flex: 1;
+  width: 100%;
+  min-height: 0; 
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+.cs-image-main img, .cs-image-wide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.8s ease;
+}
+
+.cs-image-main:hover img, .cs-image-wide:hover img {
+  transform: scale(1.02);
+}
+
+/* Slide 2: Bento Grid */
+.cs-bento-layout {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 50px;
+  height: 100%;
+  align-items: center;
+}
+
+.cs-bento-text h3 {
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.1;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 20px;
+}
+
+.cs-bento-text .divider { margin-bottom: 25px; }
+
+.cs-bento-text p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.cs-bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  height: 85%;
+}
+
+.cs-bento-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+  transition: all 0.4s ease;
+}
+
+.cs-bento-grid img:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: var(--gold-base);
+  box-shadow: 0 20px 40px var(--gold-glow-strong);
+  z-index: 2;
+}
+
+/* Slide 3: Footer */
+.cs-footer-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  height: 100%;
+  padding-top: 20px;
+}
+
+.cs-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.cs-image-wide img {
+  object-position: center; 
+}
+
+/* ==========================================================================
+   10. RESPONSIVE DESIGN
+   ========================================================================== */
 @media(max-width: 1200px) {
   section { padding: 30px; }
   
@@ -972,20 +785,26 @@
     gap: 30px;
     padding: 30px;
     
-    /* === ESTO ES LO QUE ELIMINA LO FEO === */
-    scrollbar-width: none; /* Oculta en Firefox */
-    -ms-overflow-style: none; /* Oculta en IE/Edge */
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
   }
 
-  /* Oculta en Chrome, Safari y Opera */
-  .recurso::-webkit-scrollbar {
-    display: none;
-  }
-
+  .recurso::-webkit-scrollbar { display: none; }
   .recurso.invertido { grid-template-columns: 1fr; }
   .recurso.invertido .preview { grid-row: 2; }
   .preview { height: 45vh; }
   .side-nav { display: none; }
+}
+
+@media(max-width: 1024px) {
+  .cs-bento-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 30px;
+  }
+  .cs-bento-text { text-align: center; }
+  .cs-bento-text .divider { margin: 0 auto 20px; }
+  .cs-stats-row { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media(max-width: 768px) {
@@ -995,6 +814,12 @@
   .preview { height: 38vh; border-radius: 16px; }
   .titulo { font-size: 2rem; }
   .hero h1 { padding: 25px; font-size: 2.2rem; }
+  
+  .cs-container { height: auto; min-height: 80vh; justify-content: flex-start; }
+  .cs-title { font-size: 2rem; }
+  .cs-hero, .cs-footer-layout { gap: 20px; }
+  .cs-image-main, .cs-image-wide { min-height: 30vh; }
+  .cs-bento-grid { gap: 10px; height: 40vh; }
 }
   </style>
 </head>
@@ -1018,7 +843,7 @@
     <div class="about-container">
 
         <div class="about-photo">
-            <img src="foto.jpg" alt="Javier Barillas">
+            <img src="personal.png" alt="Javier Barillas">
         </div>
 
         <div class="about-content">
@@ -1033,7 +858,7 @@
             </h2>
 
             <p>
-Soy Javier Barillas, economista especializado en análisis de datos, visualización y desarrollo de dashboards. Combino estadística, programación y diseño para transformar información compleja en herramientas que apoyan la toma de decisiones. Manejo SQL, Python, HTML, CSS, JavaScript, Excel y Power BI, integrando análisis económico con comunicación visual efectiva. Actualmente me enfoco en analítica descriptiva, con el objetivo de avanzar hacia modelos predictivos y soluciones basadas en datos.			
+			Soy Javier Barillas, economista especializado en análisis de datos, visualización y desarrollo de dashboards. Combino estadística, programación y diseño para transformar información compleja en herramientas que apoyan la toma de decisiones. Manejo SQL, Python, HTML, CSS, JavaScript, Excel y Power BI, integrando análisis económico con comunicación visual efectiva. Actualmente me enfoco en analítica descriptiva, con el objetivo de avanzar hacia modelos predictivos y soluciones basadas en datos.			
             </p>
 
             <div class="about-highlights">
@@ -1091,7 +916,7 @@ Soy Javier Barillas, economista especializado en análisis de datos, visualizaci
 
             <p>
                 Utilización de bases de datos públicas,
-                repositorios académicos y conjuntos de datos
+                repositorios académicos y conjuntos de datos obtenidos en Kaggle
                 especializados para cada dominio analítico.
             </p>
         </div>
@@ -1236,126 +1061,68 @@ Soy Javier Barillas, economista especializado en análisis de datos, visualizaci
     </div>
   </section>
 
-<section class="enif-section">
-
-    <div class="enif-showcase">
-
-        <div class="enif-header">
-
-            <span class="enif-tag">
-                Proyecto Destacado
-            </span>
-
-            <h2>
-                Dashboard de la
-                <span>Encuesta Nacional de Inclusión Financiera (ENIF)</span>
-            </h2>
-
-            <p>
-                Plataforma analítica desarrollada para explorar los principales
-                indicadores de inclusión financiera en Guatemala.
-                El sistema integra múltiples módulos temáticos, filtros dinámicos
-                y visualizaciones interactivas orientadas al análisis económico,
-                social y territorial de la población.
-            </p>
-
-        </div>
-
-        <!-- ==========================================
-             CAPTURA PRINCIPAL
-        =========================================== -->
-
-        <div class="enif-gallery">
-
-            <div class="enif-shot-main">
-                <img src="enif1.png"
-                     alt="Vista principal del dashboard ENIF">
-            </div>
-
-            <!-- ======================================
-                 MODULOS INTERMEDIOS
-            ======================================= -->
-
-            <div class="enif-grid">
-
-                <div class="enif-shot-2">
-                    <img src="enif2.png"
-                         alt="Módulo ENIF">
-                </div>
-
-                <div class="enif-shot-3">
-                    <img src="enif3.png"
-                         alt="Módulo ENIF">
-                </div>
-
-                <div class="enif-shot-4">
-                    <img src="enif4.png"
-                         alt="Módulo ENIF">
-                </div>
-
-                <div class="enif-shot-5">
-                    <img src="enif5.png"
-                         alt="Módulo ENIF">
-                </div>
-
-            </div>
-
-            <!-- ======================================
-                 CAPTURA FINAL
-            ======================================= -->
-
-            <div class="enif-shot-wide">
-                <img src="enif6.png"
-                     alt="Resultados y conclusiones">
-            </div>
-
-        </div>
-
-        <!-- ==========================================
-             METRICAS
-        =========================================== -->
-
-        <div class="enif-footer">
-
-            <div class="enif-metric">
-                <span>Módulos Analíticos</span>
-                <strong>20+</strong>
-            </div>
-
-            <div class="enif-metric">
-                <span>Variables Procesadas</span>
-                <strong>500+</strong>
-            </div>
-
-            <div class="enif-metric">
-                <span>Visualizaciones</span>
-                <strong>40+</strong>
-            </div>
-
-            <div class="enif-metric">
-                <span>Tecnologías</span>
-                <strong>Python + JS</strong>
-            </div>
-
-        </div>
-
-        <!-- ==========================================
-             NOTA DEL PROYECTO
-        =========================================== -->
-
-        <div class="enif-note">
-
-            Este dashboard fue desarrollado a partir de los microdatos de la
-            Encuesta Nacional de Inclusión Financiera (ENIF). El proyecto
-            involucró procesos de limpieza, transformación y modelado de datos,
-            construcción de indicadores estadísticos y desarrollo de
-            visualizaciones interactivas orientadas al análisis económico y
-            social de la población guatemalteca.
-
-        </div>
-
+<!-- ==========================================
+     CASO DE ESTUDIO ENIF - PARTE 1: INTRO Y HERO
+     ========================================== -->
+<section>
+  <div class="cs-container">
+    <div class="cs-hero">
+      <div class="cs-header">
+        <div class="cs-badge">CASO DE ESTUDIO · DASHBOARD ENIF</div>
+        <h2 class="cs-title">Inclusión Financiera en <span>Guatemala</span></h2>
+        <p class="cs-desc">
+          Plataforma analítica integral diseñada para explorar indicadores clave de acceso, uso y calidad de servicios financieros. Un solo dashboard, múltiples perspectivas.
+        </p>
+      </div>
+      <div class="cs-image-main">
+        <img src="enif1.png" alt="Dashboard ENIF Principal">
+      </div>
     </div>
+  </div>
+</section>
 
+<!-- ==========================================
+     CASO DE ESTUDIO ENIF - PARTE 2: BENTO GRID
+     ========================================== -->
+<section>
+  <div class="cs-container">
+    <div class="cs-bento-layout">
+      <div class="cs-bento-text">
+        <div class="cs-badge">CASO DE ESTUDIO · DASHBOARD ENIF</div>
+        <h3>Exploración <span>Multidimensional</span></h3>
+        <div class="divider"></div>
+        <p>
+          En lugar de vistas estáticas, la herramienta segmenta los datos en módulos interactivos. Al aislar variables como el acceso, servicios, cuentas y prestamos, permite un cruce sociodemográfico preciso para revelar brechas estructurales.
+        </p>
+      </div>
+      <div class="cs-bento-grid">
+        <img src="enif2.png" alt="Módulo de Ahorro">
+        <img src="enif3.png" alt="Módulo de Crédito">
+        <img src="enif4.png" alt="Filtros">
+        <img src="enif5.png" alt="KPIs">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     CASO DE ESTUDIO ENIF - PARTE 3: MÉTRICAS Y CIERRE
+     ========================================== -->
+<section>
+  <div class="cs-container">
+    <div class="cs-footer-layout">
+      <!-- Usamos las tarjetas (cards) que ya tenías definidas en tu CSS principal -->
+      <div class="cs-stats-row">
+        <div class="card"><h3>Registros</h3><p>Trimestral 2015 - 2025</p></div>
+        <div class="card"><h3>Variables</h3><p>4 Analizadas</p></div>
+        <div class="card"><h3>Componentes</h3><p>+20 Módulos</p></div>
+        <div class="card"><h3>Impacto</h3><p>Nivel Nacional</p></div>
+      </div>
+      <div class="cs-image-wide">
+        <img src="enif6.png" alt="Vista de Mapa o Inferior">
+      </div>
+    </div>
+  </div>
 </section>
 
 </div>
