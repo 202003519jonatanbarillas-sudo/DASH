@@ -559,13 +559,12 @@ function renderCharts() {
         freqs[idx]++;
     });
 
-    chartHist.setOption({
+	chartHist.setOption({
         ...baseConfig,
-        // Tooltip alineado al diseño general para el histograma
         tooltip: { 
             trigger: 'item',
             backgroundColor: 'rgba(11, 17, 32, 0.95)',
-            borderColor: colorCyan,
+            borderColor: colorCoral, // Cambiamos el borde del tooltip a tono coral/vino
             textStyle: { color: '#F8FAFC' },
             formatter: p => `${p.name}<br/>Frecuencia: <b>${p.value}</b> meses`
         },
@@ -576,9 +575,10 @@ function renderCharts() {
             data: freqs,
             type: 'bar',
             itemStyle: {
+                // Gradiente en tonos Vino/Coral a juego con el Heatmap
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    { offset: 0, color: colorCyan },
-                    { offset: 1, color: 'rgba(0, 229, 255, 0.1)' }
+                    { offset: 0, color: colorCoral },              // Tono principal Vino/Coral
+                    { offset: 1, color: 'rgba(244, 67, 54, 0.1)' } // Desvanecimiento suave hacia el fondo
                 ]),
                 borderRadius: [4, 4, 0, 0]
             }
