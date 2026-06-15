@@ -819,6 +819,91 @@ section.visible .cs-container {
   .side-nav { display: none; }
 }
 
+/* ==========================================================================
+   NUEVOS COMPONENTES: RECOMENDACIONES DE PANTALLA COMPLETA
+   ========================================================================== */
+
+/* Sugerencia en la Portada (Hero) */
+.fullscreen-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  pointer-events: none;
+  animation: pulseHint 2.5s infinite ease-in-out;
+  z-index: 10;
+}
+
+.fullscreen-hint span {
+  color: var(--gold-light);
+  font-weight: 700;
+}
+
+/* Flecha animada apuntando al botón superior derecho */
+.fullscreen-hint::after {
+  content: "↗";
+  font-size: 1.2rem;
+  color: var(--gold-base);
+  animation: bounceArrow 1.5s infinite alternative ease-in-out;
+}
+
+@keyframes pulseHint {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; text-shadow: 0 0 10px var(--gold-glow-strong); }
+}
+
+@keyframes bounceArrow {
+  0% { transform: translate(-3px, 3px); }
+  100% { transform: translate(3px, -3px); }
+}
+
+/* Sugerencia en la esquina superior izquierda de cada Dashboard */
+.dashboard-hint {
+  position: absolute;
+  top: 12px;
+  left: 70px; /* Se posiciona al lado de los 3 puntitos de colores */
+  z-index: 4;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--gold-light);
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 4px 10px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  animation: fadeInHint 1s var(--ease-out-expo) forwards;
+}
+
+/* Pequeño indicador parpadeante al lado del texto del dashboard */
+.dashboard-hint::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background-color: var(--gold-light);
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px var(--gold-light);
+}
+
+@keyframes fadeInHint {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
 @media(max-width: 1024px) {
   .cs-bento-layout {
     grid-template-columns: 1fr;
@@ -844,6 +929,8 @@ section.visible .cs-container {
   .cs-image-main, .cs-image-wide { min-height: 30vh; }
   .cs-bento-grid { gap: 10px; height: 40vh; }
 }
+
+
   </style>
 </head>
 
@@ -860,6 +947,7 @@ section.visible .cs-container {
       <source src="https://github.com/202003519jonatanbarillas-sudo/infogra-chin/releases/download/v1/valores.mp4" type="video/mp4">
     </video>
     <h1>PORTAFOLIO DE DASHBOARDS</h1>
+	<div class="fullscreen-hint">Se recomienda visualizar en <span>Pantalla Completa</span></div>
   </section>
 
 <section class="about-section">
@@ -1004,6 +1092,7 @@ section.visible .cs-container {
 
       <div class="preview">
         <div class="topbar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+		<div class="dashboard-hint">Visualizar Dashboard en pantalla completa</div>
         <iframe src="dashboard1.html"></iframe>
       </div>
     </div>
@@ -1013,6 +1102,7 @@ section.visible .cs-container {
     <div class="recurso invertido">
       <div class="preview">
         <div class="topbar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+		<div class="dashboard-hint">Visualizar Dashboard en pantalla completa</div>
         <iframe src="dashboard2.html"></iframe>
       </div>
 
@@ -1054,6 +1144,7 @@ section.visible .cs-container {
 
       <div class="preview">
         <div class="topbar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+		<div class="dashboard-hint">Visualizar Dashboard en pantalla completa</div>
         <iframe src="dashboard3.html"></iframe>
       </div>
     </div>
@@ -1063,6 +1154,7 @@ section.visible .cs-container {
     <div class="recurso invertido">
       <div class="preview">
         <div class="topbar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+		<div class="dashboard-hint">Visualizar Dashboard en pantalla completa</div>
         <iframe src="dashboard4.html"></iframe>
       </div>
 
