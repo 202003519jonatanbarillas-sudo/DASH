@@ -222,6 +222,7 @@
                 <option value="gen">Vista Histórica</option>
                 <option value="intmen">Variación Intermensual</option>
                 <option value="intan">Variación Interanual</option>
+				<option value="cum12">Acumulada</option>
             </select>
             <button id="fullscreenBtn" title="Modo Cine">⛶</button>
         </div>
@@ -361,13 +362,20 @@ function renderCharts() {
     const intmen = dataCSV.map((d, i) => i === 0 ? 0 : ((d[currentVar] - dataCSV[i-1][currentVar]) / dataCSV[i-1][currentVar]) * 100);
     const intan = dataCSV.map((d, i) => i < 12 ? 0 : ((d[currentVar] - dataCSV[i-12][currentVar]) / dataCSV[i-12][currentVar]) * 100);
 
+// NUEVO: Variación Acumulada (Suma de los últimos 12 meses de variaciones mensuales)
+	// Cambiamos a i < 12 para que todo 1995 sea 0 y empiece estrictamente en Enero de 1996
+	const cum12 = dataCSV.map((d, i) => {
+		if (i < 12) return 0; 
+		return intmen.slice(i - 11, i + 1).reduce((a, b) => a + b, 0);
+	});																														
+
     let activeData = [];
     let skipCount = 0;
 
     if (currentView === 'gen') { activeData = rawData; skipCount = 0; }
     else if (currentView === 'intmen') { activeData = intmen; skipCount = 1; }
     else if (currentView === 'intan') { activeData = intan; skipCount = 12; }
-
+	else if (currentView === 'cum12') { activeData = cum12; skipCount = 11; }
     const validDataForStats = activeData.slice(skipCount);
 
     // --- B. ACTUALIZAR KPIS SUPERIORES ---
@@ -438,7 +446,7 @@ function renderCharts() {
         series: [{ type: 'heatmap', data: heatmapData, itemStyle: { borderRadius: 4, borderColor: '#030712', borderWidth: 2 } }]
     }, true);
 
-    // --- 3. RADAR (SUMA ESCALADA [GEN] VS PROMEDIO SIN ESCALA [VAR]) ---
+// --- 3. POLAR BAR CHART NORMALIZADO (Min-Max) ---
     const monthlySum = Array(12).fill(0);
     const monthlyCount = Array(12).fill(0);
     
@@ -449,44 +457,78 @@ function renderCharts() {
         }
     });
 
-    let radarVals = [];
+    // 1. Seleccionamos el dato crudo
+    let rawPolarData = [];
     if (currentView === 'gen') {
-        radarVals = scaleMinMax(monthlySum); 
+        rawPolarData = monthlySum; 
     } else {
-        radarVals = monthlySum.map((s, i) => monthlyCount[i] ? s / monthlyCount[i] : 0); 
+        rawPolarData = monthlySum.map((s, i) => monthlyCount[i] ? s / monthlyCount[i] : 0); 
     }
-    
-    const radarMax = Math.max(...radarVals) || 1;
+
+// 2. Normalización Min-Max para el motor de renderizado visual
+    const minVal = Math.min(...rawPolarData);
+    const maxVal = Math.max(...rawPolarData);
+    const range = (maxVal - minVal) === 0 ? 1 : (maxVal - minVal);
+
+    // ---> ESTE ES EL BLOQUE QUE FALTABA <---
+    const polarVisualData = rawPolarData.map(val => {
+        // Escalamos de 0.1 a 1.0 para que el mes más bajo siempre sea visible
+        return 0.1 + ((val - minVal) / range) * 0.025;
+    });
+    // ----------------------------------------
+
+    // 3. Formateamos la data para el Gráfico de Rosa
+    const roseData = polarVisualData.map((val, i) => ({
+        value: val,
+        name: months[i],
+        rawValue: rawPolarData[i] // Guardamos el dato real intacto para el Hover
+    }));
+
+    // Limpiamos la instancia antes de cambiar drásticamente de tipo de gráfico
+    chartRadial.clear(); 
 
     chartRadial.setOption({
         ...baseConfig,
-        // Configuración específica de Hover para el Radar
         tooltip: { 
             trigger: 'item',
             backgroundColor: 'rgba(11, 17, 32, 0.95)',
             borderColor: colorCyan,
             textStyle: { color: '#F8FAFC' },
-            valueFormatter: (value) => value.toFixed(2) // Limita a 2 decimales en el hover del radar
-        },
-        radar: {
-            indicator: months.map(m => ({ name: m, max: radarMax })),
-            center: ['50%', '55%'], radius: '65%',
-            splitArea: { areaStyle: { color: ['transparent'] } },
-            axisLine: { lineStyle: { color: 'rgba(0, 229, 255, 0.2)' } },
-            splitLine: { lineStyle: { color: 'rgba(0, 229, 255, 0.2)' } }
+            // Mostramos el valor REAL (rawValue) al usuario
+            formatter: p => {
+                let suffix = currentView === 'gen' ? '' : '%';
+                let prefix = currentView === 'gen' ? 'Q ' : '';
+                return `${p.name}<br/><b>${prefix}${formatNumber(p.data.rawValue)}${suffix}</b>`;
+            }
         },
         series: [{
-            type: 'radar',
-            data: [{
-                value: radarVals,
-                name: currentView === 'gen' ? 'Suma Anual (Escala 0-1)' : 'Promedio Mensual (%)',
-                lineStyle: { color: colorCyan, width: 2 },
-                areaStyle: { color: 'rgba(0, 229, 255, 0.3)' },
-                itemStyle: { color: colorCyan }
-            }]
+            type: 'pie',
+            radius: [0, '70%'], // El 0 inicial elimina el agujero del centro
+            center: ['50%', '55%'],
+            roseType: 'area', // Esto crea la estética simétrica de la Rosa
+            itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    { offset: 0, color: colorCyan },
+                    { offset: 1, color: 'rgba(0, 229, 255, 0.1)' }
+                ]),
+                borderRadius: 4,
+                borderColor: '#0b1120', // Color oscuro de fondo para separar las "hojas"
+                borderWidth: 2
+            },
+            label: {
+                color: colorMuted,
+                fontSize: 10
+            },
+            labelLine: {
+                lineStyle: { color: 'rgba(255, 255, 255, 0.1)' },
+                smooth: 0.2,
+                length: 8,
+                length2: 12
+            },
+            data: roseData
         }]
     }, true);
-
+	
     // --- 4. HISTOGRAMA (BINS ESCALADOS 0-1 [GEN] VS BINS CRUDOS [VAR]) ---
     const binCount = 5;
     let histMin, histMax, dataForBins;
