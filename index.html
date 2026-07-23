@@ -8,9 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-/* ==========================================================================
-   1. VARIABLES & THEME (PALETA DORADA PREMIUM)
-   ========================================================================== */
+
 :root {
   /* Fondos */
   --bg-start: #050505;
@@ -34,9 +32,7 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ==========================================================================
-   2. RESET & BASE DESIGN
-   ========================================================================== */
+
 * {
   margin: 0;
   padding: 0;
@@ -62,9 +58,7 @@ body {
   color: var(--text-main);
 }
 
-/* ==========================================================================
-   3. LAYOUT PRINCIPAL (SCROLL SNAP & FONDO)
-   ========================================================================== */
+
 #container {
   height: 100vh;
   overflow-y: hidden;
@@ -72,7 +66,6 @@ body {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   position: relative;
-  /* Retícula de fondo tintada ligeramente en oro */
   background-image: 
     linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
@@ -98,9 +91,6 @@ section {
   perspective: 1000px;
 }
 
-/* ==========================================================================
-   4. UI COMPONENTS (BOTONES Y NAVEGACIÓN)
-   ========================================================================== */
 #fullscreenBtn {
   position: fixed;
   top: 30px;
@@ -158,9 +148,6 @@ section {
   box-shadow: 0 0 15px var(--gold-base);
 }
 
-/* ==========================================================================
-   5. SECCIÓN: HERO
-   ========================================================================== */
 .hero video {
   position: absolute;
   inset: 0;
@@ -179,20 +166,17 @@ section {
 }
 
 .hero h1 {
-  /* Espaciado más dinámico y responsivo */
   padding: clamp(30px, 6vw, 60px) clamp(20px, 4vw, 40px);
-  line-height: 1.1; /* Crucial: reduce el espacio entre líneas para un look editorial */
+  line-height: 1.1; 
   
-  /* Fondo con degradado sutil para dar volumen (evita que se vea plano) */
+
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.2) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   
-  /* Borde definido pero suave */
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px; 
   
-  /* Tipografía limpia y moderna */
   color: #ffffff;
   text-shadow: none; 
   font-size: clamp(2.2rem, 5.5vw, 4.2rem);
@@ -207,9 +191,6 @@ section {
   transition: transform 0.3s ease;
 }
 
-/* ==========================================================================
-   6. SECCIÓN: ABOUT ME
-   ========================================================================== */
 .about-section {
   min-height: 100vh;
   display: flex;
@@ -303,9 +284,7 @@ section {
   font-size: 0.9rem;
 }
 
-/* ==========================================================================
-   7. SECCIÓN: METODOLOGÍA
-   ========================================================================== */
+
 .methodology {
   min-height: 100vh;
   display: flex;
@@ -394,9 +373,6 @@ section {
   line-height: 1.5;
 }
 
-/* ==========================================================================
-   8. SECCIÓN: PRODUCTOS Y RECURSOS (CAJAS DE CRISTAL)
-   ========================================================================== */
 .recurso {
   width: min(1560px, 92vw);
   height: 84vh;
@@ -502,7 +478,6 @@ section.visible .info > :nth-child(5) { transition-delay: 0.6s; }
   display: inline-block;
 }
 
-/* Divider 100% Dorado */
 .divider {
   width: 70px;
   height: 4px;
@@ -628,9 +603,6 @@ section.visible .preview {
 .recurso.invertido .info > * { transform: translateX(30px); }
 section.visible .recurso.invertido .info > * { transform: translateX(0); }
 
-/* ==========================================================================
-   9. CASO DE ESTUDIO (DASHBOARD ENIF)
-   ========================================================================== */
 .cs-container {
   width: min(1500px, 95vw);
   height: 85vh;
@@ -683,7 +655,6 @@ section.visible .cs-container {
   margin: 20px auto 0;
 }
 
-/* Slide 1: Hero Principal */
 .cs-hero {
   display: flex;
   flex-direction: column;
@@ -794,9 +765,7 @@ section.visible .cs-container {
     font-style: italic;
     border-radius: 4px;
 }
-/* ==========================================================================
-   10. RESPONSIVE DESIGN
-   ========================================================================== */
+
 @media(max-width: 1200px) {
   section { padding: 30px; }
   
@@ -819,11 +788,6 @@ section.visible .cs-container {
   .side-nav { display: none; }
 }
 
-/* ==========================================================================
-   NUEVOS COMPONENTES: RECOMENDACIONES DE PANTALLA COMPLETA
-   ========================================================================== */
-
-/* Sugerencia en la Portada (Hero) */
 .fullscreen-hint {
   position: absolute;
   bottom: 40px;
@@ -866,11 +830,11 @@ section.visible .cs-container {
   100% { transform: translate(3px, -3px); }
 }
 
-/* Sugerencia en la esquina superior izquierda de cada Dashboard */
+
 .dashboard-hint {
   position: absolute;
   top: 12px;
-  left: 70px; /* Se posiciona al lado de los 3 puntitos de colores */
+  left: 70px; 
   z-index: 4;
   font-size: 11px;
   font-weight: 700;
@@ -888,7 +852,7 @@ section.visible .cs-container {
   animation: fadeInHint 1s var(--ease-out-expo) forwards;
 }
 
-/* Pequeño indicador parpadeante al lado del texto del dashboard */
+
 .dashboard-hint::before {
   content: "";
   width: 6px;
@@ -913,6 +877,467 @@ section.visible .cs-container {
   .cs-bento-text { text-align: center; }
   .cs-bento-text .divider { margin: 0 auto 20px; }
   .cs-stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+.hub-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+}
+
+.hub-container {
+  width: min(1200px, 90vw);
+  text-align: center;
+}
+
+.hub-title {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 900;
+  margin-bottom: 15px;
+  color: var(--text-main);
+}
+
+.hub-title span {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-base));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hub-desc {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 50px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.hub-card {
+  padding: 40px;
+  background: linear-gradient(145deg, rgba(22, 22, 22, 0.8), rgba(8, 8, 8, 0.95));
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out-expo);
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.hub-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, var(--gold-glow), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.hub-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--gold-light);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 25px var(--gold-glow-strong);
+}
+
+.hub-card:hover::before {
+  opacity: 1;
+}
+
+.hub-card h3 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.hub-card h3 span {
+  color: var(--gold-light);
+}
+
+.hub-card p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  position: relative;
+  z-index: 1;
+}
+
+.hub-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--gold-light);
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.hub-card:hover .hub-btn {
+  background: var(--gold-base);
+  color: #050505;
+  box-shadow: 0 0 15px var(--gold-glow-strong);
+}
+
+.view-content {
+  display: none; /* Oculto por defecto */
+  transform-origin: top center;
+}
+
+.view-content.active-view {
+  display: block;
+  animation: desplegarPersiana 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes desplegarPersiana {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+    max-height: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+    max-height: 10000px; /* Suficiente espacio para que crezcan las secciones */
+  }
+}
+
+
+.hub-card.active-card {
+  border-color: var(--gold-base);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15), inset 0 0 15px rgba(212, 175, 55, 0.05);
+}
+.hub-card.active-card::before {
+  opacity: 1;
+}
+.hub-card.active-card .hub-btn {
+  background: var(--gold-base);
+  color: #050505;
+}
+
+.analysis-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0b0b0b;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.case-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  height: 85vh; /* Mantiene un margen arriba y abajo para no usar scroll */
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 40px;
+  align-items: stretch;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.analysis-section.visible .case-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- COLUMNA IZQUIERDA --- */
+.case-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 20px;
+}
+
+.case-top-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #d4af37;
+  border: 1px solid #a57a29;
+  padding: 6px 14px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.case-title {
+  font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.case-divider {
+  width: 50px;
+  height: 3px;
+  background: #d4af37;
+  margin-bottom: 20px;
+  border-radius: 2px;
+}
+
+.case-desc {
+  color: #cfcfcf;
+  font-size: clamp(0.9rem, 1vw, 1.05rem);
+  line-height: 1.6;
+  margin-bottom: 25px;
+  text-wrap: pretty;
+}
+
+.case-badges-container {
+  margin-bottom: 25px;
+}
+
+.badges-title {
+  font-size: 0.75rem;
+  color: #a57a29;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.badge.tech {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge.skill {
+  background: rgba(212, 175, 55, 0.05);
+  color: #d4af37;
+  border: 1px solid rgba(165, 122, 41, 0.3);
+}
+
+.case-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: auto;
+}
+
+.case-btn {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-btn.primary {
+  background: #d4af37;
+  color: #0b0b0b;
+  border: 1px solid #d4af37;
+}
+
+.case-btn.primary:hover {
+  background: transparent;
+  color: #d4af37;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.case-btn.secondary {
+  background: transparent;
+  color: #cfcfcf;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.case-btn.secondary:hover {
+  border-color: #d4af37;
+  color: #ffffff;
+}
+
+/* --- COLUMNA DERECHA (EXECUTIVE SUMMARY) --- */
+.case-right {
+  background-color: #121212;
+  border: 1px solid #a57a29;
+  border-radius: 18px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.case-right::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #a57a29, #d4af37, #a57a29);
+}
+
+.exec-header {
+  margin-bottom: 25px;
+}
+
+.exec-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #d4af37;
+}
+
+.exec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+.exec-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(165, 122, 41, 0.15);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.exec-card:hover {
+  border-color: #a57a29;
+  background: rgba(212, 175, 55, 0.03);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card-icon {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: #d4af37;
+}
+
+.exec-card h4 {
+  font-size: 0.95rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.exec-card p, .exec-card ul {
+  font-size: 0.85rem;
+  color: #cfcfcf;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+.exec-card ul {
+  list-style-type: none;
+}
+
+.exec-card ul.check-list li::before {
+  content: "✓ ";
+  color: #d4af37;
+  font-weight: bold;
+}
+
+.exec-card ul.bullet-list li {
+  position: relative;
+  padding-left: 12px;
+  margin-bottom: 4px;
+}
+.exec-card ul.bullet-list li::before {
+  content: "•";
+  color: #d4af37;
+  position: absolute;
+  left: 0;
+}
+
+.exec-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(165, 122, 41, 0.3);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.65rem;
+  color: #a57a29;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* RESPONSIVE MÓVIL */
+@media (max-width: 1024px) {
+  .case-wrapper {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 30px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  .analysis-section {
+    height: auto !important;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .exec-grid {
+    grid-template-columns: 1fr;
+  }
+  .exec-stats {
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-start;
+  }
+  .stat-item {
+    text-align: left;
+    margin-right: 15px;
+  }
+}
+
+@media(max-width: 768px) {
+  .hub-grid { grid-template-columns: 1fr; }
 }
 
 @media(max-width: 768px) {
@@ -996,6 +1421,31 @@ section.visible .cs-container {
     </div>
 </section>
 
+  <section class="hub-section">
+    <div class="hub-container">
+      <span class="about-badge">EXPLORAR PORTAFOLIO</span>
+      <h2 class="hub-title">Selecciona una <span>Categoría</span></h2>
+      <p class="hub-desc">
+        Elige entre los proyectos especializados de análisis estadístico y de datos, o explora la colección completa de dashboards interactivos de Business Intelligence.
+      </p>
+      
+      <div class="hub-grid">      
+        <div class="hub-card" onclick="switchView('analysis', this)">
+          <h3>Análisis de <span>Datos</span></h3>
+          <p>Modelos estadísticos, scripts de Python, SQL, notebooks y estudios económicos cuantitativos detallados.</p>
+          <div class="hub-btn">Ver Proyectos ➔</div>
+        </div>
+        
+        <div class="hub-card" onclick="switchView('dashboards', this)">
+          <h3><span>Dashboards</span> Interactivos</h3>
+          <p>Herramientas de Business Intelligence, visualizaciones web dinámicas, macroeconomía, ventas, logística y finanzas.</p>
+          <div class="hub-btn">Ver Dashboards ➔</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="dashboards-view" class="view-content">
 <section class="methodology">
 
     <div class="method-header">
@@ -1068,9 +1518,6 @@ section.visible .cs-container {
     </div>
 
 </section>
-
-
-
 
   <section>
     <div class="recurso">
@@ -1176,9 +1623,6 @@ section.visible .cs-container {
     </div>
   </section>
 
-<!-- ==========================================
-     CASO DE ESTUDIO ENIF - PARTE 1: INTRO Y HERO
-     ========================================== -->
 <section>
   <div class="cs-container">
     <div class="cs-hero">
@@ -1202,9 +1646,6 @@ section.visible .cs-container {
   </div>
 </section>
 
-<!-- ==========================================
-     CASO DE ESTUDIO ENIF - PARTE 2: BENTO GRID
-     ========================================== -->
 <section>
   <div class="cs-container">
     <div class="cs-bento-layout">
@@ -1226,9 +1667,6 @@ section.visible .cs-container {
   </div>
 </section>
 
-<!-- ==========================================
-     CASO DE ESTUDIO ENIF - PARTE 3: MÉTRICAS Y CIERRE
-     ========================================== -->
 <section>
   <div class="cs-container">
     <div class="cs-footer-layout">
@@ -1247,58 +1685,233 @@ section.visible .cs-container {
 </section>
 
 </div>
+  </div>
+
+  <div id="analysis-view" class="view-content">
+    
+    <!-- CASO 1 -->
+    <section class="analysis-section">
+      <div class="case-wrapper">
+        
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="case-left">
+          <div class="case-top-badge">CASO 01 | Sector Bancario</div>
+          
+          <h2 class="case-title">Análisis del Comportamiento de los Saldos Bancarios durante 2025</h2>
+          <div class="case-divider"></div>
+          
+          <p class="case-desc">
+            Proyecto de análisis exploratorio de datos desarrollado para comprender el comportamiento de los saldos bancarios durante 2025. El estudio identifica patrones temporales, diferencias entre sucursales, segmentos de clientes y grupos de edad, generando información que apoya la toma de decisiones comerciales y estratégicas.
+			</p>
+
+          <div class="case-badges-container">
+            <div class="badges-title">Tecnologías Utilizadas</div>
+            <div class="badge-group">
+              <span class="badge tech">MySQL</span>
+              <span class="badge tech">Python</span>
+              <span class="badge tech">Pandas</span>
+              <span class="badge tech">NumPy</span>
+              <span class="badge tech">Bokeh</span>
+              <span class="badge tech">JupyterLab</span>
+            </div>
+            
+            <div class="badges-title">Competencias Demostradas</div>
+            <div class="badge-group">
+              <span class="badge skill">SQL</span>
+              <span class="badge skill">Limpieza de Datos</span>
+              <span class="badge skill">EDA</span>
+              <span class="badge skill">Visualización</span>
+              <span class="badge skill">Storytelling</span>
+              <span class="badge skill">Análisis de Negocio</span>
+			  <span class="badge skill">Comunicación de Resultados</span>
+              <span class="badge skill">Toma de Decisiones</span>
+            </div>
+          </div>
+
+		<div class="case-actions">
+		  
+		  <a href="https://github.com/202003519jonatanbarillas-sudo/DASH/blob/master/Caso%201/Caso%201.ipynb" target="_blank" class="case-btn primary">Ver Notebook</a>
+		  
+		  <a href="https://github.com/202003519jonatanbarillas-sudo/DASH" target="_blank" class="case-btn secondary">Ver Repositorio</a>
+		  
+		  <a href="Caso 1/caso_1_limpios.csv" download="datos_caso1.csv" class="case-btn secondary">Descargar Datos</a>
+
+		</div>
+		
+        </div>
+
+        <div class="case-right">
+          <div class="exec-header">
+            <h3 class="exec-title">Resumen del Proyecto</h3>
+          </div>
+          
+          <div class="exec-grid">
+
+            <div class="exec-card">
+              <div class="card-icon">Meta</div>
+              <h4>Problema</h4>
+              <p>Comprender el comportamiento de los saldos bancarios registrados durante 2025 para apoyar la toma de decisiones comerciales.</p>
+            </div>
+            
+            <div class="exec-card">
+              <div class="card-icon">⚑</div>
+              <h4>Objetivo</h4>
+              <p>Identificar patrones temporales, diferencias entre sucursales y segmentos de clientes mediante análisis exploratorio de datos.</p>
+            </div>
+
+            <div class="exec-card">
+              <div class="card-icon">☰</div>
+              <h4>Preguntas Respondidas</h4>
+              <ul class="check-list">
+                <li>Evolución temporal</li>
+                <li>Sucursales</li>
+                <li>Segmentos</li>
+                <li>Relación ingreso–saldo</li>
+                <li>Distribución por edad</li>
+              </ul>
+            </div>
+
+            <div class="exec-card">
+              <div class="card-icon">✦</div>
+              <h4>Principales Hallazgos</h4>
+              <ul class="bullet-list">
+                <li>Comportamiento mensual sin tendencia sostenida.</li>
+                <li>Distribución equilibrada entre sucursales.</li>
+                <li>Segmentos homogéneos.</li>
+                <li>No existe relación lineal clara entre ingreso y saldo.</li>
+                <li>Mayor concentración de saldos entre 20 y 69 años.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="exec-stats">
+            <div class="stat-item">
+              <span class="stat-label">Sector</span>
+              <span class="stat-value">Bancario</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Tipo</span>
+              <span class="stat-value">EDA</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Visualizaciones</span>
+              <span class="stat-value">5</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Periodo</span>
+              <span class="stat-value">2025</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Recomendaciones</span>
+              <span class="stat-value">4</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Estado</span>
+              <span class="stat-value" style="color: #4CAF50;">Finalizado</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+  
 
 <script>
-  /* ==========================================================================
-     INTERSECTION OBSERVER (FADE-IN & DOTS COUPLING)
-     ========================================================================== */
-  const sections = document.querySelectorAll("section");
+
+  let sections = [];
+  let sideDots = [];
   const sideNav = document.getElementById("sideNav");
   let currentSection = 0;
   let isScrolling = false;
+  let observer = null;
 
-  // Renderizar dinámicamente los puntos laterales de navegación
-  sections.forEach((_, idx) => {
-    const dot = document.createElement("div");
-    dot.classList.add("side-dot");
-    if(idx === 0) dot.classList.add("active");
-    dot.addEventListener("click", () => goToSection(idx));
-    sideNav.appendChild(dot);
+
+  function initSections() {
+
+    if (observer) {
+      observer.disconnect();
+    }
+
+    sideNav.innerHTML = "";
+    
+    sections = Array.from(document.querySelectorAll("section")).filter(sec => sec.offsetParent !== null);
+
+    sections.forEach((_, idx) => {
+      const dot = document.createElement("div");
+      dot.classList.add("side-dot");
+      if(idx === 0) dot.classList.add("active");
+      dot.addEventListener("click", () => goToSection(idx));
+      sideNav.appendChild(dot);
+    });
+
+    sideDots = document.querySelectorAll(".side-dot");
+
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add("visible");
+          
+          // Sincronizar el punto activo
+          const index = sections.indexOf(entry.target);
+          if (index !== -1) {
+            currentSection = index;
+            sideDots.forEach((dot, i) => {
+              dot.classList.toggle("active", i === index);
+            });
+          }
+        }
+      });
+    }, { threshold: 0.35 });
+
+    sections.forEach(sec => observer.observe(sec));
+  }
+
+  function switchView(viewType, cardElement) {
+    const dashView = document.getElementById('dashboards-view');
+    const analysisView = document.getElementById('analysis-view');
+    const allCards = document.querySelectorAll('.hub-card');
+    
+    // Determinar qué vista se intentó abrir
+    const targetView = viewType === 'dashboards' ? dashView : analysisView;
+    const isCurrentlyOpen = targetView.classList.contains('active-view');
+
+    // 1. Limpiar todo (Cerrar persianas y quitar selecciones doradas)
+    dashView.classList.remove('active-view');
+    analysisView.classList.remove('active-view');
+    allCards.forEach(c => c.classList.remove('active-card'));
+
+    if (!isCurrentlyOpen) {
+      targetView.classList.add('active-view');
+      cardElement.classList.add('active-card');
+    }
+    
+    setTimeout(() => {
+      initSections();
+
+      if (!isCurrentlyOpen) {
+        goToSection(3);
+      }
+    }, 50);
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    initSections();
   });
 
-  const sideDots = document.querySelectorAll(".side-dot");
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add("visible");
-        // Sincronizar el punto activo según la sección visible en pantalla
-        const index = Array.from(sections).indexOf(entry.target);
-        currentSection = index;
-        sideDots.forEach((dot, i) => {
-          dot.classList.toggle("active", i === index);
-        });
+  const btn = document.getElementById("fullscreenBtn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
       }
     });
-  }, { threshold: 0.35 });
+  }
 
-  sections.forEach(sec => observer.observe(sec));
-
-  /* ==========================================================================
-     FULLSCREEN MANAGEMENT
-     ========================================================================== */
-const btn = document.getElementById("fullscreenBtn");
-  btn.addEventListener("click", () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  });
-
-  /* ==========================================================================
-     SCROLL KINETICS (ONE-PAGE SNAP CONTROL)
-     ========================================================================== */
   function goToSection(index){
     if(index < 0 || index >= sections.length) return;
     currentSection = index;
@@ -1320,37 +1933,34 @@ const btn = document.getElementById("fullscreenBtn");
 
     setTimeout(() => {
       isScrolling = false;
-    }, 1100); // Buffer alineado con las transiciones CSS de 1.1s
+    }, 1100); 
   }, { passive: false });
 
   window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowDown") { e.preventDefault(); goToSection(currentSection + 1); }
     if (e.key === "ArrowUp") { e.preventDefault(); goToSection(currentSection - 1); }
   });
-  /* ==========================================================================
-   MOVIL: Detección de Swipe (Touch Events)
-   ========================================================================== */
-	let touchStartY = 0;
 
-	window.addEventListener("touchstart", (e) => {
-	  touchStartY = e.changedTouches[0].screenY;
-	}, { passive: true });
+  let touchStartY = 0;
 
-	window.addEventListener("touchend", (e) => {
-	  if (isScrolling) return; // Respeta tu bloqueo actual de animación
-	  
-	  const touchEndY = e.changedTouches[0].screenY;
-	  const deltaY = touchStartY - touchEndY;
-	  
-	  // Umbral de 50px para evitar que cambie de sección por error
-	  if (Math.abs(deltaY) > 50) {
-		if (deltaY > 0) {
-		  goToSection(currentSection + 1); // Swipe hacia arriba (bajar página)
-		} else {
-		  goToSection(currentSection - 1); // Swipe hacia abajo (subir página)
-		}
-	  }
-	}, { passive: true });
+  window.addEventListener("touchstart", (e) => {
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  window.addEventListener("touchend", (e) => {
+    if (isScrolling) return;
+    
+    const touchEndY = e.changedTouches[0].screenY;
+    const deltaY = touchStartY - touchEndY;
+    
+    if (Math.abs(deltaY) > 50) {
+      if (deltaY > 0) {
+        goToSection(currentSection + 1);
+      } else {
+        goToSection(currentSection - 1);
+      }
+    }
+  }, { passive: true });
 </script>
 
 </body>
