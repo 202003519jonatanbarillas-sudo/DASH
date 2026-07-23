@@ -165,11 +165,15 @@ section {
   z-index: -1;
 }
 
+.hero {
+  flex-direction: column;
+  gap: 20px; /* Espacio entre el título y el subtítulo */
+}
+
 .hero h1 {
   padding: clamp(30px, 6vw, 60px) clamp(20px, 4vw, 40px);
   line-height: 1.1; 
   
-
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.2) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -177,20 +181,35 @@ section {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px; 
   
-  color: #ffffff;
-  text-shadow: none; 
+
+  color: var(--gold-light);
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+  
   font-size: clamp(2.2rem, 5.5vw, 4.2rem);
   font-weight: 800; 
   letter-spacing: -0.02em; 
   text-align: center;
   
-  /* Sombra de profundidad + "Highlight" superior (EL TOQUE PREMIUM) */
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
               inset 0 1px 0 rgba(255, 255, 255, 0.1); 
   
   transition: transform 0.3s ease;
 }
-
+.hero-subtitle {
+  color: var(--text-main); /* Tu variable de texto blanco */
+  font-size: clamp(1.75rem, 2.5vw, 1.95rem); 
+  font-weight: 400;
+  text-align: center;
+  max-width: 800px; 
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  
+  /* Sombra oscura para máxima legibilidad sobre el video */
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 
+               0 4px 20px rgba(0, 0, 0, 0.6);
+               
+  animation: fadeIn 1.5s ease-out forwards; /* Opcional: animación de entrada */
+}
 .about-section {
   min-height: 100vh;
   display: flex;
@@ -1371,7 +1390,8 @@ section.visible .cs-container {
     <video autoplay muted loop playsinline>
       <source src="https://github.com/202003519jonatanbarillas-sudo/infogra-chin/releases/download/v1/valores.mp4" type="video/mp4">
     </video>
-    <h1>PORTAFOLIO DE DASHBOARDS</h1>
+    <h1>Portafolio de Análisis de Datos</h1>
+	<p class="hero-subtitle">Proyectos de análisis exploratorio, visualización de datos y desarrollo de dashboards interactivos.</p>
 	<div class="fullscreen-hint">Se recomienda visualizar en <span>Pantalla Completa</span></div>
   </section>
 
@@ -1689,7 +1709,79 @@ section.visible .cs-container {
 
   <div id="analysis-view" class="view-content">
     
-    <!-- CASO 1 -->
+	<section class="methodology">
+
+    <div class="method-header">
+
+			<span class="method-tag">
+				FLUJO DE TRABAJO
+			</span>
+
+			<h2>
+				Mi proceso
+				<span>analítico</span>
+			</h2>
+
+			<p>
+				Cada caso de estudio se desarrolla mediante un enfoque estructurado, 
+				pasando desde la extracción y preparación de los datos hasta la 
+				construcción de visualizaciones y el planteamiento de recomendaciones de negocio.
+			</p>
+
+		</div>
+
+		<div class="timeline">
+
+			<div class="timeline-item">
+				<div class="step-number">01</div>
+
+				<h3>Gestión de Base de Datos</h3>
+
+				<p>
+					Diseño, importación y manipulación inicial de las bases de datos 
+					mediante consultas estructuradas en MySQL para garantizar su integridad.
+				</p>
+			</div>
+
+			<div class="timeline-item">
+				<div class="step-number">02</div>
+
+				<h3>Limpieza y Transformación</h3>
+
+				<p>
+					Tratamiento, validación y preparación de los conjuntos de datos 
+					utilizando scripts en SQL y la librería Pandas en Python.
+				</p>
+			</div>
+
+			<div class="timeline-item">
+				<div class="step-number">03</div>
+
+				<h3>Análisis Exploratorio (EDA)</h3>
+
+				<p>
+					Análisis descriptivo y cálculo de agregaciones estadísticas 
+					para identificar patrones temporales, demográficos y financieros.
+				</p>
+			</div>
+
+			<div class="timeline-item">
+				<div class="step-number">04</div>
+
+				<h3>Visualización y Conclusiones</h3>
+
+				<p>
+					Desarrollo de gráficos interactivos con herramientas como Bokeh 
+					para responder a las preguntas de negocio y sugerir acciones comerciales.
+				</p>
+			</div>
+
+		</div>
+
+	</section>
+
+	
+	
     <section class="analysis-section">
       <div class="case-wrapper">
         
@@ -1730,11 +1822,11 @@ section.visible .cs-container {
 
 		<div class="case-actions">
 		  
-		  <a href="https://github.com/202003519jonatanbarillas-sudo/DASH/blob/master/Caso%201/Caso%201.ipynb" target="_blank" class="case-btn primary">Ver Notebook</a>
+		  <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%201/Caso%201.ipynb" target="_blank" class="case-btn primary">Ver Notebook</a>
 		  
-		  <a href="https://github.com/202003519jonatanbarillas-sudo/DASH" target="_blank" class="case-btn secondary">Ver Repositorio</a>
+		  <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos" target="_blank" class="case-btn secondary">Ver Repositorio</a>
 		  
-		  <a href="Caso 1/caso_1_limpios.csv" download="datos_caso1.csv" class="case-btn secondary">Descargar Datos</a>
+		  <a href="https://cdn.jsdelivr.net/gh/202003519jonatanbarillas-sudo/Analisis_de_Datos@main/Caso%201/caso_1_limpios.csv"	class="case-btn secondary" download="caso_1_limpios.csv"> Descargar Datos</a>
 
 		</div>
 		
