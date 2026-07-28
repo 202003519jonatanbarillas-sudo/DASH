@@ -1355,6 +1355,34 @@ section.visible .cs-container {
   }
 }
 
+.case-wrapper.reverse {
+  grid-template-columns: 60% 40%;
+}
+
+/* Movemos visualmente el bloque de texto a la segunda columna */
+.case-wrapper.reverse .case-left {
+  order: 2;
+  padding-right: 0;
+  padding-left: 20px; /* Pasamos el espaciado al lado izquierdo */
+}
+
+/* Movemos visualmente las tarjetas a la primera columna */
+.case-wrapper.reverse .case-right {
+  order: 1;
+}
+
+/* RESPONSIVE MÓVIL PARA LA VERSIÓN INVERTIDA */
+/* En celular siempre queremos el texto arriba y las tarjetas abajo, para no romper la lectura */
+@media (max-width: 1024px) {
+  .case-wrapper.reverse .case-left {
+    order: 1; /* Forzamos el texto arriba */
+    padding-left: 0;
+  }
+  .case-wrapper.reverse .case-right {
+    order: 2; /* Forzamos las tarjetas abajo */
+  }
+}
+
 @media(max-width: 768px) {
   .hub-grid { grid-template-columns: 1fr; }
 }
@@ -1806,7 +1834,7 @@ section.visible .cs-container {
               <span class="badge tech">Bokeh</span>
               <span class="badge tech">JupyterLab</span>
             </div>
-            
+
             <div class="badges-title">Competencias Demostradas</div>
             <div class="badge-group">
               <span class="badge skill">SQL</span>
@@ -1821,17 +1849,12 @@ section.visible .cs-container {
           </div>
 
 		<div class="case-actions">
-		  
 		  <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%201/Caso%201.ipynb" target="_blank" class="case-btn primary">Ver Notebook</a>
-		  
 		  <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos" target="_blank" class="case-btn secondary">Ver Repositorio</a>
-		  
-		  <a href="https://cdn.jsdelivr.net/gh/202003519jonatanbarillas-sudo/Analisis_de_Datos@main/Caso%201/caso_1_limpios.csv"	class="case-btn secondary" download="caso_1_limpios.csv"> Descargar Datos</a>
-
+		  <a href="https://cdn.jsdelivr.net/gh/202003519jonatanbarillas-sudo/Analisis_de_Datos@main/Caso%201/caso_1_lim.csv" download="caso_1_lim.csv" class="case-btn secondary">Descargar Datos</a>
 		</div>
 		
         </div>
-
         <div class="case-right">
           <div class="exec-header">
             <h3 class="exec-title">Resumen del Proyecto</h3>
@@ -1840,7 +1863,7 @@ section.visible .cs-container {
           <div class="exec-grid">
 
             <div class="exec-card">
-              <div class="card-icon">Meta</div>
+              <div class="card-icon">Objetivo</div>
               <h4>Problema</h4>
               <p>Comprender el comportamiento de los saldos bancarios registrados durante 2025 para apoyar la toma de decisiones comerciales.</p>
             </div>
@@ -1907,9 +1930,311 @@ section.visible .cs-container {
       </div>
     </section>
 
+    <section class="analysis-section">
+
+      <div class="case-wrapper reverse">
+
+        <div class="case-left">
+          <div class="case-top-badge">CASO 02 | Sector Bancario</div>
+          
+          <h2 class="case-title">Análisis Exploratorio de los Factores Asociados a la Mora Crediticia</h2>
+          <div class="case-divider"></div>
+          
+          <p class="case-desc">
+			Desarrollo de un análisis exploratorio de datos (EDA) orientado a identificar
+			los principales factores asociados al incumplimiento de pago de clientes con
+			créditos activos. El proyecto integra procesos de limpieza de datos, análisis
+			descriptivo y visualización interactiva para apoyar la gestión del riesgo
+			crediticio y fortalecer la toma de decisiones dentro de una institución
+			bancaria.
+          </p>
+
+           <div class="case-badges-container">
+            <div class="badges-title">Tecnologías Utilizadas</div>
+            <div class="badge-group">
+              <span class="badge tech">MySQL</span>
+              <span class="badge tech">Python</span>
+              <span class="badge tech">Pandas</span>
+              <span class="badge tech">NumPy</span>
+              <span class="badge tech">Bokeh</span>
+              <span class="badge tech">JupyterLab</span>
+            </div>
+            
+            <div class="badges-title">Competencias Demostradas</div>
+            <div class="badge-group">
+              <span class="badge skill">SQL</span>
+              <span class="badge skill">Limpieza de Datos</span>
+              <span class="badge skill">EDA</span>
+              <span class="badge skill">Visualización</span>
+              <span class="badge skill">Storytelling</span>
+              <span class="badge skill">Análisis de Negocio</span>
+			  <span class="badge skill">Comunicación de Resultados</span>
+              <span class="badge skill">Toma de Decisiones</span>
+            </div>
+          </div>
+
+		<div class="case-actions">
+		  <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%202/Caso%202.ipynb" target="_blank" class="case-btn primary">Ver Notebook</a>
+		  <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos" target="_blank" class="case-btn secondary">Ver Repositorio</a>
+		  <a href="https://cdn.jsdelivr.net/gh/202003519jonatanbarillas-sudo/Analisis_de_Datos@main/Caso%202/caso_2_Lim.csv" download="caso_2_lim.csv" class="case-btn secondary">Descargar Datos</a>		
+		</div>
+        </div>
+
+        <div class="case-right">
+          <div class="exec-header">
+            <h3 class="exec-title">Resumen del Proyecto</h3>
+          </div>
+          
+          <div class="exec-grid">
+            <!-- Tarjeta 1 -->
+            <div class="exec-card">
+              <div class="card-icon">Objetivo</div>
+              <h4>Problema</h4>
+              <p> Identificar patrones asociados al incumplimiento de pago para fortalecer
+            las políticas de evaluación crediticia y mejorar la gestión del riesgo.</p>
+            </div>
+            
+            <div class="exec-card">
+              <div class="card-icon">⚑</div>
+              <h4>Objetivo</h4>
+              <p>Analizar variables financieras, laborales y demográficas para determinar
+            qué características presentan los clientes con mayor probabilidad de mora.</p>
+            </div>
+
+            <div class="exec-card">
+              <div class="card-icon">☰</div>
+              <h4>Preguntas Respondidas</h4>
+				  <ul class="check-list">
+					<li>Distribución de clientes con y sin mora.</li>
+					<li>Sectores laborales con mayor mora.</li>
+					<li>Ingreso mensual vs préstamo.</li>
+					<li>Antigüedad laboral y mora.</li>
+					<li>Grupos de edad con mayor riesgo.</li>
+				  </ul>
+            </div>
+
+            <div class="exec-card">
+              <div class="card-icon">✦</div>
+              <h4>Principales Hallazgos</h4>
+				  <ul class="bullet-list">
+					<li>Tasa de mora de <strong>12.7%</strong>.</li>
+					<li>No existe relación lineal clara entre ingreso y préstamo.</li>
+					<li>La antigüedad laboral mostró bajo poder explicativo.</li>
+					<li>La mayor concentración de mora se ubica entre los 20 y 64 años.</li>
+				  </ul>
+            </div>
+          </div>
+
+          <div class="exec-stats">
+            <div class="stat-item">
+              <span class="stat-label">Sector</span>
+              <span class="stat-value">Bancario</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Tipo</span>
+              <span class="stat-value">EDA</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Visualizaciones</span>
+              <span class="stat-value">5</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Periodo</span>
+              <span class="stat-value">2025</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Recomendaciones</span>
+              <span class="stat-value">4</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Estado</span>
+              <span class="stat-value" style="color: #4CAF50;">Finalizado</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section class="analysis-section">	
+	<div class="case-wrapper">
+
+	  <!-- COLUMNA IZQUIERDA -->
+	  <div class="case-left">
+
+		<div class="case-top-badge">
+		  CASO 03 | Sector Financiero
+		</div>
+
+		<h2 class="case-title">
+		  Análisis de la Evolución de los Indicadores Monetarios y Financieros de Guatemala (2015–2025)
+		</h2>
+
+		<div class="case-divider"></div>
+
+		<p class="case-desc">
+		  Proyecto de análisis exploratorio de datos desarrollado para evaluar el comportamiento de los principales indicadores monetarios y financieros de Guatemala durante el período 2015–2025. El estudio identifica tendencias, relaciones entre variables macroeconómicas y patrones relevantes que apoyan el análisis económico y la toma de decisiones de política monetaria y financiera.
+		</p>
+
+		<div class="case-badges-container">
+
+		  <div class="badges-title">
+			Tecnologías Utilizadas
+		  </div>
+
+		  <div class="badge-group">
+			<span class="badge tech">MySQL</span>
+			<span class="badge tech">Python</span>
+			<span class="badge tech">Pandas</span>
+			<span class="badge tech">NumPy</span>
+			<span class="badge tech">Bokeh</span>
+			<span class="badge tech">JupyterLab</span>
+		  </div>
+
+		  <div class="badges-title">
+			Competencias Demostradas
+		  </div>
+
+		  <div class="badge-group">
+			<span class="badge skill">SQL</span>
+			<span class="badge skill">Limpieza de Datos</span>
+			<span class="badge skill">EDA</span>
+			<span class="badge skill">Visualización</span>
+			<span class="badge skill">Análisis Económico</span>
+			<span class="badge skill">Storytelling</span>
+			<span class="badge skill">Comunicación de Resultados</span>
+			<span class="badge skill">Toma de Decisiones</span>
+		  </div>
+
+		</div>
+
+		<div class="case-actions">
+		  <a href="https://github.com/TU_USUARIO/TU_REPO/blob/main/Caso%203/Caso%203.ipynb" target="_blank" class="case-btn primary">Ver Notebook</a>
+
+		  <a href="https://github.com/TU_USUARIO/TU_REPO" target="_blank" class="case-btn secondary">Ver Repositorio</a>
+
+		  <a href="https://cdn.jsdelivr.net/gh/TU_USUARIO/TU_REPO@main/Caso%203/caso_3_lim.csv"
+			 download="caso_3_lim.csv"
+			 class="case-btn secondary">
+			 Descargar Datos
+		  </a>
+		</div>
+
+	  </div>
+
+	  <!-- COLUMNA DERECHA -->
+
+	  <div class="case-right">
+
+		<div class="exec-header">
+		  <h3 class="exec-title">
+			Resumen del Proyecto
+		  </h3>
+		</div>
+
+		<div class="exec-grid">
+
+		  <div class="exec-card">
+			<div class="card-icon">Objetivo</div>
+
+			<h4>Problema</h4>
+
+			<p>
+			  Comprender la evolución de los principales indicadores monetarios y financieros
+			  para apoyar el análisis macroeconómico y la estabilidad financiera del país.
+			</p>
+		  </div>
+
+		  <div class="exec-card">
+
+			<div class="card-icon">⚑</div>
+
+			<h4>Objetivo</h4>
+
+			<p>
+			  Analizar tendencias, relaciones entre variables monetarias y el crecimiento
+			  económico mediante técnicas de análisis exploratorio de datos.
+			</p>
+
+		  </div>
+
+		  <div class="exec-card">
+
+			<div class="card-icon">☰</div>
+
+			<h4>Preguntas Respondidas</h4>
+
+			<ul class="check-list">
+			  <li>Evolución de agregados monetarios.</li>
+			  <li>Crédito vs PIB.</li>
+			  <li>Remesas vs M2.</li>
+			  <li>Spread bancario.</li>
+			  <li>Crecimiento acumulado.</li>
+			  <li>Variación trimestral del PIB.</li>
+			  <li>Remesas vs PIB.</li>
+			</ul>
+
+		  </div>
+
+		  <div class="exec-card">
+
+			<div class="card-icon">✦</div>
+
+			<h4>Principales Hallazgos</h4>
+
+			<ul class="bullet-list">
+			  <li>Las remesas registraron el mayor crecimiento acumulado.</li>
+			  <li>El numerario fue el segundo indicador con mayor crecimiento.</li>
+			  <li>El PIB mostró una recuperación posterior al COVID-19.</li>
+			  <li>El spread en moneda nacional fue más estable que en moneda extranjera.</li>
+			  <li>Las variables monetarias presentaron relaciones positivas con el PIB.</li>
+			</ul>
+
+		  </div>
+
+		</div>
+
+		<div class="exec-stats">
+
+		  <div class="stat-item">
+			<span class="stat-label">Sector</span>
+			<span class="stat-value">Financiero</span>
+		  </div>
+
+		  <div class="stat-item">
+			<span class="stat-label">Tipo</span>
+			<span class="stat-value">EDA</span>
+		  </div>
+
+		  <div class="stat-item">
+			<span class="stat-label">Preguntas</span>
+			<span class="stat-value">7</span>
+		  </div>
+
+		  <div class="stat-item">
+			<span class="stat-label">Periodo</span>
+			<span class="stat-value">2015–2025</span>
+		  </div>
+
+		  <div class="stat-item">
+			<span class="stat-label">Recomendaciones</span>
+			<span class="stat-value">4</span>
+		  </div>
+
+		  <div class="stat-item">
+			<span class="stat-label">Estado</span>
+			<span class="stat-value" style="color:#4CAF50;">Finalizado</span>
+		  </div>
+
+		</div>
+
+	  </div>
+
+	</div>
+	</section>
   </div>
   
 
+	
 <script>
 
   let sections = [];
