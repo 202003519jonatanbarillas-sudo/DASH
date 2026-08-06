@@ -1402,6 +1402,690 @@ section.visible .cs-container {
   .cs-bento-grid { gap: 10px; height: 40vh; }
 }
 
+/* ==========================================================
+   ESTILOS DE METODOLOGÍA / PIPELINE (Efecto Pirámide 3-Arriba / 4-Abajo)
+   ========================================================== */
+
+.methodology-alt {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 50px;
+  background: radial-gradient(circle at 50% 0%, #161616 0%, #080808 70%);
+  color: #e0e0e0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Resplandor ambiental de fondo */
+.methodology-alt::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60vw;
+  height: 350px;
+  background: radial-gradient(ellipse, rgba(212, 175, 55, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.method-alt-header {
+  max-width: 1000px;
+  margin: 0 auto 35px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.method-alt-tag {
+  display: inline-block;
+  color: #d4af37;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 700;
+  background: rgba(212, 175, 55, 0.1);
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.method-alt-header h2 {
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 18px;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.method-alt-header h2 span {
+  display: block;
+  background: linear-gradient(135deg, #fff2cc 0%, #d4af37 50%, #aa8c2c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.method-alt-header p {
+  color: #b0b0b0;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+/* Contenedor principal */
+.pipeline-alt-container {
+  width: min(1550px, 95vw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Fila Superior (3 columnas) - Más angosta para formar la cúspide de la pirámide */
+.pipeline-row-top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 1180px; /* Ancho menor para centrar y reducir el tamaño visual */
+  margin: 0 auto;    /* Centra la fila superior automáticamente */
+  width: 100%;
+}
+
+/* Fila Inferior (4 columnas) - Toma todo el ancho para la base */
+.pipeline-row-bottom {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  width: 100%;
+}
+
+.pipeline-alt-card {
+  position: relative;
+  padding: 26px 22px;
+  background: linear-gradient(145deg, rgba(24, 24, 24, 0.9) 0%, rgba(12, 12, 12, 0.95) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/* Línea de brillo superior dinámica */
+.pipeline-alt-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+  opacity: 0.6;
+  transition: opacity 0.4s ease;
+}
+
+.pipeline-alt-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.15);
+  background: linear-gradient(145deg, rgba(30, 28, 22, 0.95) 0%, rgba(16, 15, 12, 0.98) 100%);
+}
+
+.pipeline-alt-card:hover::before {
+  opacity: 1;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+
+.pipeline-alt-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.pipeline-alt-num {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #d4af37;
+  letter-spacing: 1.5px;
+  background: rgba(212, 175, 55, 0.1);
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.pipeline-alt-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.pipeline-alt-card:hover .pipeline-alt-icon-box {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: rgba(212, 175, 55, 0.4);
+  transform: rotate(6deg) scale(1.08);
+}
+
+.pipeline-alt-icon {
+  width: 18px;
+  height: 18px;
+  color: #d4af37;
+}
+
+.pipeline-alt-card h3 {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+}
+
+.pipeline-alt-card p {
+  color: #bcbcbc;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Responsivo adaptable para tablets y móviles */
+@media (max-width: 1200px) {
+  .pipeline-row-top,
+  .pipeline-row-bottom {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .pipeline-row-top,
+  .pipeline-row-bottom {
+    grid-template-columns: 1fr;
+  }
+  .methodology-alt {
+    padding: 40px 20px;
+  }
+}
+
+/* ==========================================================
+   ESTILOS DEL CASO DE ESTUDIO (Enfoque Ejecutivo/Consultoría)
+   ========================================================== */
+
+.cs-section {
+  background-color: #080808;
+  color: #e0e0e0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding: 60px 20px;
+  line-height: 1.6;
+}
+
+.cs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* Tipografía y Utilitarios */
+.cs-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+.cs-block-title {
+  font-size: 1.2rem;
+  color: #d4af37;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  padding-bottom: 10px;
+}
+
+.cs-desc {
+  font-size: 1.05rem;
+  color: #a0a0a0;
+  margin-bottom: 30px;
+}
+
+.cs-text-gold { color: #d4af37 !important; }
+.cs-no-margin { margin: 0 !important; }
+
+/* Grid Systems */
+.cs-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.cs-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.cs-align-stretch { align-items: stretch; }
+
+/* 1. Hero Block */
+.cs-hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.cs-meta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cs-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cs-badge-gold { background: #d4af37; color: #000; }
+.cs-badge-outline { border: 1px solid rgba(255, 255, 255, 0.3); color: #ccc; }
+.cs-badge-success { background: rgba(76, 175, 80, 0.1); color: #4CAF50; border: 1px solid rgba(76, 175, 80, 0.3); }
+
+.cs-hero-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.cs-btn {
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.cs-btn-primary {
+  background: #d4af37;
+  color: #0b0b0b;
+  border: 1px solid #d4af37;
+}
+
+.cs-btn-primary:hover {
+  background: transparent;
+  color: #d4af37;
+}
+
+.cs-btn-outline {
+  background: transparent;
+  color: #d4af37;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.cs-btn-outline:hover {
+  background: rgba(212, 175, 55, 0.05);
+  border-color: #d4af37;
+}
+
+.cs-image-placeholder {
+  width: 100%;
+  height: 350px;
+  background: #141414;
+  border: 1px dashed rgba(212, 175, 55, 0.3);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* 2. Tarjetas base */
+.cs-card {
+  background: #141414;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cs-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-color: rgba(212, 175, 55, 0.2);
+}
+
+.cs-card-highlight {
+  background: linear-gradient(145deg, #141414 0%, #1a1813 100%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.cs-icon {
+  width: 32px;
+  height: 32px;
+  color: #d4af37;
+  margin-bottom: 15px;
+}
+
+.cs-icon-small {
+  width: 20px;
+  height: 20px;
+  color: #d4af37;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cs-card h4 {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.cs-card p {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* 3. Pipeline / Timeline */
+.cs-timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #141414;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow-x: auto;
+}
+
+.cs-timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  flex: 1;
+  min-width: 100px;
+}
+
+.cs-timeline-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  right: -50%;
+  width: 100%;
+  height: 2px;
+  background: rgba(212, 175, 55, 0.3);
+  z-index: 0;
+}
+
+.cs-dot {
+  width: 14px;
+  height: 14px;
+  background: #d4af37;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  z-index: 1;
+  box-shadow: 0 0 0 4px #141414;
+}
+
+.cs-timeline-step span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #ccc;
+}
+
+/* 4. Tech Stack */
+.cs-tech-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cs-tech-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  padding: 12px 15px;
+  background: #141414;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cs-tech-label {
+  font-size: 0.8rem;
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.cs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cs-tag {
+  background: rgba(212, 175, 55, 0.1);
+  color: #d4af37;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* 5. Competencias */
+.cs-competencies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cs-tag-skill {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e0e0e0;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 6. Checklist de Preguntas */
+.cs-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cs-checklist li {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  color: #e0e0e0;
+}
+
+.cs-checklist li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #d4af37;
+  font-weight: bold;
+}
+
+/* 7. Hallazgos */
+.cs-findings {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cs-finding-item {
+  display: flex;
+  gap: 15px;
+  background: #141414;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 3px solid #d4af37;
+}
+
+.cs-finding-item h5 {
+  margin: 0 0 5px 0;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.cs-finding-item p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #a0a0a0;
+}
+
+/* 8. KPI Metrics */
+.cs-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cs-kpi {
+  background: #141414;
+  padding: 25px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cs-kpi-label {
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cs-kpi-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* 9. Valor Agregado */
+.cs-value-card {
+  background: #141414;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.cs-check { color: #d4af37; font-weight: bold; }
+
+/* 10. Footer Links */
+.cs-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cs-footer-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #a0a0a0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.cs-footer-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cs-footer-link:hover {
+  color: #d4af37;
+}
+
+/* ==========================================
+   RESPONSIVE (Móvil y Tablets)
+   ========================================== */
+@media (max-width: 1024px) {
+  .cs-hero { grid-template-columns: 1fr; }
+  .cs-grid-2 { grid-template-columns: 1fr; }
+  .cs-tech-row { grid-template-columns: 1fr; gap: 10px; }
+  .cs-timeline { 
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 20px; 
+  }
+  .cs-timeline-step { 
+    flex-direction: row; 
+    gap: 15px; 
+    width: 100%;
+  }
+  .cs-timeline-step::after {
+    top: 50%;
+    left: 6px;
+    width: 2px;
+    height: 100%;
+    right: auto;
+  }
+  .cs-dot { margin-bottom: 0; }
+}
+
+@media (max-width: 768px) {
+  .cs-section { padding: 40px 15px; }
+  .cs-title { font-size: 1.8rem; }
+  .cs-kpi-grid { grid-template-columns: 1fr 1fr; }
+  .cs-footer { flex-direction: column; align-items: center; gap: 15px; }
+}
 
   </style>
 </head>
@@ -1737,498 +2421,997 @@ section.visible .cs-container {
 
   <div id="analysis-view" class="view-content">
     
-	<section class="methodology">
+<section class="methodology-alt">
 
-    <div class="method-header">
+  <div class="method-alt-header">
+    <span class="method-alt-tag">
+      METODOLOGÍA DE TRABAJO
+    </span>
 
-			<span class="method-tag">
-				FLUJO DE TRABAJO
-			</span>
+    <h2>
+      Pipeline de
+      <span>Análisis de Datos</span>
+    </h2>
 
-			<h2>
-				Mi proceso
-				<span>analítico</span>
-			</h2>
+    <p>
+      Metodología estandarizada para desarrollar proyectos de análisis de datos, desde la evaluación de la calidad de la información hasta la comunicación de resultados mediante visualizaciones e informes reproducibles.
+    </p>
+  </div>
 
-			<p>
-				Cada caso de estudio se desarrolla mediante un enfoque estructurado, 
-				pasando desde la extracción y preparación de los datos hasta la 
-				construcción de visualizaciones y el planteamiento de recomendaciones de negocio.
-			</p>
+  <div class="pipeline-alt-container">
 
-		</div>
+    <!-- ===================== -->
+    <!-- FILA SUPERIOR -->
+    <!-- ===================== -->
 
-		<div class="timeline">
+    <div class="pipeline-row-top">
 
-			<div class="timeline-item">
-				<div class="step-number">01</div>
+      <!-- Paso 1 -->
+      <div class="pipeline-alt-card">
 
-				<h3>Gestión de Base de Datos</h3>
+        <div class="pipeline-alt-top">
+          <span class="pipeline-alt-num">01</span>
 
-				<p>
-					Diseño, importación y manipulación inicial de las bases de datos 
-					mediante consultas estructuradas en MySQL para garantizar su integridad.
-				</p>
-			</div>
-
-			<div class="timeline-item">
-				<div class="step-number">02</div>
-
-				<h3>Limpieza y Transformación</h3>
-
-				<p>
-					Tratamiento, validación y preparación de los conjuntos de datos 
-					utilizando scripts en SQL y la librería Pandas en Python.
-				</p>
-			</div>
-
-			<div class="timeline-item">
-				<div class="step-number">03</div>
-
-				<h3>Análisis Exploratorio (EDA)</h3>
-
-				<p>
-					Análisis descriptivo y cálculo de agregaciones estadísticas 
-					para identificar patrones temporales, demográficos y financieros.
-				</p>
-			</div>
-
-			<div class="timeline-item">
-				<div class="step-number">04</div>
-
-				<h3>Visualización y Conclusiones</h3>
-
-				<p>
-					Desarrollo de gráficos interactivos con herramientas como Bokeh 
-					para responder a las preguntas de negocio y sugerir acciones comerciales.
-				</p>
-			</div>
-
-		</div>
-
-	</section>
-
-	
-	
-    <section class="analysis-section">
-      <div class="case-wrapper">
-        
-        <!-- COLUMNA IZQUIERDA -->
-        <div class="case-left">
-          <div class="case-top-badge">CASO 01 | Sector Bancario</div>
-          
-          <h2 class="case-title">Análisis del Comportamiento de los Saldos Bancarios durante 2025</h2>
-          <div class="case-divider"></div>
-          
-          <p class="case-desc">
-            Proyecto de análisis exploratorio de datos desarrollado para comprender el comportamiento de los saldos bancarios durante 2025. El estudio identifica patrones temporales, diferencias entre sucursales, segmentos de clientes y grupos de edad, generando información que apoya la toma de decisiones comerciales y estratégicas.
-			</p>
-
-          <div class="case-badges-container">
-            <div class="badges-title">Tecnologías Utilizadas</div>
-            <div class="badge-group">
-              <span class="badge tech">MySQL</span>
-              <span class="badge tech">Python</span>
-              <span class="badge tech">Pandas</span>
-              <span class="badge tech">NumPy</span>
-              <span class="badge tech">Bokeh</span>
-              <span class="badge tech">JupyterLab</span>
-            </div>
-
-            <div class="badges-title">Competencias Demostradas</div>
-            <div class="badge-group">
-              <span class="badge skill">SQL</span>
-              <span class="badge skill">Limpieza de Datos</span>
-              <span class="badge skill">EDA</span>
-              <span class="badge skill">Visualización</span>
-              <span class="badge skill">Storytelling</span>
-              <span class="badge skill">Análisis de Negocio</span>
-			  <span class="badge skill">Comunicación de Resultados</span>
-              <span class="badge skill">Toma de Decisiones</span>
-            </div>
+          <div class="pipeline-alt-icon-box">
+            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
+              </path>
+            </svg>
           </div>
 
-		<div class="case-actions">
-		  <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%201/Caso%201.ipynb" target="_blank" class="case-btn primary">Ver Notebook</a>
-		  <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos" target="_blank" class="case-btn secondary">Ver Repositorio</a>
-		  <a href="https://cdn.jsdelivr.net/gh/202003519jonatanbarillas-sudo/Analisis_de_Datos@main/Caso%201/caso_1_lim.csv" download="caso_1_lim.csv" class="case-btn secondary">Descargar Datos</a>
-		</div>
-		
         </div>
-        <div class="case-right">
-          <div class="exec-header">
-            <h3 class="exec-title">Resumen del Proyecto</h3>
-          </div>
-          
-          <div class="exec-grid">
 
-            <div class="exec-card">
-              <div class="card-icon">Objetivo</div>
-              <h4>Problema</h4>
-              <p>Comprender el comportamiento de los saldos bancarios registrados durante 2025 para apoyar la toma de decisiones comerciales.</p>
-            </div>
-            
-            <div class="exec-card">
-              <div class="card-icon">⚑</div>
-              <h4>Objetivo</h4>
-              <p>Identificar patrones temporales, diferencias entre sucursales y segmentos de clientes mediante análisis exploratorio de datos.</p>
-            </div>
+        <h3>Auditoría de Datos</h3>
 
-            <div class="exec-card">
-              <div class="card-icon">☰</div>
-              <h4>Preguntas Respondidas</h4>
-              <ul class="check-list">
-                <li>Evolución temporal</li>
-                <li>Sucursales</li>
-                <li>Segmentos</li>
-                <li>Relación ingreso–saldo</li>
-                <li>Distribución por edad</li>
-              </ul>
-            </div>
+        <p>
+          Evaluación de calidad, integridad y consistencia para garantizar información confiable antes del análisis.
+        </p>
 
-            <div class="exec-card">
-              <div class="card-icon">✦</div>
-              <h4>Principales Hallazgos</h4>
-              <ul class="bullet-list">
-                <li>Comportamiento mensual sin tendencia sostenida.</li>
-                <li>Distribución equilibrada entre sucursales.</li>
-                <li>Segmentos homogéneos.</li>
-                <li>No existe relación lineal clara entre ingreso y saldo.</li>
-                <li>Mayor concentración de saldos entre 20 y 69 años.</li>
-              </ul>
-            </div>
+      </div>
+
+      <!-- Paso 2 -->
+      <div class="pipeline-alt-card">
+
+        <div class="pipeline-alt-top">
+          <span class="pipeline-alt-num">02</span>
+
+          <div class="pipeline-alt-icon-box">
+            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 7v10c0 2 1.5 3 4 3h8c2.5 0 4-1 4-3V7M4 7c0-2 1.5-3 4-3h8c2.5 0 4 1 4 3m-16 0c0 2 1.5 3 4 3h8c2.5 0 4-1 4-3">
+              </path>
+            </svg>
           </div>
 
-          <div class="exec-stats">
-            <div class="stat-item">
-              <span class="stat-label">Sector</span>
-              <span class="stat-value">Bancario</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Tipo</span>
-              <span class="stat-value">EDA</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Visualizaciones</span>
-              <span class="stat-value">5</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Periodo</span>
-              <span class="stat-value">2025</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Recomendaciones</span>
-              <span class="stat-value">4</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Estado</span>
-              <span class="stat-value" style="color: #4CAF50;">Finalizado</span>
-            </div>
+        </div>
+
+        <h3>Preparación de Datos</h3>
+
+        <p>
+          Limpieza, transformación y estandarización mediante SQL para construir un conjunto de datos consistente.
+        </p>
+
+      </div>
+
+      <!-- Paso 3 -->
+      <div class="pipeline-alt-card">
+
+        <div class="pipeline-alt-top">
+          <span class="pipeline-alt-num">03</span>
+
+          <div class="pipeline-alt-icon-box">
+            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+              </path>
+            </svg>
           </div>
+
+        </div>
+
+        <h3>Procesamiento</h3>
+
+        <p>
+          Manipulación y enriquecimiento de datos mediante funciones reutilizables desarrolladas en Python.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- FILA INFERIOR -->
+    <!-- ===================== -->
+
+    <div class="pipeline-row-bottom">
+
+      <!-- Paso 4 -->
+      <div class="pipeline-alt-card">
+
+        <div class="pipeline-alt-top">
+          <span class="pipeline-alt-num">04</span>
+
+          <div class="pipeline-alt-icon-box">
+            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+              </path>
+            </svg>
+          </div>
+
+        </div>
+
+        <h3>Análisis Exploratorio</h3>
+
+        <p>
+          Evaluación estadística y visual para identificar patrones, tendencias y oportunidades de análisis.
+        </p>
+
+      </div>
+
+      <!-- Paso 5 -->
+      <div class="pipeline-alt-card">
+
+        <div class="pipeline-alt-top">
+          <span class="pipeline-alt-num">05</span>
+
+          <div class="pipeline-alt-icon-box">
+            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+              </path>
+            </svg>
+          </div>
+
+        </div>
+
+        <h3>Visualización de Datos</h3>
+
+        <p>
+          Desarrollo de visualizaciones interactivas para comunicar hallazgos y facilitar la toma de decisiones.
+        </p>
+
+      </div>
+
+      <!-- Paso 6 -->
+      <div class="pipeline-alt-card">
+
+        <div class="pipeline-alt-top">
+          <span class="pipeline-alt-num">06</span>
+
+          <div class="pipeline-alt-icon-box">
+            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
+              </path>
+            </svg>
+          </div>
+
+        </div>
+
+        <h3>Automatización</h3>
+
+        <p>
+          Generación automática de tablas, gráficos y recursos para optimizar el flujo de trabajo analítico.
+        </p>
+
+      </div>
+
+      <!-- Paso 7 -->
+      <div class="pipeline-alt-card">
+
+        <div class="pipeline-alt-top">
+          <span class="pipeline-alt-num">07</span>
+
+          <div class="pipeline-alt-icon-box">
+            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+              </path>
+            </svg>
+          </div>
+
+        </div>
+
+        <h3>Documentación Técnica</h3>
+
+        <p>
+          Elaboración automática de informes profesionales con resultados, métricas y visualizaciones integradas.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+	
+	
+<section class="analysis-section">
+  <div class="case-wrapper">
+
+    <!-- =========================
+         COLUMNA IZQUIERDA
+    ========================== -->
+
+    <div class="case-left">
+
+      <div class="case-top-badge">
+        CASO 01 | Sector Bancario
+      </div>
+
+      <h2 class="case-title">
+        Análisis del Comportamiento de los Saldos Bancarios durante 2025
+      </h2>
+
+      <div class="case-divider"></div>
+
+      <p class="case-desc">
+        Proyecto de análisis exploratorio desarrollado para evaluar el comportamiento de los saldos bancarios durante 2025. A través del análisis estadístico y la visualización de datos se identificaron patrones, diferencias entre segmentos de clientes y oportunidades de negocio, transformando los datos en información útil para apoyar la toma de decisiones.
+      </p>
+
+      <div class="case-badges-container">
+
+        <div class="badges-title">
+          Tecnologías Utilizadas
+        </div>
+
+        <div class="badge-group">
+          <span class="badge tech">Python</span>
+          <span class="badge tech">MySQL</span>
+          <span class="badge tech">Pandas</span>
+          <span class="badge tech">NumPy</span>
+          <span class="badge tech">SciPy</span>
+          <span class="badge tech">Scikit-Learn</span>
+          <span class="badge tech">Bokeh</span>
+          <span class="badge tech">LaTeX</span>
+          <span class="badge tech">Jupyter</span>
+        </div>
+
+        <div class="badges-title">
+          Competencias Demostradas
+        </div>
+
+        <div class="badge-group">
+          <span class="badge skill">SQL</span>
+          <span class="badge skill">Data Cleaning</span>
+          <span class="badge skill">EDA</span>
+          <span class="badge skill">Estadística Descriptiva</span>
+          <span class="badge skill">Visualización</span>
+          <span class="badge skill">Business Insights</span>
+          <span class="badge skill">Storytelling con Datos</span>
+          <span class="badge skill">Análisis de Negocio</span>
+          <span class="badge skill">LaTeX</span>
         </div>
 
       </div>
-    </section>
 
-    <section class="analysis-section">
+      <div class="case-actions">
 
-      <div class="case-wrapper reverse">
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos"
+           target="_blank"
+           class="case-btn primary">
+           Ver Repositorio
+        </a>
 
-        <div class="case-left">
-          <div class="case-top-badge">CASO 02 | Sector Bancario</div>
-          
-          <h2 class="case-title">Análisis Exploratorio de los Factores Asociados a la Mora Crediticia</h2>
-          <div class="case-divider"></div>
-          
-          <p class="case-desc">
-			Desarrollo de un análisis exploratorio de datos (EDA) orientado a identificar
-			los principales factores asociados al incumplimiento de pago de clientes con
-			créditos activos. El proyecto integra procesos de limpieza de datos, análisis
-			descriptivo y visualización interactiva para apoyar la gestión del riesgo
-			crediticio y fortalecer la toma de decisiones dentro de una institución
-			bancaria.
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/tree/main/Caso%201%20Sector%20Bancario"
+           target="_blank"
+           class="case-btn secondary">
+           Ver Caso 01
+        </a>
+
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%201%20Sector%20Bancario/notebooks/Caso%201.ipynb"
+           download
+           class="case-btn secondary">
+           Ver Notebook
+        </a>
+
+      </div>
+
+    </div>
+
+    <!-- =========================
+         COLUMNA DERECHA
+    ========================== -->
+
+    <div class="case-right">
+
+      <div class="exec-header">
+        <h3 class="exec-title">
+          Resumen Ejecutivo
+        </h3>
+      </div>
+
+      <div class="exec-grid">
+
+        <!-- Contexto -->
+
+        <div class="exec-card">
+
+          <div class="card-icon">🏦</div>
+
+          <h4>Contexto del Negocio</h4>
+
+          <p>
+            Una institución financiera requiere comprender el comportamiento de los saldos de sus clientes para identificar patrones, diferencias entre segmentos y generar información que apoye la toma de decisiones.
           </p>
 
-           <div class="case-badges-container">
-            <div class="badges-title">Tecnologías Utilizadas</div>
-            <div class="badge-group">
-              <span class="badge tech">MySQL</span>
-              <span class="badge tech">Python</span>
-              <span class="badge tech">Pandas</span>
-              <span class="badge tech">NumPy</span>
-              <span class="badge tech">Bokeh</span>
-              <span class="badge tech">JupyterLab</span>
-            </div>
-            
-            <div class="badges-title">Competencias Demostradas</div>
-            <div class="badge-group">
-              <span class="badge skill">SQL</span>
-              <span class="badge skill">Limpieza de Datos</span>
-              <span class="badge skill">EDA</span>
-              <span class="badge skill">Visualización</span>
-              <span class="badge skill">Storytelling</span>
-              <span class="badge skill">Análisis de Negocio</span>
-			  <span class="badge skill">Comunicación de Resultados</span>
-              <span class="badge skill">Toma de Decisiones</span>
-            </div>
-          </div>
-
-		<div class="case-actions">
-		  <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%202/Caso%202.ipynb" target="_blank" class="case-btn primary">Ver Notebook</a>
-		  <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos" target="_blank" class="case-btn secondary">Ver Repositorio</a>
-		  <a href="https://cdn.jsdelivr.net/gh/202003519jonatanbarillas-sudo/Analisis_de_Datos@main/Caso%202/caso_2_Lim.csv" download="caso_2_lim.csv" class="case-btn secondary">Descargar Datos</a>		
-		</div>
         </div>
 
-        <div class="case-right">
-          <div class="exec-header">
-            <h3 class="exec-title">Resumen del Proyecto</h3>
-          </div>
-          
-          <div class="exec-grid">
-            <!-- Tarjeta 1 -->
-            <div class="exec-card">
-              <div class="card-icon">Objetivo</div>
-              <h4>Problema</h4>
-              <p> Identificar patrones asociados al incumplimiento de pago para fortalecer
-            las políticas de evaluación crediticia y mejorar la gestión del riesgo.</p>
-            </div>
-            
-            <div class="exec-card">
-              <div class="card-icon">⚑</div>
-              <h4>Objetivo</h4>
-              <p>Analizar variables financieras, laborales y demográficas para determinar
-            qué características presentan los clientes con mayor probabilidad de mora.</p>
-            </div>
+        <!-- Preguntas -->
 
-            <div class="exec-card">
-              <div class="card-icon">☰</div>
-              <h4>Preguntas Respondidas</h4>
-				  <ul class="check-list">
-					<li>Distribución de clientes con y sin mora.</li>
-					<li>Sectores laborales con mayor mora.</li>
-					<li>Ingreso mensual vs préstamo.</li>
-					<li>Antigüedad laboral y mora.</li>
-					<li>Grupos de edad con mayor riesgo.</li>
-				  </ul>
-            </div>
+        <div class="exec-card">
 
-            <div class="exec-card">
-              <div class="card-icon">✦</div>
-              <h4>Principales Hallazgos</h4>
-				  <ul class="bullet-list">
-					<li>Tasa de mora de <strong>12.7%</strong>.</li>
-					<li>No existe relación lineal clara entre ingreso y préstamo.</li>
-					<li>La antigüedad laboral mostró bajo poder explicativo.</li>
-					<li>La mayor concentración de mora se ubica entre los 20 y 64 años.</li>
-				  </ul>
-            </div>
-          </div>
+          <div class="card-icon">❓</div>
 
-          <div class="exec-stats">
-            <div class="stat-item">
-              <span class="stat-label">Sector</span>
-              <span class="stat-value">Bancario</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Tipo</span>
-              <span class="stat-value">EDA</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Visualizaciones</span>
-              <span class="stat-value">5</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Periodo</span>
-              <span class="stat-value">2025</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Recomendaciones</span>
-              <span class="stat-value">4</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Estado</span>
-              <span class="stat-value" style="color: #4CAF50;">Finalizado</span>
-            </div>
-          </div>
+          <h4>Preguntas de Negocio</h4>
+
+          <ul class="check-list">
+            <li>¿Cómo evolucionan los saldos durante el año?</li>
+            <li>¿Existen diferencias entre sucursales?</li>
+            <li>¿Qué segmentos concentran mayor capital?</li>
+            <li>¿Existe relación entre ingreso y saldo?</li>
+            <li>¿Qué grupos de edad presentan mayor participación?</li>
+          </ul>
+
+        </div>
+
+        <!-- Indicadores -->
+
+        <div class="exec-card">
+
+          <div class="card-icon">📈</div>
+
+          <h4>Indicadores Analizados</h4>
+
+          <ul class="check-list">
+            <li>Tendencia temporal</li>
+            <li>Comparación por sucursal</li>
+            <li>Segmentación de clientes</li>
+            <li>Correlación ingreso–saldo</li>
+            <li>Distribución por edad</li>
+          </ul>
+
+        </div>
+
+        <!-- Recomendaciones -->
+
+        <div class="exec-card">
+
+          <div class="card-icon">💡</div>
+
+          <h4>Conclusiones y Recomendaciones</h4>
+
+          <ul class="bullet-list">
+            <li>Monitorear periódicamente la evolución mensual de los saldos.</li>
+            <li>Complementar el análisis incorporando nuevas variables financieras.</li>
+            <li>Profundizar el estudio por segmentos de clientes.</li>
+            <li>Utilizar dashboards para facilitar el seguimiento de indicadores.</li>
+          </ul>
+
         </div>
 
       </div>
-    </section>
-    <section class="analysis-section">	
-	<div class="case-wrapper">
 
-	  <!-- COLUMNA IZQUIERDA -->
-	  <div class="case-left">
+      <div class="exec-stats">
 
-		<div class="case-top-badge">
-		  CASO 03 | Sector Monetario
-		</div>
+        <div class="stat-item">
+          <span class="stat-label">Sector</span>
+          <span class="stat-value">Bancario</span>
+        </div>
 
-		<h2 class="case-title">
-		  Análisis de la Evolución de los Indicadores Monetarios y Financieros de Guatemala (2015–2025)
-		</h2>
+        <div class="stat-item">
+          <span class="stat-label">Registros</span>
+          <span class="stat-value">1000</span>
+        </div>
 
-		<div class="case-divider"></div>
+        <div class="stat-item">
+          <span class="stat-label">Variables</span>
+          <span class="stat-value">9</span>
+        </div>
 
-		<p class="case-desc">
-		  Proyecto de análisis exploratorio de datos desarrollado para evaluar el comportamiento de los principales indicadores monetarios y financieros de Guatemala durante el período 2015–2025. El estudio identifica tendencias, relaciones entre variables macroeconómicas y patrones relevantes que apoyan el análisis económico y la toma de decisiones de política monetaria y financiera.
-		</p>
+        <div class="stat-item">
+          <span class="stat-label">Preguntas</span>
+          <span class="stat-value">5</span>
+        </div>
 
-		<div class="case-badges-container">
+        <div class="stat-item">
+          <span class="stat-label">Visualizaciones</span>
+          <span class="stat-value">5</span>
+        </div>
 
-		  <div class="badges-title">
-			Tecnologías Utilizadas
-		  </div>
+        <div class="stat-item">
+          <span class="stat-label">Estado</span>
+          <span class="stat-value" style="color:#4CAF50;">
+            Finalizado
+          </span>
+        </div>
 
-		  <div class="badge-group">
-			<span class="badge tech">Python</span>
-			<span class="badge tech">Pandas</span>
-			<span class="badge tech">NumPy</span>
-			<span class="badge tech">Bokeh</span>
-			<span class="badge tech">JupyterLab</span>
-		  </div>
+      </div>
 
-		  <div class="badges-title">
-			Competencias Demostradas
-		  </div>
+    </div>
 
-		  <div class="badge-group">
-			<span class="badge skill">Limpieza de Datos</span>
-			<span class="badge skill">EDA</span>
-			<span class="badge skill">Visualización</span>
-			<span class="badge skill">Análisis Económico</span>
-			<span class="badge skill">Storytelling</span>
-			<span class="badge skill">Comunicación de Resultados</span>
-			<span class="badge skill">Toma de Decisiones</span>
-		  </div>
+  </div>
+</section>
 
-		</div>
+ <section class="analysis-section">
 
-		<div class="case-actions">
-		  <a href="https://github.com/TU_USUARIO/TU_REPO/blob/main/Caso%203/Caso%203.ipynb" target="_blank" class="case-btn primary">Ver Notebook</a>
+  <div class="case-wrapper reverse">
 
-		  <a href="https://github.com/TU_USUARIO/TU_REPO" target="_blank" class="case-btn secondary">Ver Repositorio</a>
+    <div class="case-left">
 
-		  <a href="https://cdn.jsdelivr.net/gh/202003519jonatanbarillas-sudo/Analisis_de_Datos@main/Caso%203/caso_3_lim.csv"
-			 download="caso_3_lim.csv"
-			 class="case-btn secondary">
-			 Descargar Datos
-		  </a>
-		</div>
+      <div class="case-top-badge">
+        CASO 02 | Riesgo Crediticio
+      </div>
 
-	  </div>
+      <h2 class="case-title">
+        Análisis de los Factores Asociados a la Mora Crediticia
+      </h2>
 
-	  <!-- COLUMNA DERECHA -->
+      <div class="case-divider"></div>
 
-	  <div class="case-right">
+      <p class="case-desc">
+        Proyecto de análisis exploratorio desarrollado para identificar los factores asociados al incumplimiento de pago de clientes con créditos activos. Mediante técnicas de limpieza, análisis estadístico y visualización de datos se evaluaron variables demográficas, laborales y financieras para generar información que apoye la gestión del riesgo crediticio y la toma de decisiones.
+      </p>
 
-		<div class="exec-header">
-		  <h3 class="exec-title">
-			Resumen del Proyecto
-		  </h3>
-		</div>
+      <div class="case-badges-container">
 
-		<div class="exec-grid">
+        <div class="badges-title">
+          Tecnologías Utilizadas
+        </div>
 
-		  <div class="exec-card">
-			<div class="card-icon">Objetivo</div>
+        <div class="badge-group">
+          <span class="badge tech">Python</span>
+          <span class="badge tech">MySQL</span>
+          <span class="badge tech">Pandas</span>
+          <span class="badge tech">NumPy</span>
+          <span class="badge tech">SciPy</span>
+          <span class="badge tech">Scikit-Learn</span>
+          <span class="badge tech">Bokeh</span>
+          <span class="badge tech">LaTeX</span>
+          <span class="badge tech">Jupyter</span>
+        </div>
 
-			<h4>Problema</h4>
+        <div class="badges-title">
+          Competencias Demostradas
+        </div>
 
-			<p>
-			  Comprender la evolución de los principales indicadores monetarios y financieros
-			  para apoyar el análisis macroeconómico y la estabilidad financiera del país.
-			</p>
-		  </div>
+        <div class="badge-group">
+          <span class="badge skill">SQL</span>
+          <span class="badge skill">Data Cleaning</span>
+          <span class="badge skill">EDA</span>
+          <span class="badge skill">Risk Analytics</span>
+          <span class="badge skill">Credit Risk</span>
+          <span class="badge skill">Estadística Descriptiva</span>
+          <span class="badge skill">Visualización</span>
+          <span class="badge skill">Business Insights</span>
+          <span class="badge skill">Storytelling con Datos</span>
+          <span class="badge skill">LaTeX</span>
+        </div>
 
-		  <div class="exec-card">
+      </div>
 
-			<div class="card-icon">⚑</div>
+      <div class="case-actions">
 
-			<h4>Objetivo</h4>
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos"
+           target="_blank"
+           class="case-btn primary">
+           Ver Repositorio
+        </a>
 
-			<p>
-			  Analizar tendencias, relaciones entre variables monetarias y el crecimiento
-			  económico mediante técnicas de análisis exploratorio de datos.
-			</p>
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/tree/main/Caso%202%20Sector%20Bancario"
+           target="_blank"
+           class="case-btn secondary">
+           Ver Caso 02
+        </a>
 
-		  </div>
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%202%20Sector%20Bancario/notebooks/Caso%202.ipynb"
+           download
+           class="case-btn secondary">
+           Ver Notebook
+        </a>
 
-		  <div class="exec-card">
+      </div>
 
-			<div class="card-icon">☰</div>
+    </div>
 
-			<h4>Preguntas Respondidas</h4>
+    <div class="case-right">
 
-			<ul class="check-list">
-			  <li>Evolución de agregados monetarios.</li>
-			  <li>Crédito vs PIB.</li>
-			  <li>Remesas vs M2.</li>
-			  <li>Spread bancario.</li>
-			  <li>Crecimiento acumulado.</li>
-			  <li>Variación trimestral del PIB.</li>
-			  <li>Remesas vs PIB.</li>
-			</ul>
+      <div class="exec-header">
+        <h3 class="exec-title">
+          Resumen Ejecutivo
+        </h3>
+      </div>
 
-		  </div>
+      <div class="exec-grid">
 
-		  <div class="exec-card">
+        <div class="exec-card">
 
-			<div class="card-icon">✦</div>
+          <div class="card-icon">🏦</div>
 
-			<h4>Principales Hallazgos</h4>
+          <h4>Contexto del Negocio</h4>
 
-			<ul class="bullet-list">
-			  <li>Las remesas registraron el mayor crecimiento acumulado.</li>
-			  <li>El numerario fue el segundo indicador con mayor crecimiento.</li>
-			  <li>El PIB mostró una recuperación posterior al COVID-19.</li>
-			  <li>El spread en moneda nacional fue más estable que en moneda extranjera.</li>
-			  <li>Las variables monetarias presentaron relaciones positivas con el PIB.</li>
-			</ul>
+          <p>
+            Banco Capital GT busca fortalecer su proceso de evaluación crediticia identificando patrones asociados al incumplimiento de pago para mejorar la gestión del riesgo y apoyar la toma de decisiones.
+          </p>
 
-		  </div>
+        </div>
 
-		</div>
+        <div class="exec-card">
 
-		<div class="exec-stats">
+          <div class="card-icon">🎯</div>
 
-		  <div class="stat-item">
-			<span class="stat-label">Sector</span>
-			<span class="stat-value">Financiero</span>
-		  </div>
+          <h4>Objetivo</h4>
 
-		  <div class="stat-item">
-			<span class="stat-label">Tipo</span>
-			<span class="stat-value">EDA</span>
-		  </div>
+          <p>
+            Analizar las características financieras, laborales y demográficas de los clientes con créditos activos para identificar factores asociados a la mora y generar información útil para la gestión del riesgo crediticio.
+          </p>
 
-		  <div class="stat-item">
-			<span class="stat-label">Preguntas</span>
-			<span class="stat-value">7</span>
-		  </div>
+        </div>
 
-		  <div class="stat-item">
-			<span class="stat-label">Periodo</span>
-			<span class="stat-value">2015–2025</span>
-		  </div>
+        <div class="exec-card">
 
-		  <div class="stat-item">
-			<span class="stat-label">Recomendaciones</span>
-			<span class="stat-value">4</span>
-		  </div>
+          <div class="card-icon">❓</div>
 
-		  <div class="stat-item">
-			<span class="stat-label">Estado</span>
-			<span class="stat-value" style="color:#4CAF50;">Finalizado</span>
-		  </div>
+          <h4>Preguntas de Negocio</h4>
 
-		</div>
+          <ul class="check-list">
+            <li>Distribución de clientes con y sin mora.</li>
+            <li>Sectores laborales con mayor riesgo.</li>
+            <li>Ingreso mensual vs préstamo.</li>
+            <li>Antigüedad laboral y mora.</li>
+            <li>Grupos de edad con mayor concentración de mora.</li>
+          </ul>
 
-	  </div>
+        </div>
 
-	</div>
-	</section>
+        <div class="exec-card">
+
+          <div class="card-icon">💡</div>
+
+          <h4>Conclusiones y Recomendaciones</h4>
+
+          <ul class="bullet-list">
+            <li>Complementar el análisis mediante modelos predictivos.</li>
+            <li>Incorporar nuevas variables financieras.</li>
+            <li>Monitorear periódicamente la tasa de mora.</li>
+            <li>Fortalecer la evaluación crediticia basada en datos.</li>
+          </ul>
+
+        </div>
+
+      </div>
+
+      <div class="exec-stats">
+
+        <div class="stat-item">
+          <span class="stat-label">Sector</span>
+          <span class="stat-value">Bancario</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Registros</span>
+          <span class="stat-value">1000</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Variables</span>
+          <span class="stat-value">8</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Preguntas</span>
+          <span class="stat-value">5</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Visualizaciones</span>
+          <span class="stat-value">5</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Estado</span>
+          <span class="stat-value" style="color:#4CAF50;">
+            Finalizado
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="analysis-section">
+  <div class="case-wrapper">
+
+    <div class="case-left">
+
+      <div class="case-top-badge">
+        CASO 03 | Economía y Finanzas
+      </div>
+
+      <h2 class="case-title">
+        Análisis de la Evolución de los Indicadores Monetarios y Financieros de Guatemala (2015–2025)
+      </h2>
+
+      <div class="case-divider"></div>
+
+      <p class="case-desc">
+        Proyecto de análisis exploratorio desarrollado para estudiar la evolución de los principales indicadores monetarios y financieros de Guatemala durante el período 2015–2025. Mediante análisis estadístico y visualización de datos se identificaron tendencias, relaciones entre variables macroeconómicas y patrones relevantes para apoyar el análisis económico y la toma de decisiones.
+      </p>
+
+      <div class="case-badges-container">
+
+        <div class="badges-title">
+          Tecnologías Utilizadas
+        </div>
+
+        <div class="badge-group">
+          <span class="badge tech">Python</span>
+          <span class="badge tech">MySQL</span>
+          <span class="badge tech">Pandas</span>
+          <span class="badge tech">NumPy</span>
+          <span class="badge tech">SciPy</span>
+          <span class="badge tech">Scikit-Learn</span>
+          <span class="badge tech">Bokeh</span>
+          <span class="badge tech">LaTeX</span>
+          <span class="badge tech">Jupyter</span>
+        </div>
+
+        <div class="badges-title">
+          Competencias Demostradas
+        </div>
+
+        <div class="badge-group">
+          <span class="badge skill">SQL</span>
+          <span class="badge skill">EDA</span>
+          <span class="badge skill">Macroeconomía</span>
+          <span class="badge skill">Series de Tiempo</span>
+          <span class="badge skill">Análisis Económico</span>
+          <span class="badge skill">Estadística Descriptiva</span>
+          <span class="badge skill">Visualización</span>
+          <span class="badge skill">Business Insights</span>
+          <span class="badge skill">Storytelling con Datos</span>
+          <span class="badge skill">LaTeX</span>
+        </div>
+
+      </div>
+
+      <div class="case-actions">
+
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos"
+           target="_blank"
+           class="case-btn primary">
+           Ver Repositorio
+        </a>
+
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/tree/main/Caso%203%20Sector%20Monetario"
+           target="_blank"
+           class="case-btn secondary">
+           Ver Caso 03
+        </a>
+
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%203%20Sector%20Monetario/notebooks/Caso%203.ipynb"
+           download
+           class="case-btn secondary">
+           Ver Notebook
+        </a>
+      </div>
+
+    </div>
+
+    <div class="case-right">
+
+      <div class="exec-header">
+        <h3 class="exec-title">
+          Resumen Ejecutivo
+        </h3>
+      </div>
+
+      <div class="exec-grid">
+
+        <div class="exec-card">
+
+          <div class="card-icon">🏛️</div>
+
+          <h4>Contexto del Negocio</h4>
+
+          <p>
+            El Banco de Guatemala requiere monitorear la evolución de los principales indicadores monetarios y financieros para apoyar el análisis macroeconómico, evaluar la estabilidad financiera y comprender el comportamiento de la economía nacional.
+          </p>
+
+        </div>
+
+        <div class="exec-card">
+
+          <div class="card-icon">❓</div>
+
+          <h4>Preguntas de Negocio</h4>
+
+          <ul class="check-list">
+            <li>¿Cómo evolucionaron los agregados monetarios?</li>
+            <li>¿Existe relación entre PIB y crédito?</li>
+            <li>¿Las remesas influyen en M2?</li>
+            <li>¿Cómo evolucionó el spread bancario?</li>
+            <li>¿Qué indicador presentó mayor crecimiento?</li>
+          </ul>
+
+        </div>
+
+        <div class="exec-card">
+
+          <div class="card-icon">📈</div>
+
+          <h4>Indicadores Analizados</h4>
+
+          <ul class="check-list">
+            <li>Producto Interno Bruto (PIB)</li>
+            <li>Remesas familiares</li>
+            <li>Medios de Pago (M2)</li>
+            <li>Crédito Bancario</li>
+            <li>Spread Bancario</li>
+          </ul>
+
+        </div>
+
+        <div class="exec-card">
+
+          <div class="card-icon">💡</div>
+
+          <h4>Conclusiones y Recomendaciones</h4>
+
+          <ul class="bullet-list">
+            <li>Monitorear continuamente los indicadores monetarios.</li>
+            <li>Complementar el análisis con modelos econométricos.</li>
+            <li>Actualizar periódicamente las series oficiales.</li>
+            <li>Evaluar el impacto macroeconómico de las remesas.</li>
+          </ul>
+
+        </div>
+
+      </div>
+
+      <div class="exec-stats">
+
+        <div class="stat-item">
+          <span class="stat-label">Sector</span>
+          <span class="stat-value">Macroeconomía</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Registros</span>
+          <span class="stat-value">44</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Variables</span>
+          <span class="stat-value">9</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Preguntas</span>
+          <span class="stat-value">7</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Visualizaciones</span>
+          <span class="stat-value">7</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Estado</span>
+          <span class="stat-value" style="color:#4CAF50;">
+            Finalizado
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="analysis-section">
+
+  <div class="case-wrapper">
+
+    <div class="case-left">
+
+      <div class="case-top-badge">
+        CASO 04 | Mercado Bursátil
+      </div>
+
+      <h2 class="case-title">
+        Análisis del Rendimiento de las Empresas con Mayor Capitalización Bursátil (2018–2025)
+      </h2>
+
+      <div class="case-divider"></div>
+
+      <p class="case-desc">
+        Proyecto de análisis exploratorio desarrollado para estudiar el comportamiento histórico de las principales empresas del mercado bursátil estadounidense durante el período 2018–2025. Mediante técnicas de limpieza, análisis estadístico y visualización de datos se identificaron patrones de crecimiento, volatilidad, liquidez y rendimiento acumulado que apoyan el análisis financiero y la toma de decisiones de inversión.
+      </p>
+
+      <div class="case-badges-container">
+
+        <div class="badges-title">
+          Tecnologías Utilizadas
+        </div>
+
+        <div class="badge-group">
+          <span class="badge tech">Python</span>
+          <span class="badge tech">MySQL</span>
+          <span class="badge tech">Pandas</span>
+          <span class="badge tech">NumPy</span>
+          <span class="badge tech">SciPy</span>
+          <span class="badge tech">Scikit-Learn</span>
+          <span class="badge tech">Bokeh</span>
+          <span class="badge tech">LaTeX</span>
+          <span class="badge tech">Jupyter</span>
+        </div>
+
+        <div class="badges-title">
+          Competencias Demostradas
+        </div>
+
+        <div class="badge-group">
+          <span class="badge skill">SQL</span>
+          <span class="badge skill">Data Cleaning</span>
+          <span class="badge skill">EDA</span>
+          <span class="badge skill">Series de Tiempo</span>
+          <span class="badge skill">Análisis Financiero</span>
+          <span class="badge skill">Estadística Descriptiva</span>
+          <span class="badge skill">Visualización</span>
+          <span class="badge skill">Business Insights</span>
+          <span class="badge skill">Storytelling con Datos</span>
+          <span class="badge skill">LaTeX</span>
+        </div>
+
+      </div>
+
+      <div class="case-actions">
+
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos"
+           target="_blank"
+           class="case-btn primary">
+           Ver Repositorio
+        </a>
+
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/tree/main/Caso%204%20Stock%20Acciones"
+           target="_blank"
+           class="case-btn secondary">
+           Ver Caso 04
+        </a>
+
+        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%204%20Stock%20Acciones/notebooks/Caso%204.ipynb"
+           target="_blank"
+           class="case-btn secondary">
+           Ver Notebook
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="case-right">
+
+      <div class="exec-header">
+        <h3 class="exec-title">
+          Resumen Ejecutivo
+        </h3>
+      </div>
+
+      <div class="exec-grid">
+
+        <div class="exec-card">
+
+          <div class="card-icon">📈</div>
+
+          <h4>Contexto del Negocio</h4>
+
+          <p>
+            Una firma de inversión busca comprender el comportamiento histórico de las principales empresas del mercado bursátil estadounidense para apoyar futuros análisis financieros y la toma de decisiones de inversión.
+          </p>
+
+        </div>
+
+        <div class="exec-card">
+
+          <div class="card-icon">🎯</div>
+
+          <h4>Objetivo</h4>
+
+          <p>
+            Analizar la evolución del precio de las acciones, el volumen de negociación y el rendimiento acumulado para identificar tendencias, niveles de volatilidad y diferencias entre las empresas analizadas.
+          </p>
+
+        </div>
+
+        <div class="exec-card">
+
+          <div class="card-icon">❓</div>
+
+          <h4>Preguntas de Negocio</h4>
+
+          <ul class="check-list">
+            <li>Empresas con mayor rendimiento acumulado.</li>
+            <li>Evolución del precio de cierre.</li>
+            <li>Distribución de rendimientos diarios.</li>
+            <li>Empresas con mayor volumen negociado.</li>
+            <li>Relación entre precio y volumen.</li>
+          </ul>
+
+        </div>
+
+        <div class="exec-card">
+
+          <div class="card-icon">💡</div>
+
+          <h4>Conclusiones y Recomendaciones</h4>
+
+          <ul class="bullet-list">
+            <li>NVIDIA presentó el mayor rendimiento acumulado.</li>
+            <li>Tesla y Apple concentraron los mayores volúmenes negociados.</li>
+            <li>Complementar el análisis mediante indicadores financieros.</li>
+            <li>Desarrollar modelos predictivos para apoyar decisiones de inversión.</li>
+          </ul>
+
+        </div>
+
+      </div>
+
+      <div class="exec-stats">
+
+        <div class="stat-item">
+          <span class="stat-label">Sector</span>
+          <span class="stat-value">Financiero</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Empresas Analizadas</span>
+          <span class="stat-value">10</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Variables</span>
+          <span class="stat-value">602962</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Preguntas</span>
+          <span class="stat-value">7</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Visualizaciones</span>
+          <span class="stat-value">7</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Estado</span>
+          <span class="stat-value" style="color:#4CAF50;">
+            Finalizado
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
   </div>
   
 
