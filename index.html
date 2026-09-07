@@ -3,3563 +3,697 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portafolio de Dashboards de Alto Impacto</title>
+  <title>Portafolio | Análisis de Datos</title>
+  <!-- Tipografía limpia y moderna -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
   <style>
-
-:root {
-  /* Fondos */
-  --bg-start: #050505;
-  --bg-card: rgba(18, 18, 18, 0.7);
-  
-  /* Escala de Dorados */
-  --gold-light: #ffd700;       /* Dorado brillante (Hovers y destellos) */
-  --gold-base: #d4af37;        /* Dorado clásico (Acentos principales) */
-  --gold-dark: #b8860b;        /* Dorado antiguo (Sombras y degradados) */
-  
-  /* Brillos y Transparencias Doradas */
-  --gold-glow: rgba(212, 175, 55, 0.15);
-  --gold-glow-strong: rgba(212, 175, 55, 0.35);
-  --glass-border: rgba(212, 175, 55, 0.12); /* Borde de cristal tintado en oro */
-  
-  /* Textos */
-  --text-main: #f4f4f0;        /* Blanco con un levísimo tono cálido */
-  --text-muted: #b3b3b0;       /* Gris cálido */
-  
-  /* Utilidades */
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-html {
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  background-color: var(--bg-start);
-}
-
-html::-webkit-scrollbar {
-  display: none;
-}
-
-body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg-start);
-  overflow: hidden;
-  color: var(--text-main);
-}
-
-
-#container {
-  height: 100vh;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  position: relative;
-  background-image: 
-    linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: panBackground 60s linear infinite;
-}
-
-@keyframes panBackground {
-  0% { background-position: 0 0; }
-  100% { background-position: -60px -60px; }
-}
-
-section {
-  height: 100vh;
-  width: 100vw;
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  padding: 40px 60px;
-  perspective: 1000px;
-}
-
-#fullscreenBtn {
-  position: fixed;
-  top: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  background: linear-gradient(145deg, #111, #1a1a1a);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  color: var(--gold-base);
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.4s var(--ease-out-expo);
-  box-shadow: 0 10px 30px var(--gold-glow);
-}
-
-#fullscreenBtn:hover {
-  transform: translateY(-3px) scale(1.05);
-  border-color: var(--gold-light);
-  color: var(--gold-light);
-  background: linear-gradient(145deg, #1a1a1a, #222);
-  box-shadow: 0 15px 40px var(--gold-glow-strong);
-}
-
-.side-nav {
-  position: fixed;
-  right: 35px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  z-index: 999;
-}
-
-.side-dot {
-  width: 6px;
-  height: 24px;
-  border-radius: 12px;
-  background: var(--gold-base);
-  box-shadow: 0 0 10px var(--gold-glow);
-  cursor: pointer;
-  transition: all 0.4s var(--ease-out-expo);
-}
-
-.side-dot.active {
-  background: var(--gold-light);
-  height: 48px;
-  box-shadow: 0 0 15px var(--gold-base);
-}
-
-.hero video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -2;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(5,5,5,0.85) 90%);
-  z-index: -1;
-}
-
-.hero {
-  flex-direction: column;
-  gap: 20px; /* Espacio entre el título y el subtítulo */
-}
-
-.hero h1 {
-  padding: clamp(30px, 6vw, 60px) clamp(20px, 4vw, 40px);
-  line-height: 1.1; 
-  
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.2) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px; 
-  
-
-  color: var(--gold-light);
-  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-  
-  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
-  font-weight: 800; 
-  letter-spacing: -0.02em; 
-  text-align: center;
-  
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
-              inset 0 1px 0 rgba(255, 255, 255, 0.1); 
-  
-  transition: transform 0.3s ease;
-}
-.hero-subtitle {
-  color: var(--text-main); /* Tu variable de texto blanco */
-  font-size: clamp(1.75rem, 2.5vw, 1.95rem); 
-  font-weight: 400;
-  text-align: center;
-  max-width: 800px; 
-  line-height: 1.6;
-  letter-spacing: 0.02em;
-  
-  /* Sombra oscura para máxima legibilidad sobre el video */
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 
-               0 4px 20px rgba(0, 0, 0, 0.6);
-               
-  animation: fadeIn 1.5s ease-out forwards; /* Opcional: animación de entrada */
-}
-.about-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 80px;
-}
-
-.about-container {
-  width: min(1400px, 90vw);
-  display: grid;
-  grid-template-columns: 420px 1fr;
-  gap: 50px;
-  align-items: center;
-}
-
-.about-photo {
-  position: relative;
-}
-
-.about-photo::before {
-  content: "";
-  position: absolute;
-  inset: -20px;
-  border-radius: 40px;
-  background: radial-gradient(circle, var(--gold-glow-strong), transparent 70%);
-  z-index: -1;
-}
-
-.about-photo img {
-  width: 85%;
-  border-radius: 30px;
-  object-fit: cover;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.8);
-  border: 1px solid var(--glass-border);
-}
-
-.about-badge {
-  display: inline-block;
-  margin-bottom: 25px;
-  color: var(--gold-base);
-  font-size: 0.8rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.about-content h2 {
-  font-size: clamp(2rem, 3.5vw, 3.5rem);
-  line-height: 1;
-  font-weight: 900;
-  margin-bottom: 30px;
-}
-
-.about-content h2 span {
-  display: block;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.about-content p {
-  font-size: 1.15rem;
-  color: var(--text-muted);
-  line-height: 1.9;
-  max-width: 700px;
-  margin-bottom: 40px;
-}
-
-.about-highlights {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-}
-
-.highlight {
-  padding: 25px;
-  border-left: 2px solid var(--gold-base);
-  background: rgba(212, 175, 55, 0.03);
-  border-radius: 0 12px 12px 0;
-}
-
-.highlight strong {
-  display: block;
-  font-size: 1rem;
-  margin-bottom: 8px;
-  color: var(--text-main);
-}
-
-.highlight span {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-
-.methodology {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 100px 80px;
-}
-
-.method-header {
-  max-width: 900px;
-  margin: 0 auto 100px;
-  text-align: center;
-}
-
-.method-tag {
-  display: inline-block;
-  color: var(--gold-base);
-  font-size: 0.8rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  margin-bottom: 15px;
-}
-
-.method-header h2 {
-  font-size: clamp(3rem, 5vw, 5rem);
-  font-weight: 900;
-  line-height: 1;
-  margin-bottom: 25px;
-}
-
-.method-header h2 span {
-  display: block;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold-base));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.method-header p {
-  color: var(--text-muted);
-  line-height: 1.5;
-  font-size: 1.1rem;
-}
-
-.timeline {
-  width: min(1400px, 90vw);
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
-}
-
-.timeline-item {
-  position: relative;
-  padding: 40px 30px;
-  background: linear-gradient(180deg, rgba(212,175,55,0.04), rgba(255,255,255,0.01));
-  border: 1px solid var(--glass-border);
-  border-radius: 25px;
-  transition: 0.4s var(--ease-out-expo);
-}
-
-.timeline-item:hover {
-  transform: translateY(-10px);
-  border-color: var(--gold-base);
-  box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 30px var(--gold-glow);
-}
-
-.step-number {
-  font-size: 4rem;
-  font-weight: 900;
-  color: var(--gold-glow);
-  margin-bottom: 15px;
-  transition: 0.4s ease;
-}
-
-.timeline-item:hover .step-number {
-  color: var(--gold-base);
-}
-
-.timeline-item h3 {
-  color: var(--text-main);
-  margin-bottom: 12.5px;
-}
-
-.timeline-item p {
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-.recurso {
-  width: min(1560px, 92vw);
-  height: 84vh;
-  display: grid;
-  grid-template-columns: 420px minmax(0, 1fr);
-  gap: 45px;
-  padding: 40px;
-  border-radius: 40px;
-  background: linear-gradient(145deg, rgba(22, 22, 22, 0.8), rgba(8, 8, 8, 0.95));
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid var(--glass-border);
-  border-top: 1px solid rgba(212, 175, 55, 0.2);
-  box-shadow: 
-    0 40px 100px rgba(0, 0, 0, 0.9),
-    inset 0 1px 2px rgba(212, 175, 55, 0.1);
-  position: relative;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  scroll-snap-type: y mandatory;
-  opacity: 0;
-  transform: translateY(50px) rotateX(5deg);
-  transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo);
-}
-
-section.visible .recurso {
-  opacity: 1;
-  transform: translateY(0) rotateX(0);
-}
-
-/* Efectos de Iluminación Ambiental Dorada */
-.recurso::before {
-  content: "";
-  position: absolute;
-  width: 700px;
-  height: 700px;
-  top: -350px;
-  left: -250px;
-  background: radial-gradient(circle, var(--gold-glow) 0%, transparent 65%);
-  pointer-events: none;
-  z-index: 0;
-  animation: pulseAmbient 8s alternate infinite ease-in-out;
-}
-
-.recurso.invertido::before {
-  right: -250px;
-  left: unset;
-}
-
-@keyframes pulseAmbient {
-  0% { transform: scale(0.9); opacity: 0.7; }
-  100% { transform: scale(1.1); opacity: 1; }
-}
-
-/* Panel Informativo Lateral */
-.info {
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-  position: relative;
-  z-index: 2;
-  height: 100%;
-}
-
-.info > * {
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
-}
-
-section.visible .info > * { opacity: 1; transform: translateX(0); }
-section.visible .info > :nth-child(1) { transition-delay: 0.2s; }
-section.visible .info > :nth-child(2) { transition-delay: 0.3s; }
-section.visible .info > :nth-child(3) { transition-delay: 0.4s; }
-section.visible .info > :nth-child(4) { transition-delay: 0.5s; }
-section.visible .info > :nth-child(5) { transition-delay: 0.6s; }
-
-.tag {
-  width: max-content;
-  padding: 8px 16px;
-  border-radius: 12px;
-  background: rgba(212, 175, 55, 0.1);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  color: var(--gold-light);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.titulo {
-  font-size: clamp(2rem, 2.8vw, 3rem);
-  line-height: 1.1;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--text-main);
-}
-
-.titulo span {
-  background: linear-gradient(135deg, var(--gold-light) 10%, var(--gold-base) 90%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
-}
-
-.divider {
-  width: 70px;
-  height: 4px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
-  box-shadow: 0 0 12px var(--gold-glow-strong);
-}
-
-.descripcion {
-  color: var(--text-muted);
-  line-height: 1.8;
-  font-size: 1.05rem;
-  text-align: left;
-  font-weight: 400;
-}
-
-/* Tarjetas de Métricas (KPIs) Doradas */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: auto;
-}
-
-.card {
-  position: relative;
-  padding: 20px;
-  border-radius: 20px;
-  overflow: hidden;
-  background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(255,255,255,0.01));
-  border: 1px solid rgba(212,175,55,0.25);
-  box-shadow: inset 0 0 12px rgba(212,175,55,0.1);
-  transition: all 0.5s var(--ease-out-expo);
-}
-
-.card:hover {
-  transform: translateY(-6px) scale(1.02);
-  border-color: var(--gold-light);
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(255, 255, 255, 0.02));
-  box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 25px var(--gold-glow-strong);
-}
-
-.card h3 {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--gold-base);
-  margin-bottom: 8px;
-}
-
-.card p {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-/* Contenedor del Iframe */
-.preview {
-  position: relative;
-  min-width: 0;
-  height: 100%;
-  border-radius: 28px;
-  overflow: hidden;
-  background: #090909;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
-  transform: scale(0.98);
-  opacity: 0;
-  transition: all 1.2s var(--ease-out-expo) 0.3s;
-}
-
-section.visible .preview {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.preview::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 44px;
-  background: linear-gradient(to right, rgba(20,20,20,0.95), rgba(10,10,10,0.95));
-  border-bottom: 1px solid var(--glass-border);
-  backdrop-filter: blur(10px);
-  z-index: 2;
-}
-
-.topbar {
-  position: absolute;
-  top: 17px;
-  left: 20px;
-  display: flex;
-  gap: 8px;
-  z-index: 3;
-}
-
-.dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: rgba(212, 175, 55, 0.2);
-}
-
-.preview:hover .dot:nth-child(1) { background: #ff5f56; }
-.preview:hover .dot:nth-child(2) { background: #ffbd2e; }
-.preview:hover .dot:nth-child(3) { background: #27c93f; }
-
-.preview iframe {
-  width: 100%;
-  height: calc(100% - 44px);
-  margin-top: 44px;
-  border: none;
-  display: block;
-  background: #121212;
-}
-
-.recurso.invertido {
-  grid-template-columns: minmax(0, 1fr) 420px;
-}
-
-.recurso.invertido .info > * { transform: translateX(30px); }
-section.visible .recurso.invertido .info > * { transform: translateX(0); }
-
-.cs-container {
-  width: min(1500px, 95vw);
-  height: 85vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  opacity: 0;
-  transform: scale(0.95) translateY(30px);
-  transition: all 1.2s var(--ease-out-expo);
-}
-
-section.visible .cs-container {
-  opacity: 1;
-  transform: scale(1) translateY(0);
-}
-
-.cs-badge {
-  display: inline-block;
-  padding: 8px 16px;
-  border-radius: 12px;
-  background: var(--gold-glow);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  color: var(--gold-light);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-
-.cs-title {
-  font-size: clamp(2.5rem, 4vw, 4rem);
-  line-height: 1.1;
-  font-weight: 900;
-  color: var(--text-main);
-}
-
-.cs-title span, .cs-bento-text h3 span {
-  background: linear-gradient(135deg, var(--gold-light) 10%, var(--gold-dark) 90%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.cs-desc {
-  color: var(--text-muted);
-  font-size: 1.15rem;
-  line-height: 1.8;
-  max-width: 850px;
-  margin: 20px auto 0;
-}
-
-.cs-hero {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  gap: 30px;
-  height: 100%;
-}
-
-.cs-image-main, .cs-image-wide {
-  flex: 1;
-  width: 100%;
-  min-height: 0; 
-  border-radius: 24px;
-  overflow: hidden;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-  position: relative;
-}
-
-.cs-image-main img, .cs-image-wide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  transition: transform 0.8s ease;
-}
-
-.cs-image-main:hover img, .cs-image-wide:hover img {
-  transform: scale(1.02);
-}
-
-/* Slide 2: Bento Grid */
-.cs-bento-layout {
-  display: grid;
-  grid-template-columns: 400px 1fr;
-  gap: 50px;
-  height: 100%;
-  align-items: center;
-}
-
-.cs-bento-text h3 {
-  font-size: clamp(2rem, 3vw, 3rem);
-  line-height: 1.1;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 20px;
-}
-
-.cs-bento-text .divider { margin-bottom: 25px; }
-
-.cs-bento-text p {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  line-height: 1.8;
-}
-
-.cs-bento-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 20px;
-  height: 85%;
-}
-
-.cs-bento-grid img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-  transition: all 0.4s ease;
-}
-
-.cs-bento-grid img:hover {
-  transform: translateY(-5px) scale(1.02);
-  border-color: var(--gold-base);
-  box-shadow: 0 20px 40px var(--gold-glow-strong);
-  z-index: 2;
-}
-
-/* Slide 3: Footer */
-.cs-footer-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  height: 100%;
-  padding-top: 20px;
-}
-
-.cs-stats-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-.cs-image-wide img {
-  object-position: center; 
-}
-
-.disclaimer-note {
-    background-color: #2c2c2c; /* Tono a juego con el tema graphite */
-    color: #a0a0a0;
-    font-size: 0.8rem;
-    padding: 10px;
-    border-left: 3px solid #555;
-    margin-top: 15px;
-    font-style: italic;
-    border-radius: 4px;
-}
-
-@media(max-width: 1200px) {
-  section { padding: 30px; }
-  
-  .recurso {
-    grid-template-columns: 1fr;
-    height: auto;
-    max-height: 90vh;
-    overflow-y: auto; 
-    gap: 30px;
-    padding: 30px;
+    :root {
+      /* Paleta Editorial / Pastel */
+      --bg-main: #F8F7F4;
+      --white: #FFFFFF;
+      --sage-green: #B8C9BE;
+      --grey-blue: #B8C7D9;
+      --lavender: #C9C1D9;
+      --peach: #E8C5B5;
+      --text-main: #263238;
+      --text-muted: #667085;
+      
+      --border-light: rgba(38, 50, 56, 0.08);
+      --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
     
-    scrollbar-width: none; 
-    -ms-overflow-style: none; 
-  }
-
-  .recurso::-webkit-scrollbar { display: none; }
-  .recurso.invertido { grid-template-columns: 1fr; }
-  .recurso.invertido .preview { grid-row: 2; }
-  .preview { height: 45vh; }
-  .side-nav { display: none; }
-}
-
-.fullscreen-hint {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  font-weight: 500;
-  pointer-events: none;
-  animation: pulseHint 2.5s infinite ease-in-out;
-  z-index: 10;
-}
-
-.fullscreen-hint span {
-  color: var(--gold-light);
-  font-weight: 700;
-}
-
-/* Flecha animada apuntando al botón superior derecho */
-.fullscreen-hint::after {
-  content: "↗";
-  font-size: 1.2rem;
-  color: var(--gold-base);
-  animation: bounceArrow 1.5s infinite alternative ease-in-out;
-}
-
-@keyframes pulseHint {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; text-shadow: 0 0 10px var(--gold-glow-strong); }
-}
-
-@keyframes bounceArrow {
-  0% { transform: translate(-3px, 3px); }
-  100% { transform: translate(3px, -3px); }
-}
-
-
-.dashboard-hint {
-  position: absolute;
-  top: 12px;
-  left: 70px; 
-  z-index: 4;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--gold-light);
-  background: rgba(212, 175, 55, 0.15);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  padding: 4px 10px;
-  border-radius: 8px;
-  backdrop-filter: blur(5px);
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  animation: fadeInHint 1s var(--ease-out-expo) forwards;
-}
-
-
-.dashboard-hint::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  background-color: var(--gold-light);
-  border-radius: 50%;
-  display: inline-block;
-  box-shadow: 0 0 8px var(--gold-light);
-}
-
-@keyframes fadeInHint {
-  from { opacity: 0; transform: translateX(-10px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@media(max-width: 1024px) {
-  .cs-bento-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    gap: 30px;
-  }
-  .cs-bento-text { text-align: center; }
-  .cs-bento-text .divider { margin: 0 auto 20px; }
-  .cs-stats-row { grid-template-columns: repeat(2, 1fr); }
-}
-
-.hub-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px;
-}
-
-.hub-container {
-  width: min(1200px, 90vw);
-  text-align: center;
-}
-
-.hub-title {
-  font-size: clamp(2rem, 3.5vw, 3rem);
-  font-weight: 900;
-  margin-bottom: 15px;
-  color: var(--text-main);
-}
-
-.hub-title span {
-  background: linear-gradient(135deg, var(--gold-light), var(--gold-base));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hub-desc {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  margin-bottom: 50px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hub-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-}
-
-.hub-card {
-  padding: 40px;
-  background: linear-gradient(145deg, rgba(22, 22, 22, 0.8), rgba(8, 8, 8, 0.95));
-  border: 1px solid var(--glass-border);
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.4s var(--ease-out-expo);
-  text-align: left;
-  position: relative;
-  overflow: hidden;
-}
-
-.hub-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top right, var(--gold-glow), transparent 70%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.hub-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--gold-light);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 25px var(--gold-glow-strong);
-}
-
-.hub-card:hover::before {
-  opacity: 1;
-}
-
-.hub-card h3 {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 15px;
-  position: relative;
-  z-index: 1;
-}
-
-.hub-card h3 span {
-  color: var(--gold-light);
-}
-
-.hub-card p {
-  color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 25px;
-  position: relative;
-  z-index: 1;
-}
-
-.hub-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 24px;
-  border-radius: 12px;
-  background: rgba(212, 175, 55, 0.1);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  color: var(--gold-light);
-  font-weight: 700;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 1;
-}
-
-.hub-card:hover .hub-btn {
-  background: var(--gold-base);
-  color: #050505;
-  box-shadow: 0 0 15px var(--gold-glow-strong);
-}
-
-.view-content {
-  display: none; /* Oculto por defecto */
-  transform-origin: top center;
-}
-
-.view-content.active-view {
-  display: block;
-  animation: desplegarPersiana 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes desplegarPersiana {
-  0% {
-    opacity: 0;
-    transform: scaleY(0);
-    max-height: 0;
-  }
-  100% {
-    opacity: 1;
-    transform: scaleY(1);
-    max-height: 10000px; /* Suficiente espacio para que crezcan las secciones */
-  }
-}
-
-
-.hub-card.active-card {
-  border-color: var(--gold-base);
-  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15), inset 0 0 15px rgba(212, 175, 55, 0.05);
-}
-.hub-card.active-card::before {
-  opacity: 1;
-}
-.hub-card.active-card .hub-btn {
-  background: var(--gold-base);
-  color: #050505;
-}
-
-.analysis-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #0b0b0b;
-  padding: 0 40px;
-  box-sizing: border-box;
-}
-
-.case-wrapper {
-  width: 100%;
-  max-width: 1400px;
-  height: 85vh; /* Mantiene un margen arriba y abajo para no usar scroll */
-  display: grid;
-  grid-template-columns: 40% 60%;
-  gap: 40px;
-  align-items: stretch;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.analysis-section.visible .case-wrapper {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* --- COLUMNA IZQUIERDA --- */
-.case-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-right: 20px;
-}
-
-.case-top-badge {
-  display: inline-block;
-  align-self: flex-start;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #d4af37;
-  border: 1px solid #a57a29;
-  padding: 6px 14px;
-  border-radius: 50px;
-  text-transform: uppercase;
-  margin-bottom: 15px;
-}
-
-.case-title {
-  font-size: clamp(1.8rem, 2.5vw, 2.5rem);
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1.2;
-  margin-bottom: 20px;
-}
-
-.case-divider {
-  width: 50px;
-  height: 3px;
-  background: #d4af37;
-  margin-bottom: 20px;
-  border-radius: 2px;
-}
-
-.case-desc {
-  color: #cfcfcf;
-  font-size: clamp(0.9rem, 1vw, 1.05rem);
-  line-height: 1.6;
-  margin-bottom: 25px;
-  text-wrap: pretty;
-}
-
-.case-badges-container {
-  margin-bottom: 25px;
-}
-
-.badges-title {
-  font-size: 0.75rem;
-  color: #a57a29;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-.badge-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 15px;
-}
-
-.badge {
-  font-size: 0.75rem;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-weight: 500;
-}
-
-.badge.tech {
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.badge.skill {
-  background: rgba(212, 175, 55, 0.05);
-  color: #d4af37;
-  border: 1px solid rgba(165, 122, 41, 0.3);
-}
-
-.case-actions {
-  display: flex;
-  gap: 15px;
-  margin-top: auto;
-}
-
-.case-btn {
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.case-btn.primary {
-  background: #d4af37;
-  color: #0b0b0b;
-  border: 1px solid #d4af37;
-}
-
-.case-btn.primary:hover {
-  background: transparent;
-  color: #d4af37;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-}
-
-.case-btn.secondary {
-  background: transparent;
-  color: #cfcfcf;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.case-btn.secondary:hover {
-  border-color: #d4af37;
-  color: #ffffff;
-}
-
-/* --- COLUMNA DERECHA (EXECUTIVE SUMMARY) --- */
-.case-right {
-  background-color: #121212;
-  border: 1px solid #a57a29;
-  border-radius: 18px;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-  position: relative;
-  overflow: hidden;
-}
-
-.case-right::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 4px;
-  background: linear-gradient(90deg, #a57a29, #d4af37, #a57a29);
-}
-
-.exec-header {
-  margin-bottom: 25px;
-}
-
-.exec-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #d4af37;
-}
-
-.exec-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 20px;
-  flex-grow: 1;
-}
-
-.exec-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(165, 122, 41, 0.15);
-  border-radius: 12px;
-  padding: 20px;
-  transition: all 0.3s ease;
-}
-
-.exec-card:hover {
-  border-color: #a57a29;
-  background: rgba(212, 175, 55, 0.03);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.card-icon {
-  font-size: 1.2rem;
-  margin-bottom: 12px;
-  color: #d4af37;
-}
-
-.exec-card h4 {
-  font-size: 0.95rem;
-  color: #ffffff;
-  margin-bottom: 10px;
-}
-
-.exec-card p, .exec-card ul {
-  font-size: 0.85rem;
-  color: #cfcfcf;
-  line-height: 1.5;
-  margin: 0;
-  padding: 0;
-}
-
-.exec-card ul {
-  list-style-type: none;
-}
-
-.exec-card ul.check-list li::before {
-  content: "✓ ";
-  color: #d4af37;
-  font-weight: bold;
-}
-
-.exec-card ul.bullet-list li {
-  position: relative;
-  padding-left: 12px;
-  margin-bottom: 4px;
-}
-.exec-card ul.bullet-list li::before {
-  content: "•";
-  color: #d4af37;
-  position: absolute;
-  left: 0;
-}
-
-.exec-stats {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 25px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(165, 122, 41, 0.3);
-}
-
-.stat-item {
-  text-align: center;
-}
-
-.stat-label {
-  display: block;
-  font-size: 0.65rem;
-  color: #a57a29;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-}
-
-.stat-value {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-/* RESPONSIVE MÓVIL */
-@media (max-width: 1024px) {
-  .case-wrapper {
-    grid-template-columns: 1fr;
-    height: auto;
-    gap: 30px;
-    padding-top: 60px;
-    padding-bottom: 60px;
-  }
-  .analysis-section {
-    height: auto !important;
-    min-height: 100vh;
-    padding: 20px;
-  }
-  .exec-grid {
-    grid-template-columns: 1fr;
-  }
-  .exec-stats {
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: flex-start;
-  }
-  .stat-item {
-    text-align: left;
-    margin-right: 15px;
-  }
-}
-
-.case-wrapper.reverse {
-  grid-template-columns: 60% 40%;
-}
-
-/* Movemos visualmente el bloque de texto a la segunda columna */
-.case-wrapper.reverse .case-left {
-  order: 2;
-  padding-right: 0;
-  padding-left: 20px; /* Pasamos el espaciado al lado izquierdo */
-}
-
-/* Movemos visualmente las tarjetas a la primera columna */
-.case-wrapper.reverse .case-right {
-  order: 1;
-}
-
-/* RESPONSIVE MÓVIL PARA LA VERSIÓN INVERTIDA */
-/* En celular siempre queremos el texto arriba y las tarjetas abajo, para no romper la lectura */
-@media (max-width: 1024px) {
-  .case-wrapper.reverse .case-left {
-    order: 1; /* Forzamos el texto arriba */
-    padding-left: 0;
-  }
-  .case-wrapper.reverse .case-right {
-    order: 2; /* Forzamos las tarjetas abajo */
-  }
-}
-
-@media(max-width: 768px) {
-  .hub-grid { grid-template-columns: 1fr; }
-}
-
-@media(max-width: 768px) {
-  section { padding: 15px; }
-  .recurso { border-radius: 24px; padding: 20px; gap: 20px; }
-  .stats { grid-template-columns: 1fr; gap: 10px; }
-  .preview { height: 38vh; border-radius: 16px; }
-  .titulo { font-size: 2rem; }
-  .hero h1 { padding: 25px; font-size: 2.2rem; }
-  
-  .cs-container { height: auto; min-height: 80vh; justify-content: flex-start; }
-  .cs-title { font-size: 2rem; }
-  .cs-hero, .cs-footer-layout { gap: 20px; }
-  .cs-image-main, .cs-image-wide { min-height: 30vh; }
-  .cs-bento-grid { gap: 10px; height: 40vh; }
-}
-
-/* ==========================================================
-   ESTILOS DE METODOLOGÍA / PIPELINE (Efecto Pirámide 3-Arriba / 4-Abajo)
-   ========================================================== */
-
-.methodology-alt {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px 50px;
-  background: radial-gradient(circle at 50% 0%, #161616 0%, #080808 70%);
-  color: #e0e0e0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Resplandor ambiental de fondo */
-.methodology-alt::before {
-  content: '';
-  position: absolute;
-  top: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60vw;
-  height: 350px;
-  background: radial-gradient(ellipse, rgba(212, 175, 55, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.method-alt-header {
-  max-width: 1000px;
-  margin: 0 auto 35px;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-
-.method-alt-tag {
-  display: inline-block;
-  color: #d4af37;
-  font-size: 0.85rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  font-weight: 700;
-  background: rgba(212, 175, 55, 0.1);
-  padding: 6px 16px;
-  border-radius: 20px;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-}
-
-.method-alt-header h2 {
-  font-size: clamp(2.5rem, 4.5vw, 4rem);
-  font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 18px;
-  color: #ffffff;
-  letter-spacing: -0.5px;
-}
-
-.method-alt-header h2 span {
-  display: block;
-  background: linear-gradient(135deg, #fff2cc 0%, #d4af37 50%, #aa8c2c 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.method-alt-header p {
-  color: #b0b0b0;
-  line-height: 1.6;
-  font-size: 1.1rem;
-  max-width: 850px;
-  margin: 0 auto;
-}
-
-/* Contenedor principal */
-.pipeline-alt-container {
-  width: min(1550px, 95vw);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  position: relative;
-  z-index: 1;
-}
-
-/* Fila Superior (3 columnas) - Más angosta para formar la cúspide de la pirámide */
-.pipeline-row-top {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  max-width: 1180px; /* Ancho menor para centrar y reducir el tamaño visual */
-  margin: 0 auto;    /* Centra la fila superior automáticamente */
-  width: 100%;
-}
-
-/* Fila Inferior (4 columnas) - Toma todo el ancho para la base */
-.pipeline-row-bottom {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  width: 100%;
-}
-
-.pipeline-alt-card {
-  position: relative;
-  padding: 26px 22px;
-  background: linear-gradient(145deg, rgba(24, 24, 24, 0.9) 0%, rgba(12, 12, 12, 0.95) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-}
-
-/* Línea de brillo superior dinámica */
-.pipeline-alt-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
-  opacity: 0.6;
-  transition: opacity 0.4s ease;
-}
-
-.pipeline-alt-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  border-color: rgba(212, 175, 55, 0.6);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.15);
-  background: linear-gradient(145deg, rgba(30, 28, 22, 0.95) 0%, rgba(16, 15, 12, 0.98) 100%);
-}
-
-.pipeline-alt-card:hover::before {
-  opacity: 1;
-  background: linear-gradient(90deg, transparent, #d4af37, transparent);
-}
-
-.pipeline-alt-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.pipeline-alt-num {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #d4af37;
-  letter-spacing: 1.5px;
-  background: rgba(212, 175, 55, 0.1);
-  padding: 5px 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-}
-
-.pipeline-alt-icon-box {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.pipeline-alt-card:hover .pipeline-alt-icon-box {
-  background: rgba(212, 175, 55, 0.2);
-  border-color: rgba(212, 175, 55, 0.4);
-  transform: rotate(6deg) scale(1.08);
-}
-
-.pipeline-alt-icon {
-  width: 18px;
-  height: 18px;
-  color: #d4af37;
-}
-
-.pipeline-alt-card h3 {
-  color: #ffffff;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 10px;
-  line-height: 1.3;
-  letter-spacing: -0.2px;
-}
-
-.pipeline-alt-card p {
-  color: #bcbcbc;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  margin: 0;
-}
-
-/* Responsivo adaptable para tablets y móviles */
-@media (max-width: 1200px) {
-  .pipeline-row-top,
-  .pipeline-row-bottom {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .pipeline-row-top,
-  .pipeline-row-bottom {
-    grid-template-columns: 1fr;
-  }
-  .methodology-alt {
-    padding: 40px 20px;
-  }
-}
-
-/* ==========================================================
-   ESTILOS DEL CASO DE ESTUDIO (Enfoque Ejecutivo/Consultoría)
-   ========================================================== */
-
-.cs-section {
-  background-color: #080808;
-  color: #e0e0e0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  padding: 60px 20px;
-  line-height: 1.6;
-}
-
-.cs-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-}
-
-/* Tipografía y Utilitarios */
-.cs-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.2;
-  margin-bottom: 20px;
-  letter-spacing: -0.5px;
-}
-
-.cs-block-title {
-  font-size: 1.2rem;
-  color: #d4af37;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-weight: 600;
-  margin-bottom: 25px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-  padding-bottom: 10px;
-}
-
-.cs-desc {
-  font-size: 1.05rem;
-  color: #a0a0a0;
-  margin-bottom: 30px;
-}
-
-.cs-text-gold { color: #d4af37 !important; }
-.cs-no-margin { margin: 0 !important; }
-
-/* Grid Systems */
-.cs-grid-4 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.cs-grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-}
-
-.cs-align-stretch { align-items: stretch; }
-
-/* 1. Hero Block */
-.cs-hero {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 50px;
-  align-items: center;
-}
-
-.cs-meta {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.cs-badge {
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.cs-badge-gold { background: #d4af37; color: #000; }
-.cs-badge-outline { border: 1px solid rgba(255, 255, 255, 0.3); color: #ccc; }
-.cs-badge-success { background: rgba(76, 175, 80, 0.1); color: #4CAF50; border: 1px solid rgba(76, 175, 80, 0.3); }
-
-.cs-hero-actions {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.cs-btn {
-  padding: 12px 24px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  text-align: center;
-}
-
-.cs-btn-primary {
-  background: #d4af37;
-  color: #0b0b0b;
-  border: 1px solid #d4af37;
-}
-
-.cs-btn-primary:hover {
-  background: transparent;
-  color: #d4af37;
-}
-
-.cs-btn-outline {
-  background: transparent;
-  color: #d4af37;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-}
-
-.cs-btn-outline:hover {
-  background: rgba(212, 175, 55, 0.05);
-  border-color: #d4af37;
-}
-
-.cs-image-placeholder {
-  width: 100%;
-  height: 350px;
-  background: #141414;
-  border: 1px dashed rgba(212, 175, 55, 0.3);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  font-size: 0.9rem;
-}
-
-/* 2. Tarjetas base */
-.cs-card {
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 25px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.cs-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  border-color: rgba(212, 175, 55, 0.2);
-}
-
-.cs-card-highlight {
-  background: linear-gradient(145deg, #141414 0%, #1a1813 100%);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.cs-icon {
-  width: 32px;
-  height: 32px;
-  color: #d4af37;
-  margin-bottom: 15px;
-}
-
-.cs-icon-small {
-  width: 20px;
-  height: 20px;
-  color: #d4af37;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.cs-card h4 {
-  color: #fff;
-  font-size: 1.1rem;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-.cs-card p {
-  color: #a0a0a0;
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-/* 3. Pipeline / Timeline */
-.cs-timeline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #141414;
-  padding: 30px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  position: relative;
-  overflow-x: auto;
-}
-
-.cs-timeline-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  position: relative;
-  flex: 1;
-  min-width: 100px;
-}
-
-.cs-timeline-step:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  top: 6px;
-  right: -50%;
-  width: 100%;
-  height: 2px;
-  background: rgba(212, 175, 55, 0.3);
-  z-index: 0;
-}
-
-.cs-dot {
-  width: 14px;
-  height: 14px;
-  background: #d4af37;
-  border-radius: 50%;
-  margin-bottom: 15px;
-  z-index: 1;
-  box-shadow: 0 0 0 4px #141414;
-}
-
-.cs-timeline-step span {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #ccc;
-}
-
-/* 4. Tech Stack */
-.cs-tech-groups {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.cs-tech-row {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  align-items: center;
-  padding: 12px 15px;
-  background: #141414;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.cs-tech-label {
-  font-size: 0.8rem;
-  color: #888;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.cs-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.cs-tag {
-  background: rgba(212, 175, 55, 0.1);
-  color: #d4af37;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  border: 1px solid rgba(212, 175, 55, 0.2);
-}
-
-/* 5. Competencias */
-.cs-competencies {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.cs-tag-skill {
-  background: rgba(255, 255, 255, 0.05);
-  color: #e0e0e0;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* 6. Checklist de Preguntas */
-.cs-checklist {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.cs-checklist li {
-  position: relative;
-  padding-left: 30px;
-  margin-bottom: 15px;
-  font-size: 0.95rem;
-  color: #e0e0e0;
-}
-
-.cs-checklist li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: #d4af37;
-  font-weight: bold;
-}
-
-/* 7. Hallazgos */
-.cs-findings {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.cs-finding-item {
-  display: flex;
-  gap: 15px;
-  background: #141414;
-  padding: 20px;
-  border-radius: 8px;
-  border-left: 3px solid #d4af37;
-}
-
-.cs-finding-item h5 {
-  margin: 0 0 5px 0;
-  font-size: 1rem;
-  color: #fff;
-}
-
-.cs-finding-item p {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #a0a0a0;
-}
-
-/* 8. KPI Metrics */
-.cs-kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1px;
-  background: rgba(212, 175, 55, 0.2);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.cs-kpi {
-  background: #141414;
-  padding: 25px 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.cs-kpi-label {
-  font-size: 0.75rem;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.cs-kpi-value {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-/* 9. Valor Agregado */
-.cs-value-card {
-  background: #141414;
-  padding: 15px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  color: #ccc;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-
-.cs-check { color: #d4af37; font-weight: bold; }
-
-/* 10. Footer Links */
-.cs-footer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  padding-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.cs-footer-link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #a0a0a0;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.2s;
-}
-
-.cs-footer-link svg {
-  width: 18px;
-  height: 18px;
-}
-
-.cs-footer-link:hover {
-  color: #d4af37;
-}
-
-/* ==========================================
-   RESPONSIVE (Móvil y Tablets)
-   ========================================== */
-@media (max-width: 1024px) {
-  .cs-hero { grid-template-columns: 1fr; }
-  .cs-grid-2 { grid-template-columns: 1fr; }
-  .cs-tech-row { grid-template-columns: 1fr; gap: 10px; }
-  .cs-timeline { 
-    flex-direction: column; 
-    align-items: flex-start; 
-    gap: 20px; 
-  }
-  .cs-timeline-step { 
-    flex-direction: row; 
-    gap: 15px; 
-    width: 100%;
-  }
-  .cs-timeline-step::after {
-    top: 50%;
-    left: 6px;
-    width: 2px;
-    height: 100%;
-    right: auto;
-  }
-  .cs-dot { margin-bottom: 0; }
-}
-
-@media (max-width: 768px) {
-  .cs-section { padding: 40px 15px; }
-  .cs-title { font-size: 1.8rem; }
-  .cs-kpi-grid { grid-template-columns: 1fr 1fr; }
-  .cs-footer { flex-direction: column; align-items: center; gap: 15px; }
-}
-
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* --- NAVEGACIÓN --- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      background: rgba(248, 247, 244, 0.9);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 5%;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+    
+    /* --- HERO SECTION --- */
+    .hero {
+      position: relative;
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding-top: 60px;
+    }
+    .hero video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(248, 247, 244, 0.88); /* Overlay claro para estética minimalista */
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 20px;
+      animation: fadeIn 1.5s ease-out;
+    }
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* --- CONTENEDORES Y TIPOGRAFÍA --- */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 5%;
+    }
+    .section-header {
+      margin-bottom: 60px;
+    }
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+      display: inline-block;
+    }
+
+    /* --- DISEÑO HORIZONTAL (EDITORIAL ROW) --- */
+    .editorial-row {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      background: var(--white);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-subtle);
+      border: 1px solid var(--border-light);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .editorial-row:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+    }
+    
+    /* --- SOBRE MÍ --- */
+    .about-image {
+      flex: 0 0 250px;
+    }
+    .about-image img {
+      width: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+      aspect-ratio: 1/1;
+    }
+    .about-content {
+      flex: 1;
+    }
+    .about-content p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .skill-col h4 {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .skill-col p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* --- CÓMO TRABAJO (METODOLOGÍA) --- */
+    .methodology-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+    .method-step {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-subtle);
+    }
+    .step-number {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--grey-blue);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .method-step h4 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .method-step p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* --- PROYECTOS / DASHBOARDS / CASOS --- */
+    .project-image {
+      flex: 0 0 45%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-main);
+    }
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    .editorial-row:hover .project-image img {
+      transform: scale(1.03);
+    }
+    .project-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .category-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    
+    /* Colores pastel asignados a categorías */
+    .tag-macro { background: var(--sage-green); color: #1f3325; }
+    .tag-bi { background: var(--peach); color: #4a2b1d; }
+    .tag-bank { background: var(--grey-blue); color: #1a2736; }
+    .tag-supply { background: var(--lavender); color: #2d2440; }
+    
+    .project-info h3 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
+    .project-info p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+    }
+    .tech-stack {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 25px;
+      font-weight: 500;
+    }
+    
+    /* Proyecto Destacado (ENIF) */
+    .featured-stats {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 25px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border-light);
+    }
+    .stat-item strong {
+      display: block;
+      font-size: 1.2rem;
+      color: var(--text-main);
+    }
+    .stat-item span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* --- BOTONES --- */
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      margin-top: auto;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 24px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: var(--text-main);
+      color: var(--white);
+      border: 1px solid var(--text-main);
+    }
+    .btn-primary:hover {
+      background: #1a2327;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--border-light);
+    }
+    .btn-secondary:hover {
+      border-color: var(--text-main);
+      background: var(--bg-main);
+    }
+
+    /* --- ANIMACIONES & RESPONSIVE --- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      will-change: opacity, visibility;
+    }
+    .fade-in-section.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 900px) {
+      .editorial-row, .about-row {
+        flex-direction: column;
+        gap: 30px;
+      }
+      .project-image, .about-image {
+        width: 50%;
+        flex: none;
+      }
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+      .methodology-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .hero h1 { font-size: 2.8rem; }
+    }
+    
+    @media (max-width: 600px) {
+      .methodology-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links { display: none; } /* En móvil se recomienda un menú hamburguesa */
+      .hero h1 { font-size: 2.2rem; }
+    }
   </style>
 </head>
-
 <body>
 
-<button id="fullscreenBtn" title="Pantalla Completa">⛶</button>
+  <!-- Navegación -->
+  <nav>
+    <div style="font-weight: 600; font-size: 1.1rem; color: var(--text-main);">Javier Barillas</div>
+    <div class="nav-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#sobre-mi">Sobre mí</a>
+	  <a href="#analisis">Análisis</a>
+      <a href="#dashboards">Dashboards</a>
 
-<div class="side-nav" id="sideNav"></div>
+    </div>
+  </nav>
 
-<div id="container">
-
-  <section id="hero" class="hero visible">
+  <!-- Hero Section -->
+  <section id="inicio" class="hero">
     <video autoplay muted loop playsinline>
       <source src="https://github.com/202003519jonatanbarillas-sudo/infogra-chin/releases/download/v1/valores.mp4" type="video/mp4">
     </video>
-    <h1>Portafolio de Análisis de Datos</h1>
-	<p class="hero-subtitle">Proyectos de análisis exploratorio, visualización de datos y desarrollo de dashboards interactivos.</p>
-	<div class="fullscreen-hint">Se recomienda visualizar en <span>Pantalla Completa</span></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Portafolio de Análisis de Datos</h1>
+      <p>Análisis exploratorio, visualización de datos y desarrollo de dashboards para transformar información en decisiones.</p>
+    </div>
   </section>
 
-<section class="about-section">
-    <div class="about-container">
-
-        <div class="about-photo">
-            <img src="present.png" alt="Javier Barillas">
+  <!-- Sobre Mí -->
+  <section id="sobre-mi" class="container fade-in-section">
+    <div class="section-header"><h2>Sobre mí</h2></div>
+    <div class="editorial-row about-row">
+      <div class="about-image">
+        <img src="present.png" alt="Javier Barillas">
+      </div>
+      <div class="about-content">
+        <p>Soy Javier Barillas, economista con pensum cerrado y formación en análisis de datos, estadística y econometría. Desarrollo soluciones de análisis y visualización utilizando Python, SQL, Power BI, Excel y R, aplicando procesos de limpieza, transformación, análisis exploratorio y modelado estadístico. He desarrollado proyectos enfocados en análisis económico, financiero y de riesgos, integrando datos para generar indicadores y facilitar la interpretación de información para la toma de decisiones. Interesado en desarrollarme profesionalmente en áreas de análisis de datos, Business Intelligence, riesgo financiero y análisis cuantitativo, contribuyendo a la toma de decisiones empresariales basada en datos.</p>
+        <div class="skills-grid">
+          <div class="skill-col">
+            <h4>Economía</h4>
+            <p>Análisis económico y financiero</p>
+          </div>
+          <div class="skill-col">
+            <h4>Data Analytics</h4>
+            <p>Python, SQL, Excel y análisis estadístico</p>
+          </div>
+          <div class="skill-col">
+            <h4>Business Intelligence</h4>
+            <p>Dashboards, KPIs y visualización de datos</p>
+          </div>
         </div>
-
-        <div class="about-content">
-
-            <span class="about-badge">
-                ECONOMISTA · ANALISTA DE DATOS · INVESTIGADOR
-            </span>
-
-            <h2>
-                Transformando datos en
-                <span>decisiones estratégicas</span>
-            </h2>
-
-            <p>
-			Soy Javier Barillas, economista especializado en análisis de datos, visualización y desarrollo de dashboards. Combino estadística, programación y diseño para transformar información compleja en herramientas que apoyan la toma de decisiones. Manejo SQL, Python, HTML, CSS, JavaScript, Excel y Power BI, integrando análisis económico con comunicación visual efectiva. Actualmente me enfoco en analítica descriptiva, con el objetivo de avanzar hacia modelos predictivos y soluciones basadas en datos.			
-            </p>
-
-            <div class="about-highlights">
-
-                <div class="highlight">
-                    <strong>Economía</strong>
-                    <span>Análisis macroeconómico y financiero</span>
-                </div>
-
-                <div class="highlight">
-                    <strong>Data Analytics</strong>
-                    <span>Python, MySQL, Excel, PowerBI, HTML, CSS y JS </span>
-                </div>
-
-                <div class="highlight">
-                    <strong>Business Intelligence</strong>
-                    <span>Dashboards interactivos y KPIs</span>
-                </div>
-
-            </div>
-
-        </div>
-
+      </div>
     </div>
-</section>
+  </section>
 
-  <section class="hub-section">
-    <div class="hub-container">
-      <span class="about-badge">EXPLORAR PORTAFOLIO</span>
-      <h2 class="hub-title">Selecciona una <span>Categoría</span></h2>
-      <p class="hub-desc">
-        Elige entre los proyectos especializados de análisis estadístico y de datos, o explora la colección completa de dashboards interactivos de Business Intelligence.
-      </p>
+
+  <section  id="analisis" class="container fade-in-section">
+    <div class="section-header"><h2>Proceso de Análisis de Datos</h2></div>
+    <div class="methodology-grid">
+      <div class="method-step">
+        <span class="step-number">01</span>
+        <h4>Auditoría de Datos</h4>
+        <p>Evaluación de calidad, integridad y consistencia para garantizar información confiable antes del análisis.</p>
+      </div>
+      <div class="method-step">
+        <span class="step-number">02</span>
+        <h4>Preparación de Datos</h4>
+        <p>Limpieza, transformación y estandarización mediante SQL para construir un conjunto de datos consistente.</p>
+      </div>
+      <div class="method-step">
+        <span class="step-number">03</span>
+        <h4>Procesamiento</h4>
+        <p>Manipulación y enriquecimiento de datos mediante funciones reutilizables desarrolladas en Python.</p>
+      </div>
+      <div class="method-step">
+        <span class="step-number">04</span>
+        <h4>Análisis Exploratorio</h4>
+        <p>Evaluación estadística y visual para identificar patrones, tendencias y oportunidades de análisis.</p>
+      </div>
+	  <div class="method-step">
+        <span class="step-number">05</span>
+        <h4>Visualización de Datos</h4>
+        <p>Desarrollo de visualizaciones interactivas para comunicar hallazgos y facilitar la toma de decisiones.</p>
+      </div>
+	  <div class="method-step">
+        <span class="step-number">06</span>
+        <h4>Automatización</h4>
+        <p>Generación automática de tablas, gráficos y recursos para optimizar el flujo de trabajo analítico.</p>
+      </div>
+	  <div class="method-step">
+        <span class="step-number">07</span>
+        <h4>Documentación Técnica</h4>
+        <p>Elaboración automática de informes profesionales con resultados, métricas y visualizaciones integradas.</p>
+      </div>
+    </div>
+  </section>
+  <!-- PROYECTO DESTACADO -->
+<section class="container fade-in-section" style="padding-top: 0;">
+  <div class="section-header">
+    <h2>Proyecto Destacado</h2>
+  </div>
+
+  <div class="editorial-row">
+    <div class="project-info" style="padding-right: 40px;">
       
-      <div class="hub-grid">      
-        <div class="hub-card" onclick="switchView('analysis', this)">
-          <h3>Análisis de <span>Datos</span></h3>
-          <p>Modelos estadísticos, scripts de Python, SQL, notebooks y estudios económicos cuantitativos detallados.</p>
-          <div class="hub-btn">Ver Proyectos ➔</div>
-        </div>
-        
-        <div class="hub-card" onclick="switchView('dashboards', this)">
-          <h3><span>Dashboards</span> Interactivos</h3>
-          <p>Herramientas de Business Intelligence, visualizaciones web dinámicas, macroeconomía, ventas, logística y finanzas.</p>
-          <div class="hub-btn">Ver Dashboards ➔</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div id="dashboards-view" class="view-content">
-<section class="methodology">
-
-    <div class="method-header">
-
-        <span class="method-tag">
-            PROCESO ANALÍTICO
-        </span>
-
-        <h2>
-            Cómo fueron construidos
-            <span>estos dashboards</span>
-        </h2>
-
-        <p>
-            Cada proyecto fue desarrollado siguiendo un proceso completo
-            de análisis de datos que abarca desde la obtención y limpieza
-            de información hasta la construcción de visualizaciones
-            interactivas orientadas a la toma de decisiones.
-        </p>
-
-    </div>
-
-    <div class="timeline">
-
-        <div class="timeline-item">
-            <div class="step-number">01</div>
-
-            <h3>Obtención de Datos</h3>
-
-            <p>
-                Utilización de bases de datos públicas,
-                repositorios académicos y conjuntos de datos obtenidos en Kaggle
-                especializados para cada dominio analítico.
-            </p>
-        </div>
-
-        <div class="timeline-item">
-            <div class="step-number">02</div>
-
-            <h3>Procesamiento</h3>
-
-            <p>
-                Limpieza, transformación y validación mediante
-                Python, SQL y herramientas de análisis estadístico.
-            </p>
-        </div>
-
-        <div class="timeline-item">
-            <div class="step-number">03</div>
-
-            <h3>Modelado</h3>
-
-            <p>
-                Construcción de indicadores, métricas de negocio,
-                variables derivadas y modelos analíticos.
-            </p>
-        </div>
-
-        <div class="timeline-item">
-            <div class="step-number">04</div>
-
-            <h3>Visualización</h3>
-
-            <p>
-                Desarrollo de dashboards interactivos utilizando
-                HTML, CSS, JavaScript y bibliotecas de visualización.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-  <section>
-    <div class="recurso">
-      <div class="info">
-        <div class="tag">Sistema Macroeconómico</div>
-        <div class="titulo">Dashboard de Datos <span>Macroeconómicos</span></div>
-        <div class="divider"></div>
-        <div class="descripcion">
-          Este dashboard integra indicadores monetarios y financieros relevantes para el análisis macroeconómico. Incluye series históricas, métricas comparativas y visualizaciones interactivas que facilitan la identificación de tendencias, variaciones estacionales y patrones de comportamiento económico.
-        </div>
-
-        <div class="stats">
-          <div class="card"><h3>Indicadores</h3><p>KPIs y Gráficos</p></div>
-          <div class="card"><h3>Series Históricas</h3><p>25 años</p></div>
-          <div class="card"><h3>Actualización</h3><p>Mensual</p></div>
-          <div class="card"><h3>Visualización</h3><p>Interactiva</p></div>
-        </div>
-      </div>
-
-      <div class="preview">
-        <div class="topbar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-		<div class="dashboard-hint">Visualizar Dashboard en pantalla completa</div>
-        <iframe src="dashboard1.html"></iframe>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="recurso invertido">
-      <div class="preview">
-        <div class="topbar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-		<div class="dashboard-hint">Visualizar Dashboard en pantalla completa</div>
-        <iframe src="dashboard2.html"></iframe>
-      </div>
-
-      <div class="info">
-        <div class="tag">Sistema de Ventas</div>
-        <div class="titulo">Dashboard de <span>Ventas</span></div>
-        <div class="divider"></div>
-        <div class="descripcion">
-          Este dashboard permite analizar el comportamiento comercial mediante indicadores clave de ventas, órdenes y devoluciones. Incluye métricas por región, métodos de pago, tipos de cliente y series históricas para identificar tendencias y patrones de consumo.
-        </div>
-
-        <div class="stats">
-          <div class="card"><h3>Indicadores</h3><p>KPIs y Gráficos</p></div>
-          <div class="card"><h3>Mercado</h3><p>Retail Local</p></div>
-          <div class="card"><h3>Actualización</h3><p>Diaria</p></div>
-          <div class="card"><h3>Visualización</h3><p>Interactiva</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="recurso">
-      <div class="info">
-        <div class="tag">Sistema Bancario</div>
-        <div class="titulo">Dashboard de <span>Dinero</span></div>
-        <div class="divider"></div>
-        <div class="descripcion">
-          Este dashboard analiza billetes auténticos y falsos mediante métricas wavelet que revelan diferencias estadísticas claras. Las visualizaciones permiten identificar patrones y relaciones entre variables, facilitando la separación de clases y su aplicación en modelos de machine learning para detección de fraude financiero.
-        </div>
-
-        <div class="stats">
-          <div class="card"><h3>Indicadores</h3><p>KPIs y Gráficos</p></div>
-          <div class="card"><h3>Objetivo</h3><p>Dinero Falso</p></div>
-          <div class="card"><h3>Variable</h3><p>Monetaria</p></div>
-          <div class="card"><h3>Visualización</h3><p>Interactiva</p></div>
-        </div>
-      </div>
-
-      <div class="preview">
-        <div class="topbar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-		<div class="dashboard-hint">Visualizar Dashboard en pantalla completa</div>
-        <iframe src="dashboard3.html"></iframe>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="recurso invertido">
-      <div class="preview">
-        <div class="topbar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-		<div class="dashboard-hint">Visualizar Dashboard en pantalla completa</div>
-        <iframe src="dashboard4.html"></iframe>
-      </div>
-
-      <div class="info">
-        <div class="tag">Global Supply Chain</div>
-        <div class="titulo">Dashboard de <span>Logística</span></div>
-        <div class="divider"></div>
-        <div class="descripcion">
-          Este dashboard permite analizar la resiliencia de la red logística global mediante indicadores clave de envíos, días de retraso y costos operativos. Incluye métricas de riesgo geopolítico y climático por ruta comercial, modos de transporte y categorías de producto, facilitando la evaluación de acciones prescriptivas de mitigación ante disrupciones.
-        </div>
-
-        <div class="stats">
-          <div class="card"><h3>Indicadores</h3><p>KPIs y Gráficos</p></div>
-          <div class="card"><h3>Muestra</h3><p>10,000 Envíos</p></div>
-          <div class="card"><h3>Actualización</h3><p>Por Envío</p></div>
-          <div class="card"><h3>Visualización</h3><p>Interactiva</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-<section>
-  <div class="cs-container">
-    <div class="cs-hero">
-      <div class="cs-header">
-        <div class="cs-badge">CASO DE ESTUDIO · DASHBOARD ENIF</div>
-        <h2 class="cs-title">Inclusión Financiera en <span>Guatemala</span></h2>
-        <p class="cs-desc">
-          Plataforma analítica integral diseñada para explorar indicadores clave de acceso, uso y calidad de servicios financieros. Un solo dashboard, múltiples perspectivas.
-        </p>
-        
-        <!-- NOTA TÉCNICA AGREGADA AQUÍ -->
-        <div class="cs-disclaimer">
-          <p>Nota: Visualización estática (captura de pantalla) por restricciones técnicas del entorno. El dashboard interactivo es funcional en el entorno de desarrollo.</p>
-        </div>
-        
-      </div>
-      <div class="cs-image-main">
-        <img src="enif1.png" alt="Dashboard ENIF Principal">
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="cs-container">
-    <div class="cs-bento-layout">
-      <div class="cs-bento-text">
-        <div class="cs-badge">CASO DE ESTUDIO · DASHBOARD ENIF</div>
-        <h3>Exploración <span>Multidimensional</span></h3>
-        <div class="divider"></div>
-        <p>
-          En lugar de vistas estáticas, la herramienta segmenta los datos en módulos interactivos. Al aislar variables como el acceso, servicios, cuentas y prestamos, permite un cruce sociodemográfico preciso para revelar brechas estructurales.
-        </p>
-      </div>
-      <div class="cs-bento-grid">
-        <img src="enif2.png" alt="Módulo de Ahorro">
-        <img src="enif3.png" alt="Módulo de Crédito">
-        <img src="enif4.png" alt="Filtros">
-        <img src="enif5.png" alt="KPIs">
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="cs-container">
-    <div class="cs-footer-layout">
-      <!-- Usamos las tarjetas (cards) que ya tenías definidas en tu CSS principal -->
-      <div class="cs-stats-row">
-        <div class="card"><h3>Registros</h3><p>Trimestral 2015 - 2025</p></div>
-        <div class="card"><h3>Variables</h3><p>8 Analizadas</p></div>
-        <div class="card"><h3>Componentes</h3><p>+20 Módulos</p></div>
-        <div class="card"><h3>Impacto</h3><p>Nivel Nacional</p></div>
-      </div>
-      <div class="cs-image-wide">
-        <img src="enif6.png" alt="Vista de Mapa o Inferior">
-      </div>
-    </div>
-  </div>
-</section>
-
-</div>
-  </div>
-
-  <div id="analysis-view" class="view-content">
-    
-<section class="methodology-alt">
-
-  <div class="method-alt-header">
-    <span class="method-alt-tag">
-      METODOLOGÍA DE TRABAJO
-    </span>
-
-    <h2>
-      Pipeline de
-      <span>Análisis de Datos</span>
-    </h2>
-
-    <p>
-      Metodología estandarizada para desarrollar proyectos de análisis de datos, desde la evaluación de la calidad de la información hasta la comunicación de resultados mediante visualizaciones e informes reproducibles.
-    </p>
-  </div>
-
-  <div class="pipeline-alt-container">
-
-    <!-- ===================== -->
-    <!-- FILA SUPERIOR -->
-    <!-- ===================== -->
-
-    <div class="pipeline-row-top">
-
-      <!-- Paso 1 -->
-      <div class="pipeline-alt-card">
-
-        <div class="pipeline-alt-top">
-          <span class="pipeline-alt-num">01</span>
-
-          <div class="pipeline-alt-icon-box">
-            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
-              </path>
-            </svg>
-          </div>
-
-        </div>
-
-        <h3>Auditoría de Datos</h3>
-
-        <p>
-          Evaluación de calidad, integridad y consistencia para garantizar información confiable antes del análisis.
-        </p>
-
-      </div>
-
-      <!-- Paso 2 -->
-      <div class="pipeline-alt-card">
-
-        <div class="pipeline-alt-top">
-          <span class="pipeline-alt-num">02</span>
-
-          <div class="pipeline-alt-icon-box">
-            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 7v10c0 2 1.5 3 4 3h8c2.5 0 4-1 4-3V7M4 7c0-2 1.5-3 4-3h8c2.5 0 4 1 4 3m-16 0c0 2 1.5 3 4 3h8c2.5 0 4-1 4-3">
-              </path>
-            </svg>
-          </div>
-
-        </div>
-
-        <h3>Preparación de Datos</h3>
-
-        <p>
-          Limpieza, transformación y estandarización mediante SQL para construir un conjunto de datos consistente.
-        </p>
-
-      </div>
-
-      <!-- Paso 3 -->
-      <div class="pipeline-alt-card">
-
-        <div class="pipeline-alt-top">
-          <span class="pipeline-alt-num">03</span>
-
-          <div class="pipeline-alt-icon-box">
-            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-              </path>
-            </svg>
-          </div>
-
-        </div>
-
-        <h3>Procesamiento</h3>
-
-        <p>
-          Manipulación y enriquecimiento de datos mediante funciones reutilizables desarrolladas en Python.
-        </p>
-
-      </div>
-
-    </div>
-
-    <!-- ===================== -->
-    <!-- FILA INFERIOR -->
-    <!-- ===================== -->
-
-    <div class="pipeline-row-bottom">
-
-      <!-- Paso 4 -->
-      <div class="pipeline-alt-card">
-
-        <div class="pipeline-alt-top">
-          <span class="pipeline-alt-num">04</span>
-
-          <div class="pipeline-alt-icon-box">
-            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
-              </path>
-            </svg>
-          </div>
-
-        </div>
-
-        <h3>Análisis Exploratorio</h3>
-
-        <p>
-          Evaluación estadística y visual para identificar patrones, tendencias y oportunidades de análisis.
-        </p>
-
-      </div>
-
-      <!-- Paso 5 -->
-      <div class="pipeline-alt-card">
-
-        <div class="pipeline-alt-top">
-          <span class="pipeline-alt-num">05</span>
-
-          <div class="pipeline-alt-icon-box">
-            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-              </path>
-            </svg>
-          </div>
-
-        </div>
-
-        <h3>Visualización de Datos</h3>
-
-        <p>
-          Desarrollo de visualizaciones interactivas para comunicar hallazgos y facilitar la toma de decisiones.
-        </p>
-
-      </div>
-
-      <!-- Paso 6 -->
-      <div class="pipeline-alt-card">
-
-        <div class="pipeline-alt-top">
-          <span class="pipeline-alt-num">06</span>
-
-          <div class="pipeline-alt-icon-box">
-            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
-              </path>
-            </svg>
-          </div>
-
-        </div>
-
-        <h3>Automatización</h3>
-
-        <p>
-          Generación automática de tablas, gráficos y recursos para optimizar el flujo de trabajo analítico.
-        </p>
-
-      </div>
-
-      <!-- Paso 7 -->
-      <div class="pipeline-alt-card">
-
-        <div class="pipeline-alt-top">
-          <span class="pipeline-alt-num">07</span>
-
-          <div class="pipeline-alt-icon-box">
-            <svg class="pipeline-alt-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-              </path>
-            </svg>
-          </div>
-
-        </div>
-
-        <h3>Documentación Técnica</h3>
-
-        <p>
-          Elaboración automática de informes profesionales con resultados, métricas y visualizaciones integradas.
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-	
-	
-<section class="analysis-section">
-  <div class="case-wrapper">
-
-    <!-- =========================
-         COLUMNA IZQUIERDA
-    ========================== -->
-
-    <div class="case-left">
-
-      <div class="case-top-badge">
-        CASO 01 | Sector Bancario
-      </div>
-
-      <h2 class="case-title">
-        Análisis del Comportamiento de los Saldos Bancarios durante 2025
-      </h2>
-
-      <div class="case-divider"></div>
-
-      <p class="case-desc">
-        Proyecto de análisis exploratorio desarrollado para evaluar el comportamiento de los saldos bancarios durante 2025. A través del análisis estadístico y la visualización de datos se identificaron patrones, diferencias entre segmentos de clientes y oportunidades de negocio, transformando los datos en información útil para apoyar la toma de decisiones.
+      <span class="category-tag tag-macro">Sector Financiero</span>
+
+      <h3>Análisis Integral de Riesgos Financieros</h3>
+	  <span class="project-status">
+		  ● En desarrollo
+		</span>
+
+      <p>
+        Proyecto de análisis financiero y estadístico orientado a la evaluación
+        de riesgos en el sector bancario, considerando riesgo de crédito,
+        liquidez, mercado y solvencia. Incluye exploración y transformación
+        de datos, identificación de patrones y construcción de indicadores
+        para apoyar la evaluación y gestión del riesgo financiero.
       </p>
 
-      <div class="case-badges-container">
-
-        <div class="badges-title">
-          Tecnologías Utilizadas
+      <div class="featured-stats">
+        <div class="stat-item">
+          <strong>Crédito</strong>
+          <span>Incumplimiento y cartera</span>
         </div>
 
-        <div class="badge-group">
-          <span class="badge tech">Python</span>
-          <span class="badge tech">MySQL</span>
-          <span class="badge tech">Pandas</span>
-          <span class="badge tech">NumPy</span>
-          <span class="badge tech">SciPy</span>
-          <span class="badge tech">Scikit-Learn</span>
-          <span class="badge tech">Bokeh</span>
-          <span class="badge tech">LaTeX</span>
-          <span class="badge tech">Jupyter</span>
+        <div class="stat-item">
+          <strong>Liquidez</strong>
+          <span>Indicadores financieros</span>
         </div>
 
-        <div class="badges-title">
-          Competencias Demostradas
+        <div class="stat-item">
+          <strong>Mercado</strong>
+          <span>Exposición y variaciones</span>
         </div>
 
-        <div class="badge-group">
-          <span class="badge skill">SQL</span>
-          <span class="badge skill">Data Cleaning</span>
-          <span class="badge skill">EDA</span>
-          <span class="badge skill">Estadística Descriptiva</span>
-          <span class="badge skill">Visualización</span>
-          <span class="badge skill">Business Insights</span>
-          <span class="badge skill">Storytelling con Datos</span>
-          <span class="badge skill">Análisis de Negocio</span>
-          <span class="badge skill">LaTeX</span>
+        <div class="stat-item">
+          <strong>Solvencia</strong>
+          <span>Indicadores patrimoniales</span>
         </div>
-
       </div>
 
-      <div class="case-actions">
-
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos"
-           target="_blank"
-           class="case-btn primary">
-           Ver Repositorio
+      <div class="btn-group">
+        <a href=" ** " class="btn btn-primary">
+          Ver caso →
         </a>
 
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/tree/main/Caso%201%20Sector%20Bancario"
-           target="_blank"
-           class="case-btn secondary">
-           Ver Caso 01
+        <a href="#" class="btn btn-secondary">
+          GitHub →
         </a>
-
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%201%20Sector%20Bancario/notebooks/Caso%201.ipynb"
-           download
-           class="case-btn secondary">
-           Ver Notebook
-        </a>
-
       </div>
 
     </div>
-
-    <!-- =========================
-         COLUMNA DERECHA
-    ========================== -->
-
-    <div class="case-right">
-
-      <div class="exec-header">
-        <h3 class="exec-title">
-          Resumen Ejecutivo
-        </h3>
-      </div>
-
-      <div class="exec-grid">
-
-        <!-- Contexto -->
-
-        <div class="exec-card">
-
-          <div class="card-icon">🏦</div>
-
-          <h4>Contexto del Negocio</h4>
-
-          <p>
-            Una institución financiera requiere comprender el comportamiento de los saldos de sus clientes para identificar patrones, diferencias entre segmentos y generar información que apoye la toma de decisiones.
-          </p>
-
-        </div>
-
-        <!-- Preguntas -->
-
-        <div class="exec-card">
-
-          <div class="card-icon">❓</div>
-
-          <h4>Preguntas de Negocio</h4>
-
-          <ul class="check-list">
-            <li>¿Cómo evolucionan los saldos durante el año?</li>
-            <li>¿Existen diferencias entre sucursales?</li>
-            <li>¿Qué segmentos concentran mayor capital?</li>
-            <li>¿Existe relación entre ingreso y saldo?</li>
-            <li>¿Qué grupos de edad presentan mayor participación?</li>
-          </ul>
-
-        </div>
-
-        <!-- Indicadores -->
-
-        <div class="exec-card">
-
-          <div class="card-icon">📈</div>
-
-          <h4>Indicadores Analizados</h4>
-
-          <ul class="check-list">
-            <li>Tendencia temporal</li>
-            <li>Comparación por sucursal</li>
-            <li>Segmentación de clientes</li>
-            <li>Correlación ingreso–saldo</li>
-            <li>Distribución por edad</li>
-          </ul>
-
-        </div>
-
-        <!-- Recomendaciones -->
-
-        <div class="exec-card">
-
-          <div class="card-icon">💡</div>
-
-          <h4>Conclusiones y Recomendaciones</h4>
-
-          <ul class="bullet-list">
-            <li>Monitorear periódicamente la evolución mensual de los saldos.</li>
-            <li>Complementar el análisis incorporando nuevas variables financieras.</li>
-            <li>Profundizar el estudio por segmentos de clientes.</li>
-            <li>Utilizar dashboards para facilitar el seguimiento de indicadores.</li>
-          </ul>
-
-        </div>
-
-      </div>
-
-      <div class="exec-stats">
-
-        <div class="stat-item">
-          <span class="stat-label">Sector</span>
-          <span class="stat-value">Bancario</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Registros</span>
-          <span class="stat-value">1000</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Variables</span>
-          <span class="stat-value">9</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Preguntas</span>
-          <span class="stat-value">5</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Visualizaciones</span>
-          <span class="stat-value">5</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Estado</span>
-          <span class="stat-value" style="color:#4CAF50;">
-            Finalizado
-          </span>
-        </div>
-
-      </div>
-
-    </div>
-
   </div>
 </section>
 
- <section class="analysis-section">
-
-  <div class="case-wrapper reverse">
-
-    <div class="case-left">
-
-      <div class="case-top-badge">
-        CASO 02 | Riesgo Crediticio
-      </div>
-
-      <h2 class="case-title">
-        Análisis de los Factores Asociados a la Mora Crediticia
-      </h2>
-
-      <div class="case-divider"></div>
-
-      <p class="case-desc">
-        Proyecto de análisis exploratorio desarrollado para identificar los factores asociados al incumplimiento de pago de clientes con créditos activos. Mediante técnicas de limpieza, análisis estadístico y visualización de datos se evaluaron variables demográficas, laborales y financieras para generar información que apoye la gestión del riesgo crediticio y la toma de decisiones.
-      </p>
-
-      <div class="case-badges-container">
-
-        <div class="badges-title">
-          Tecnologías Utilizadas
-        </div>
-
-        <div class="badge-group">
-          <span class="badge tech">Python</span>
-          <span class="badge tech">MySQL</span>
-          <span class="badge tech">Pandas</span>
-          <span class="badge tech">NumPy</span>
-          <span class="badge tech">SciPy</span>
-          <span class="badge tech">Scikit-Learn</span>
-          <span class="badge tech">Bokeh</span>
-          <span class="badge tech">LaTeX</span>
-          <span class="badge tech">Jupyter</span>
-        </div>
-
-        <div class="badges-title">
-          Competencias Demostradas
-        </div>
-
-        <div class="badge-group">
-          <span class="badge skill">SQL</span>
-          <span class="badge skill">Data Cleaning</span>
-          <span class="badge skill">EDA</span>
-          <span class="badge skill">Risk Analytics</span>
-          <span class="badge skill">Credit Risk</span>
-          <span class="badge skill">Estadística Descriptiva</span>
-          <span class="badge skill">Visualización</span>
-          <span class="badge skill">Business Insights</span>
-          <span class="badge skill">Storytelling con Datos</span>
-          <span class="badge skill">LaTeX</span>
-        </div>
-
-      </div>
-
-      <div class="case-actions">
-
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos"
-           target="_blank"
-           class="case-btn primary">
-           Ver Repositorio
-        </a>
-
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/tree/main/Caso%202%20Sector%20Bancario"
-           target="_blank"
-           class="case-btn secondary">
-           Ver Caso 02
-        </a>
-
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%202%20Sector%20Bancario/notebooks/Caso%202.ipynb"
-           download
-           class="case-btn secondary">
-           Ver Notebook
-        </a>
-
-      </div>
-
-    </div>
-
-    <div class="case-right">
-
-      <div class="exec-header">
-        <h3 class="exec-title">
-          Resumen Ejecutivo
-        </h3>
-      </div>
-
-      <div class="exec-grid">
-
-        <div class="exec-card">
-
-          <div class="card-icon">🏦</div>
-
-          <h4>Contexto del Negocio</h4>
-
-          <p>
-            Banco Capital GT busca fortalecer su proceso de evaluación crediticia identificando patrones asociados al incumplimiento de pago para mejorar la gestión del riesgo y apoyar la toma de decisiones.
-          </p>
-
-        </div>
-
-        <div class="exec-card">
-
-          <div class="card-icon">🎯</div>
-
-          <h4>Objetivo</h4>
-
-          <p>
-            Analizar las características financieras, laborales y demográficas de los clientes con créditos activos para identificar factores asociados a la mora y generar información útil para la gestión del riesgo crediticio.
-          </p>
-
-        </div>
-
-        <div class="exec-card">
-
-          <div class="card-icon">❓</div>
-
-          <h4>Preguntas de Negocio</h4>
-
-          <ul class="check-list">
-            <li>Distribución de clientes con y sin mora.</li>
-            <li>Sectores laborales con mayor riesgo.</li>
-            <li>Ingreso mensual vs préstamo.</li>
-            <li>Antigüedad laboral y mora.</li>
-            <li>Grupos de edad con mayor concentración de mora.</li>
-          </ul>
-
-        </div>
-
-        <div class="exec-card">
-
-          <div class="card-icon">💡</div>
-
-          <h4>Conclusiones y Recomendaciones</h4>
-
-          <ul class="bullet-list">
-            <li>Complementar el análisis mediante modelos predictivos.</li>
-            <li>Incorporar nuevas variables financieras.</li>
-            <li>Monitorear periódicamente la tasa de mora.</li>
-            <li>Fortalecer la evaluación crediticia basada en datos.</li>
-          </ul>
-
-        </div>
-
-      </div>
-
-      <div class="exec-stats">
-
-        <div class="stat-item">
-          <span class="stat-label">Sector</span>
-          <span class="stat-value">Bancario</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Registros</span>
-          <span class="stat-value">1000</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Variables</span>
-          <span class="stat-value">8</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Preguntas</span>
-          <span class="stat-value">5</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Visualizaciones</span>
-          <span class="stat-value">5</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Estado</span>
-          <span class="stat-value" style="color:#4CAF50;">
-            Finalizado
-          </span>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<section class="analysis-section">
-  <div class="case-wrapper">
-
-    <div class="case-left">
-
-      <div class="case-top-badge">
-        CASO 03 | Economía y Finanzas
-      </div>
-
-      <h2 class="case-title">
-        Análisis de la Evolución de los Indicadores Monetarios y Financieros de Guatemala (2015–2025)
-      </h2>
-
-      <div class="case-divider"></div>
-
-      <p class="case-desc">
-        Proyecto de análisis exploratorio desarrollado para estudiar la evolución de los principales indicadores monetarios y financieros de Guatemala durante el período 2015–2025. Mediante análisis estadístico y visualización de datos se identificaron tendencias, relaciones entre variables macroeconómicas y patrones relevantes para apoyar el análisis económico y la toma de decisiones.
-      </p>
-
-      <div class="case-badges-container">
-
-        <div class="badges-title">
-          Tecnologías Utilizadas
-        </div>
-
-        <div class="badge-group">
-          <span class="badge tech">Python</span>
-          <span class="badge tech">MySQL</span>
-          <span class="badge tech">Pandas</span>
-          <span class="badge tech">NumPy</span>
-          <span class="badge tech">SciPy</span>
-          <span class="badge tech">Scikit-Learn</span>
-          <span class="badge tech">Bokeh</span>
-          <span class="badge tech">LaTeX</span>
-          <span class="badge tech">Jupyter</span>
-        </div>
-
-        <div class="badges-title">
-          Competencias Demostradas
-        </div>
-
-        <div class="badge-group">
-          <span class="badge skill">SQL</span>
-          <span class="badge skill">EDA</span>
-          <span class="badge skill">Macroeconomía</span>
-          <span class="badge skill">Series de Tiempo</span>
-          <span class="badge skill">Análisis Económico</span>
-          <span class="badge skill">Estadística Descriptiva</span>
-          <span class="badge skill">Visualización</span>
-          <span class="badge skill">Business Insights</span>
-          <span class="badge skill">Storytelling con Datos</span>
-          <span class="badge skill">LaTeX</span>
-        </div>
-
-      </div>
-
-      <div class="case-actions">
-
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos"
-           target="_blank"
-           class="case-btn primary">
-           Ver Repositorio
-        </a>
-
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/tree/main/Caso%203%20Sector%20Monetario"
-           target="_blank"
-           class="case-btn secondary">
-           Ver Caso 03
-        </a>
-
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%203%20Sector%20Monetario/notebooks/Caso%203.ipynb"
-           download
-           class="case-btn secondary">
-           Ver Notebook
-        </a>
-      </div>
-
-    </div>
-
-    <div class="case-right">
-
-      <div class="exec-header">
-        <h3 class="exec-title">
-          Resumen Ejecutivo
-        </h3>
-      </div>
-
-      <div class="exec-grid">
-
-        <div class="exec-card">
-
-          <div class="card-icon">🏛️</div>
-
-          <h4>Contexto del Negocio</h4>
-
-          <p>
-            El Banco de Guatemala requiere monitorear la evolución de los principales indicadores monetarios y financieros para apoyar el análisis macroeconómico, evaluar la estabilidad financiera y comprender el comportamiento de la economía nacional.
-          </p>
-
-        </div>
-
-        <div class="exec-card">
-
-          <div class="card-icon">❓</div>
-
-          <h4>Preguntas de Negocio</h4>
-
-          <ul class="check-list">
-            <li>¿Cómo evolucionaron los agregados monetarios?</li>
-            <li>¿Existe relación entre PIB y crédito?</li>
-            <li>¿Las remesas influyen en M2?</li>
-            <li>¿Cómo evolucionó el spread bancario?</li>
-            <li>¿Qué indicador presentó mayor crecimiento?</li>
-          </ul>
-
-        </div>
-
-        <div class="exec-card">
-
-          <div class="card-icon">📈</div>
-
-          <h4>Indicadores Analizados</h4>
-
-          <ul class="check-list">
-            <li>Producto Interno Bruto (PIB)</li>
-            <li>Remesas familiares</li>
-            <li>Medios de Pago (M2)</li>
-            <li>Crédito Bancario</li>
-            <li>Spread Bancario</li>
-          </ul>
-
-        </div>
-
-        <div class="exec-card">
-
-          <div class="card-icon">💡</div>
-
-          <h4>Conclusiones y Recomendaciones</h4>
-
-          <ul class="bullet-list">
-            <li>Monitorear continuamente los indicadores monetarios.</li>
-            <li>Complementar el análisis con modelos econométricos.</li>
-            <li>Actualizar periódicamente las series oficiales.</li>
-            <li>Evaluar el impacto macroeconómico de las remesas.</li>
-          </ul>
-
-        </div>
-
-      </div>
-
-      <div class="exec-stats">
-
-        <div class="stat-item">
-          <span class="stat-label">Sector</span>
-          <span class="stat-value">Macroeconomía</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Registros</span>
-          <span class="stat-value">44</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Variables</span>
-          <span class="stat-value">9</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Preguntas</span>
-          <span class="stat-value">7</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Visualizaciones</span>
-          <span class="stat-value">7</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Estado</span>
-          <span class="stat-value" style="color:#4CAF50;">
-            Finalizado
-          </span>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<section class="analysis-section">
-
-  <div class="case-wrapper reverse">
-
-    <div class="case-left">
-
-      <div class="case-top-badge">
-        CASO 04 | Mercado Bursátil
-      </div>
-
-      <h2 class="case-title">
-        Análisis del Rendimiento de las Empresas con Mayor Capitalización Bursátil (2018–2023)
-      </h2>
-
-      <div class="case-divider"></div>
-
-      <p class="case-desc">
-        Proyecto de análisis exploratorio desarrollado para estudiar el comportamiento histórico de las principales empresas del mercado bursátil estadounidense durante el período 2018–2023. Mediante técnicas de limpieza, análisis estadístico y visualización de datos se identificaron patrones de crecimiento, volatilidad, liquidez y rendimiento acumulado que apoyan el análisis financiero y la toma de decisiones de inversión.
-      </p>
-
-      <div class="case-badges-container">
-
-        <div class="badges-title">
-          Tecnologías Utilizadas
-        </div>
-
-        <div class="badge-group">
-          <span class="badge tech">Python</span>
-          <span class="badge tech">MySQL</span>
-          <span class="badge tech">Pandas</span>
-          <span class="badge tech">NumPy</span>
-          <span class="badge tech">SciPy</span>
-          <span class="badge tech">Scikit-Learn</span>
-          <span class="badge tech">Bokeh</span>
-          <span class="badge tech">LaTeX</span>
-          <span class="badge tech">Jupyter</span>
-        </div>
-
-        <div class="badges-title">
-          Competencias Demostradas
-        </div>
-
-        <div class="badge-group">
-          <span class="badge skill">SQL</span>
-          <span class="badge skill">Data Cleaning</span>
-          <span class="badge skill">EDA</span>
-          <span class="badge skill">Series de Tiempo</span>
-          <span class="badge skill">Análisis Financiero</span>
-          <span class="badge skill">Estadística Descriptiva</span>
-          <span class="badge skill">Visualización</span>
-          <span class="badge skill">Business Insights</span>
-          <span class="badge skill">Storytelling con Datos</span>
-          <span class="badge skill">LaTeX</span>
-        </div>
-
-      </div>
-
-      <div class="case-actions">
-
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos"
-           target="_blank"
-           class="case-btn primary">
-           Ver Repositorio
-        </a>
-
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/tree/main/Caso%204%20Stock%20Acciones"
-           target="_blank"
-           class="case-btn secondary">
-           Ver Caso 04
-        </a>
-
-        <a href="https://github.com/202003519jonatanbarillas-sudo/Analisis_de_Datos/blob/main/Caso%204%20Stock%20Acciones/notebooks/Caso%204.ipynb"
-           target="_blank"
-           class="case-btn secondary">
-           Ver Notebook
-        </a>
-
-      </div>
-
-    </div>
-
-    <div class="case-right">
-
-      <div class="exec-header">
-        <h3 class="exec-title">
-          Resumen Ejecutivo
-        </h3>
-      </div>
-
-      <div class="exec-grid">
-
-        <div class="exec-card">
-
-          <div class="card-icon">📈</div>
-
-          <h4>Contexto del Negocio</h4>
-
-          <p>
-            Una firma de inversión busca comprender el comportamiento histórico de las principales empresas del mercado bursátil estadounidense para apoyar futuros análisis financieros y la toma de decisiones de inversión.
-          </p>
-
-        </div>
-
-        <div class="exec-card">
-
-          <div class="card-icon">🎯</div>
-
-          <h4>Objetivo</h4>
-
-          <p>
-            Analizar la evolución del precio de las acciones, el volumen de negociación y el rendimiento acumulado para identificar tendencias, niveles de volatilidad y diferencias entre las empresas analizadas.
-          </p>
-
-        </div>
-
-        <div class="exec-card">
-
-          <div class="card-icon">❓</div>
-
-          <h4>Preguntas de Negocio</h4>
-
-          <ul class="check-list">
-            <li>Empresas con mayor rendimiento acumulado.</li>
-            <li>Evolución del precio de cierre.</li>
-            <li>Distribución de rendimientos diarios.</li>
-            <li>Empresas con mayor volumen negociado.</li>
-            <li>Relación entre precio y volumen.</li>
-          </ul>
-
-        </div>
-
-        <div class="exec-card">
-
-          <div class="card-icon">💡</div>
-
-          <h4>Conclusiones y Recomendaciones</h4>
-
-          <ul class="bullet-list">
-            <li>NVIDIA presentó el mayor rendimiento acumulado.</li>
-            <li>Tesla y Apple concentraron los mayores volúmenes negociados.</li>
-            <li>Complementar el análisis mediante indicadores financieros.</li>
-            <li>Desarrollar modelos predictivos para apoyar decisiones de inversión.</li>
-          </ul>
-
-        </div>
-
-      </div>
-
-      <div class="exec-stats">
-
-        <div class="stat-item">
-          <span class="stat-label">Sector</span>
-          <span class="stat-value">Financiero</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Empresas Analizadas</span>
-          <span class="stat-value">10</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Registros</span>
-          <span class="stat-value">602962</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Preguntas</span>
-          <span class="stat-value">7</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Visualizaciones</span>
-          <span class="stat-value">7</span>
-        </div>
-
-        <div class="stat-item">
-          <span class="stat-label">Estado</span>
-          <span class="stat-value" style="color:#4CAF50;">
-            Finalizado
-          </span>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-  </div>
   
+  <!-- CASOS DE ANÁLISIS -->
+  <section class="container fade-in-section" style="padding-top: 0;">
+    <div class="section-header"><h2>Casos de análisis</h2></div>
 
-	
-<script>
+    <div class="editorial-row">
+      <div class="project-info">
+        <span class="category-tag tag-bank">Sector Bancario</span>
+        <h3>Comportamiento de los saldos bancarios durante 2025</h3>
+        <p>Análisis exploratorio de saldos, segmentos de clientes, sucursales y variables demográficas.</p>
+        <p class="tech-stack">Tecnologías: Python · SQL · Pandas · Bokeh <br> Competencias: EDA · Estadística · Visualización · Business Insights</p>
+        <div class="btn-group">
+          <a href="caso1.html" class="btn btn-primary">Ver caso →</a>
+          <a href="#" class="btn btn-secondary">GitHub →</a>
+        </div>
+      </div>
+    </div>
 
-  let sections = [];
-  let sideDots = [];
-  const sideNav = document.getElementById("sideNav");
-  let currentSection = 0;
-  let isScrolling = false;
-  let observer = null;
+    <div class="editorial-row">
+      <div class="project-info">
+        <span class="category-tag tag-bi">Riesgo Crediticio</span>
+        <h3>Factores asociados a la mora crediticia</h3>
+        <p>Análisis de variables financieras, laborales y demográficas asociadas al incumplimiento de pago.</p>
+        <p class="tech-stack">Tecnologías: Python · SQL · Pandas · Scikit-Learn <br> Competencias: EDA · Credit Risk · Estadística · Visualización</p>
+        <div class="btn-group">
+          <a href="caso2.html" class="btn btn-primary">Ver caso →</a>
+          <a href="#" class="btn btn-secondary">GitHub →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="editorial-row">
+      <div class="project-info">
+        <span class="category-tag tag-macro">Economía y Finanzas</span>
+        <h3>Evolución de los indicadores monetarios y financieros de Guatemala (2015–2025)</h3>
+        <p>Análisis de indicadores monetarios, crédito, remesas, PIB y spread bancario.</p>
+        <p class="tech-stack">Tecnologías: Python · SQL · Pandas · Bokeh <br> Competencias: Macroeconomía · Series de tiempo · Análisis económico · Visualización</p>
+        <div class="btn-group">
+          <a href="caso3.html" class="btn btn-primary">Ver caso →</a>
+          <a href="#" class="btn btn-secondary">GitHub →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="editorial-row">
+      <div class="project-info">
+        <span class="category-tag tag-supply">Mercado Bursátil</span>
+        <h3>Rendimiento de empresas con mayor capitalización bursátil (2018–2023)</h3>
+        <p>Análisis de rendimiento, volatilidad, liquidez y comportamiento histórico de acciones.</p>
+        <p class="tech-stack">Tecnologías: Python · SQL · Pandas · Bokeh <br> Competencias: Series de tiempo · Análisis financiero · Estadística · Visualización</p>
+        <div class="btn-group">
+          <a href="caso4.html" class="btn btn-primary">Ver caso →</a>
+          <a href="#" class="btn btn-secondary">GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cómo trabajo (Metodología) -->
+  <section id="dashboards" class="container fade-in-section" >
+    <div class="section-header"><h2>Proceso de Dashboards</h2></div>
+    <div class="methodology-grid">
+      <div class="method-step">
+        <span class="step-number">01 — Preparar</span>
+        <h4>Obtención de Datos</h4>
+        <p>Utilización de bases de datos públicas, repositorios académicos y conjuntos de datos obtenidos en Kaggle especializados para cada dominio analítico.</p>
+      </div>
+      <div class="method-step">
+        <span class="step-number">02 — Analizar</span>
+        <h4>Procesamiento</h4>
+        <p>Limpieza, transformación y validación mediante PowerQuery, Python, SQL y herramientas de análisis estadístico.</p>
+      </div>
+      <div class="method-step">
+        <span class="step-number">03 — Comunicar</span>
+        <h4>Modelado</h4>
+        <p>Construcción de indicadores, métricas de negocio, variables derivadas y modelos analíticos.</p>
+      </div>
+      <div class="method-step">
+        <span class="step-number">04 — Documentar</span>
+        <h4>Visualización</h4>
+        <p>Desarrollo de dashboards interactivos utilizando PowerBI, HTML, CSS, JavaScript y bibliotecas de visualización.</p>
+      </div>
+    </div>
+  </section>
 
 
-  function initSections() {
+  <!-- DASHBOARDS -->
+  <section class="container fade-in-section" style="padding-top: 0;">
+    <div class="section-header"><h2>Dashboards</h2></div>
 
-    if (observer) {
-      observer.disconnect();
-    }
+    <div class="editorial-row">
+      <div class="project-image">
+        <img src="dash1.png" alt="Macroeconomía">
+      </div>
+      <div class="project-info">
+        <span class="category-tag tag-macro">Macroeconomía</span>
+        <h3>Dashboard de Datos Macroeconómicos</h3>
+        <p>Indicadores monetarios y financieros para explorar tendencias y comportamiento económico histórico.</p>
+        <p class="tech-stack">CSS · HTML · JavaScript · Echarts>
+        <div class="btn-group">
+          <a href="dashboard1.html" target="_blank" class="btn btn-primary">Ver dashboard →</a>
+        </div>
+      </div>
+    </div>
 
-    sideNav.innerHTML = "";
-    
-    sections = Array.from(document.querySelectorAll("section")).filter(sec => sec.offsetParent !== null);
+    <div class="editorial-row">
+      <div class="project-image">
+        <img src="dash2.png" alt="Ventas">
+      </div>
+      <div class="project-info">
+        <span class="category-tag tag-bi">Business Intelligence</span>
+        <h3>Dashboard de Ventas</h3>
+        <p>Indicadores comerciales para analizar ventas, órdenes, devoluciones y comportamiento de clientes.</p>
+        <p class="tech-stack">Python · Excel  · HTML</p>
+        <div class="btn-group">
+          <a href="dashboard2.html" target="_blank" class="btn btn-primary">Ver dashboard →</a>
+        </div>
+      </div>
+    </div>
 
-    sections.forEach((_, idx) => {
-      const dot = document.createElement("div");
-      dot.classList.add("side-dot");
-      if(idx === 0) dot.classList.add("active");
-      dot.addEventListener("click", () => goToSection(idx));
-      sideNav.appendChild(dot);
-    });
+    <div class="editorial-row">
+      <div class="project-image">
+        <img src="dash3.png" alt="Sistema Bancario">
+      </div>
+      <div class="project-info">
+        <span class="category-tag tag-bank">Sistema Bancario</span>
+        <h3>Dashboard de Dinero</h3>
+        <p>Análisis estadístico de características monetarias y detección de patrones transaccionales.</p>
+        <p class="tech-stack">Python · Scikit-Learn · Estadística Descriptiva · HTML</p>
+        <div class="btn-group">
+          <a href="dashboard3.html" target="_blank" class="btn btn-primary">Ver dashboard →</a>
+        </div>
+      </div>
+    </div>
 
-    sideDots = document.querySelectorAll(".side-dot");
+    <div class="editorial-row">
+      <div class="project-image">
+        <img src="dash4.png" alt="Supply Chain">
+      </div>
+      <div class="project-info">
+        <span class="category-tag tag-supply">Supply Chain</span>
+        <h3>Dashboard de Logística</h3>
+        <p>Indicadores de envíos, retrasos, costos y riesgos asociados a la cadena de suministro.</p>
+        <p class="tech-stack">SQL · Python · JavaScript · HTML</p>
+        <div class="btn-group">
+          <a href="dashboard4.html" target="_blank" class="btn btn-primary">Ver dashboard →</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add("visible");
-          
-          // Sincronizar el punto activo
-          const index = sections.indexOf(entry.target);
-          if (index !== -1) {
-            currentSection = index;
-            sideDots.forEach((dot, i) => {
-              dot.classList.toggle("active", i === index);
-            });
+
+
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-light);">
+    <p>© 2026 Javier Barillas | Portafolio Editorial de Análisis de Datos</p>
+  </footer>
+
+  <!-- Script para la animación suave al hacer scroll (fade-in) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
           }
-        }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.fade-in-section').forEach((section) => {
+        observer.observe(section);
       });
-    }, { threshold: 0.35 });
-
-    sections.forEach(sec => observer.observe(sec));
-  }
-
-  function switchView(viewType, cardElement) {
-    const dashView = document.getElementById('dashboards-view');
-    const analysisView = document.getElementById('analysis-view');
-    const allCards = document.querySelectorAll('.hub-card');
-    
-    // Determinar qué vista se intentó abrir
-    const targetView = viewType === 'dashboards' ? dashView : analysisView;
-    const isCurrentlyOpen = targetView.classList.contains('active-view');
-
-    // 1. Limpiar todo (Cerrar persianas y quitar selecciones doradas)
-    dashView.classList.remove('active-view');
-    analysisView.classList.remove('active-view');
-    allCards.forEach(c => c.classList.remove('active-card'));
-
-    if (!isCurrentlyOpen) {
-      targetView.classList.add('active-view');
-      cardElement.classList.add('active-card');
-    }
-    
-    setTimeout(() => {
-      initSections();
-
-      if (!isCurrentlyOpen) {
-        goToSection(3);
-      }
-    }, 50);
-  }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    initSections();
-  });
-
-
-  const btn = document.getElementById("fullscreenBtn");
-  if (btn) {
-    btn.addEventListener("click", () => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-      } else {
-        document.exitFullscreen();
-      }
     });
-  }
-
-  function goToSection(index){
-    if(index < 0 || index >= sections.length) return;
-    currentSection = index;
-    sections[currentSection].scrollIntoView({
-      behavior: "smooth"
-    });
-  }
-
-  window.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    if(isScrolling) return;
-    isScrolling = true;
-
-    if(e.deltaY > 0){
-      goToSection(currentSection + 1);
-    } else {
-      goToSection(currentSection - 1);
-    }
-
-    setTimeout(() => {
-      isScrolling = false;
-    }, 1100); 
-  }, { passive: false });
-
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowDown") { e.preventDefault(); goToSection(currentSection + 1); }
-    if (e.key === "ArrowUp") { e.preventDefault(); goToSection(currentSection - 1); }
-  });
-
-  let touchStartY = 0;
-
-  window.addEventListener("touchstart", (e) => {
-    touchStartY = e.changedTouches[0].screenY;
-  }, { passive: true });
-
-  window.addEventListener("touchend", (e) => {
-    if (isScrolling) return;
-    
-    const touchEndY = e.changedTouches[0].screenY;
-    const deltaY = touchStartY - touchEndY;
-    
-    if (Math.abs(deltaY) > 50) {
-      if (deltaY > 0) {
-        goToSection(currentSection + 1);
-      } else {
-        goToSection(currentSection - 1);
-      }
-    }
-  }, { passive: true });
-</script>
+  </script>
 
 </body>
 </html>
